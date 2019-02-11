@@ -44,5 +44,3 @@ def make_plot():
     ax.axis([1e-6, 1e1, 1e-62, 1e-51])
     ax.set(xlabel = r'Mass of DM [GeV]', ylabel = r'Cross Section [cm$^2$]')
     plt.savefig('Cross Section plot - Analytic.png')
-    plt.show()
-
