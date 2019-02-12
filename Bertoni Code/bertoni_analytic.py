@@ -16,7 +16,7 @@ therm_time = 1e10 *3.154e7 /time_conversion # in GeV^-1
 def coupling_squared(DM_mass):
 
     k_n = np.sqrt(4*DM_mass*Temp)
-    k_0 = (7/5) * DM_mass
+    k_0 = DM_mass/3
 
 
     bracket = 1/(k_n)**4 - 1/(k_0)**4
