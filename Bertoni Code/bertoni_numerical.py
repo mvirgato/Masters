@@ -4,10 +4,14 @@ import matplotlib.pyplot as plt
 from bertoni_analytic import coupling_squared
 
 pi = np.pi
+hbar = cn.hbar
+speed_of_light = cn.c
+electric_charge = cn.elementary_charge
+k_b = cn.Boltzmann
 
-GeV_to_Kelvin = 1.16e4 *1e9 # 1GeV in Kelvin
-time_conversion = 6.58e-16 * 1e-9 #1GeV^-1 of time in seconds
-length_conversion = 1.97e-7 *1e-9 # 1GeV^-1 of length in metres
+GeV_to_Kelvin = electric_charge/k_b *1e9 # 1GeV in Kelvin
+time_conversion = hbar/electric_charge * 1e-9 #1GeV^-1 of time in seconds
+length_conversion = (hbar*speed_of_light)/electric_charge *1e-9 # 1GeV^-1 of length in metres
 
 Temp = 1e5/GeV_to_Kelvin # Neutron star temperature in GeV
 neutron_mass = 0.939 # mass of neutron in GeV
