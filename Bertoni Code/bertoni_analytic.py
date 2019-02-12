@@ -25,7 +25,7 @@ def coupling_squared(DM_mass):
 
 def cross_section(DM_mass):
     numerator = coupling_squared(DM_mass)*neutron_mass**2 * DM_mass**2
-    denominator = pi*(neutron_mass+DM_mass)**2
+    denominator = pi*(neutron_mass + DM_mass)**2
     cross_section_GeV2 = numerator/denominator
 
     return cross_section_GeV2 *(length_conversion**2) * 1e4
