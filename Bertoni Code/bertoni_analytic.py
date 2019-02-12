@@ -14,7 +14,7 @@ time_conversion = hbar/electric_charge * 1e-9 #1GeV^-1 of time in seconds
 length_conversion = (hbar*speed_of_light)/electric_charge *1e-9 # 1GeV^-1 of length in metres
 
 Temp = 1e5/GeV_to_Kelvin # Neutron star temperature in GeV
-neutron_mass = 0.939 # mass of neutron in GeV
+neutron_mass = 0.93956 # mass of neutron in GeV
 therm_time = 1e10 *3.154e7 /time_conversion # in GeV^-1
 
 def coupling_squared(DM_mass):
@@ -32,11 +32,11 @@ def cross_section(DM_mass):
     denominator = pi*(neutron_mass + DM_mass)**2
     cross_section_GeV2 = numerator/denominator
 
-    return cross_section_GeV2 *(length_conversion**2) * 1e4
+    return cross_section_GeV2 *(length_conversion**2) * (100**2)
 
 
 def make_plot():
-    mass_range = np.logspace(-6, 1, num = 100)
+    mass_range = np.logspace(-6, 1, num = 1000)
     cross_section_array = np.empty(0)
 
     for i in mass_range:
