@@ -43,11 +43,11 @@ def make_plot():
         dummy = cross_section(i)
         cross_section_array = np.append(cross_section_array, dummy)
 
-    fig, ax = plt.subplots(figsize = (10, 7), dpi = 100)
-    ax.loglog(mass_range, cross_section_array)
-    ax.axis([1e-6, 1e1, 1e-62, 1e-51])
-    ax.set(xlabel = r'Mass of DM [GeV]', ylabel = r'Cross Section [cm$^2$]')
+    fig, ax1 = plt.subplots(figsize = (10, 7), dpi = 100)
+    ax1.loglog(mass_range, cross_section_array)
+    ax1.axis([1e-6, 1e1, 1e-62, 1e-51])
+    ax1.set(xlabel = r'Mass of DM [GeV]', ylabel = r'Cross Section [cm$^2$]')
     plt.savefig('Cross Section plot - Analytic.png')
     plt.show()
 
-make_plot()
+#make_plot()

@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 from bertoni_analytic import coupling_squared
+from bertoni_analytic import cross_section
 import scipy.constants as cn
 
 pi = np.pi
@@ -45,7 +46,7 @@ def thermalization_time(DM_mass): #returns therm in 1/Gev units
         energy_array = np.append(energy_array, new_energy)
         i += 1
 
-    return np.sum(therm_time_array)*time_conversion/3.154e7
+    return np.sum(therm_time_array)#*time_conversion/3.154e7
 
 
 def make_plot_time():
@@ -77,11 +78,41 @@ def time_dep_coupling_squared(DM_mass, proper_time):
     return numerical_factor * DM_mass * bracket
 
 def time_dep_cross_section(DM_mass, proper_time):
-    numerator = time_dep_cross_section(DM_mass, proper_time)*neutron_mass**2 * DM_mass**2
+    numerator = time_dep_coupling_squared(DM_mass, proper_time)*neutron_mass**2 * DM_mass**2
     denominator = pi*(neutron_mass + DM_mass)**2
     cross_section_GeV2 = numerator/denominator
 
     return cross_section_GeV2 *(length_conversion**2) * (100**2)
 
 def make_plot_time_dep():
-    
+    mass_range = np.logspace(-6, 1, num = 1000)
+    cross_section_array = np.empty(0)
+
+    for i in mass_range:
+        time_dummy = thermalization_time(i)
+        cross_section_dummy = time_dep_cross_section(i, time_dummy)
+        cross_section_array = np.append(cross_section_array, cross_section_dummy)
+
+    fig, ax2 = plt.subplots(figsize = (10, 7), dpi = 100)
+    ax2.loglog(mass_range, cross_section_array)
+    #ax2.axis([1e-6, 1e1, 1e-62, 1e-51])
+    ax2.set(xlabel = r'Mass of DM [GeV]', ylabel = r'Cross Section [cm$^2$]')
+    plt.savefig('Cross Section plot - numerical.png')
+    plt.show()
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+def plot_a_thing():
+    mass_range = np.logspace(-6, 1, num = 1000)
+    thing = np.empty(0)
+
+    for i in mass_range:
+        time_thing = thermalization_time(i)
+        dummy = cross_section(i)/time_dep_cross_section(i, time_thing)
+        thing = np.append(thing, dummy)
+
+    plt.plot(mass_range, thing)
+    plt.xscale('log')
+    plt.show()
+
+plot_a_thing()
