@@ -7,7 +7,6 @@ pi = np.pi
 hbar = cn.hbar
 speed_of_light = cn.c
 electric_charge = cn.elementary_charge
-k_b = cn.Boltzmann
 
 GeV_to_Kelvin = electric_charge/k_b *1e9 # 1GeV in Kelvin
 time_conversion = hbar/electric_charge * 1e-9 #1GeV^-1 of time in seconds
