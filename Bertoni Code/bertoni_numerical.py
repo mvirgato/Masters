@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 from bertoni_analytic import coupling_squared
+import scipy.constants as cn
 
 pi = np.pi
 hbar = cn.hbar
@@ -30,7 +31,7 @@ def initial_energy(DM_mass):
 
 
 
-def thermalization_time(DM_mass):
+def thermalization_time(DM_mass): #returns therm in 1/Gev units
     energy_array = np.empty(0)
     therm_time_array = np.empty(0)
     energy_array = np.append(energy_array, initial_energy(DM_mass))
@@ -63,4 +64,24 @@ def make_plot_time():
     plt.savefig('Thermalzation time.png')
     plt.show()
 
-make_plot_time()
+
+
+def time_dep_coupling_squared(DM_mass, proper_time):
+
+    k_n = np.sqrt(4*DM_mass*Temp)
+    k_0 = DM_mass/3
+
+
+    bracket = 1/(k_n)**4 - 1/(k_0)**4
+    numerical_factor = (105*(pi**3))/(4*(neutron_mass**2)*proper_time)
+    return numerical_factor * DM_mass * bracket
+
+def time_dep_cross_section(DM_mass, proper_time):
+    numerator = time_dep_cross_section(DM_mass, proper_time)*neutron_mass**2 * DM_mass**2
+    denominator = pi*(neutron_mass + DM_mass)**2
+    cross_section_GeV2 = numerator/denominator
+
+    return cross_section_GeV2 *(length_conversion**2) * (100**2)
+
+def make_plot_time_dep():
+    
