@@ -48,7 +48,7 @@ def numerical_cross_section(DM_mass):
 
 
 def make_plot_numeric_cross_section():
-    mass_range = np.logspace(-6, 1, num = 1000)
+    mass_range = np.logspace(-6, 1, num = 500)
     numerical_cross_section_array = np.empty(0)
 
     for i in mass_range:

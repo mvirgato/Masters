@@ -27,7 +27,6 @@ def cross_section(DM_mass):
 
     return cross_section_GeV2 * (1/(1.97e7) *1e-9)**2 * 1e4
 
-print(cross_section(1))
 
 def make_plot_cross_section():
     mass_range = np.logspace(-6, 1, num = 1000)
@@ -38,10 +37,13 @@ def make_plot_cross_section():
         cross_section_array = np.append(cross_section_array, dummy)
 
     fig, ax1 = plt.subplots(figsize = (10, 7), dpi = 100)
-    ax1.loglog(mass_range, cross_section_array)
+    ax1.loglog(mass_range, cross_section_array, color='black')
     ax1.axis([1e-6, 1e1, 1e-62, 1e-51])
     ax1.set(xlabel = r'Mass of DM [GeV]', ylabel = r'Cross Section [cm$^2$]')
+    ax1.fill_between(mass_range, cross_section_array, facecolor='blue', alpha=0.3)
+    ax1.grid()
+    ax1.text(0.5e-3, 4e-60, 'No thermalization', fontsize=20)
     plt.savefig('Cross Section plot - Analytic.png')
-    plt.show()
+
 
 make_plot_cross_section()
