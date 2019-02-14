@@ -1,46 +1,40 @@
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
-import scipy.constants as cn
 
 pi = np.pi
-hbar = cn.hbar
-speed_of_light = cn.c
-electric_charge = cn.elementary_charge
-k_b = cn.Boltzmann
 
-GeV_to_Kelvin = electric_charge/k_b *1e9 # 1GeV in Kelvin
-time_conversion = hbar/electric_charge * 1e-9 #1GeV^-1 of time in seconds
-length_conversion = (hbar*speed_of_light)/electric_charge *1e-9 # 1GeV^-1 of length in metres
-
-Temp = 1e5/GeV_to_Kelvin # Neutron star temperature in GeV
-neutron_mass = 0.93956 # mass of neutron in GeV
-therm_time = 1e10 *3.154e7 /time_conversion # in GeV^-1
+Temp =  (1e5/(1.16e4) *1e-9) # Neutron star temperature in GeV
+neutron_mass =  (0.939) # mass of neutron in GeV
+therm_time =  (1e10 *3.154e7 /(6.58e-16) * 1e9)# in GeV^-1
 
 def coupling_squared(DM_mass):
-
     k_n = np.sqrt(4*DM_mass*Temp)
     k_0 = DM_mass/3
 
+    bracket = (1/(k_n)**4 - 1/(k_0)**4)
+    numerator = 105 * pi**3 * DM_mass * bracket
+    denominator = 4* neutron_mass**2 * therm_time
 
-    bracket = 1/(k_n)**4 - 1/(k_0)**4
-    numerical_factor = (105*(pi**3))/(4*(neutron_mass**2)*therm_time)
-    return numerical_factor * DM_mass * bracket
+    return numerator/denominator
+
 
 def cross_section(DM_mass):
-    numerator = coupling_squared(DM_mass)*neutron_mass**2 * DM_mass**2
-    denominator = pi*(neutron_mass + DM_mass)**2
+
+    numerator = coupling_squared(DM_mass) * neutron_mass**2 * DM_mass**2
+    denominator = pi *(neutron_mass + DM_mass)**2
     cross_section_GeV2 = numerator/denominator
 
-    return cross_section_GeV2 *(length_conversion**2) * (100**2)
+    return cross_section_GeV2 * (1/(1.97e7) *1e-9)**2 * 1e4
 
+print(cross_section(1))
 
-def make_plot_coupling():
+def make_plot_cross_section():
     mass_range = np.logspace(-6, 1, num = 1000)
     cross_section_array = np.empty(0)
 
-    for i in mass_range:
-        dummy = cross_section(i)
+    for mass in mass_range:
+        dummy = cross_section(mass)
         cross_section_array = np.append(cross_section_array, dummy)
 
     fig, ax1 = plt.subplots(figsize = (10, 7), dpi = 100)
@@ -50,4 +44,4 @@ def make_plot_coupling():
     plt.savefig('Cross Section plot - Analytic.png')
     plt.show()
 
-make_plot()
+make_plot_cross_section()
