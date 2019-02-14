@@ -35,7 +35,7 @@ def cross_section(DM_mass):
     return cross_section_GeV2 *(length_conversion**2) * (100**2)
 
 
-def make_plot():
+def make_plot_coupling():
     mass_range = np.logspace(-6, 1, num = 1000)
     cross_section_array = np.empty(0)
 
@@ -50,4 +50,4 @@ def make_plot():
     plt.savefig('Cross Section plot - Analytic.png')
     plt.show()
 
-#make_plot()
+make_plot()
