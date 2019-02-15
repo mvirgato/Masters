@@ -2,6 +2,18 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 
+SMALL_SIZE = 14
+MEDIUM_SIZE = 16
+BIGGER_SIZE = 18
+
+plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
+plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
+plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
+plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
+plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
+
 pi = np.pi
 
 Temp =  (1e5/(1.16e4) *1e-9) # Neutron star temperature in GeV
@@ -41,7 +53,6 @@ def make_plot_cross_section():
     ax1.axis([1e-6, 1e1, 1e-62, 1e-51])
     ax1.set(xlabel = r'Mass of DM [GeV]', ylabel = r'Cross Section [cm$^2$]')
     ax1.fill_between(mass_range, cross_section_array, facecolor='blue', alpha=0.3)
-    ax1.grid()
     ax1.text(0.5e-3, 4e-60, 'No thermalization', fontsize=20)
     plt.savefig('Cross Section plot - Analytic.png')
 
