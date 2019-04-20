@@ -65,8 +65,36 @@ def final_FD(s, t, v, dm):
         elif final_energy(s, t, v, dm) < fermi_energy:
             return 1
 
+'''
+Step functions
+'''
+def step1(s, t):
+    if w > np.abs(s-t):
+        return 1
+    elif w < np.abs(s-t):
+        return 0
 
+def step2(s, t):
+    if (s+t) > w:
+        return 1
+    elif (s+t) < w:
+        return 0
 
+def step3(s, t, v):
+    if v > np.abs(s-t):
+        return 1
+    elif v < np.abs(s-t):
+        return 0
+
+def step4(s, t, v):
+    if (s+t) > v:
+        return 1
+    elif (s+t) < v:
+        return 0
+
+'''
+main
+'''
 
 def make_plot():
     u_range = np.linspace(0.0849985, 0.0850010, 10000)
@@ -80,5 +108,3 @@ def make_plot():
     ax1.plot(u_range, dist)
     #ax1.set_xscale('log')
     plt.show()
-
-print(10**400)
