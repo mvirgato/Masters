@@ -69,37 +69,37 @@ def final_FD(s, t, v, dm):
 Step functions
 '''
 def step1(s, t):
-    if w > np.abs(s-t):
+    if w >= np.abs(s-t):
         return 1
     elif w < np.abs(s-t):
         return 0
 
 def step2(s, t):
-    if (s+t) > w:
+    if (s+t) >= w:
         return 1
     elif (s+t) < w:
         return 0
 
 def step3(s, t, v):
-    if v > np.abs(s-t):
+    if v >= np.abs(s-t):
         return 1
     elif v < np.abs(s-t):
         return 0
 
 def step4(s, t, v):
-    if (s+t) > v:
+    if (s+t) >= v:
         return 1
     elif (s+t) < v:
         return 0
 
 def heaviside_product(s, t, v):
-    return step1(s,t) * step2(s, t) * step3(s, t, v) *step4(s, t, v)
+    return step1(s,t) * step2(s, t) * step3(s, t, v) * step4(s, t, v)
 
 '''
 Integrand
 '''
 def integrand(s, t, v, dm):
-    return v * t * heaviside_product(s, t, v) * init_FD(s, t, dm) * final_FD(s, t, v, dm)
+    return v * t  * init_FD(s, t, dm) * final_FD(s, t, v, dm) * heaviside_product(s, t, v)
 
 
 '''
@@ -111,7 +111,7 @@ def make_plot():
     dist = np.empty(0)
 
     for x in v_range:
-        dummy = integrand(5, 2, x, 1)
+        dummy = integrand(2*w, w, x, 1)
         dist = np.append(dist, dummy)
 
     fig, ax1 = plt.subplots()
@@ -119,4 +119,3 @@ def make_plot():
     #ax1.set_xscale('log')
     plt.show()
 
-    make_plot()
