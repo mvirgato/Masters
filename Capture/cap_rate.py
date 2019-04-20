@@ -92,19 +92,31 @@ def step4(s, t, v):
     elif (s+t) < v:
         return 0
 
+def heaviside_product(s, t, v):
+    return step1(s,t) * step2(s, t) * step3(s, t, v) *step4(s, t, v)
+
+'''
+Integrand
+'''
+def integrand(s, t, v, dm):
+    return v * t * heaviside_product(s, t, v) * init_FD(s, t, dm) * final_FD(s, t, v, dm)
+
+
 '''
 main
 '''
 
 def make_plot():
-    u_range = np.linspace(0.0849985, 0.0850010, 10000)
+    v_range = np.linspace(0, w)
     dist = np.empty(0)
 
-    for mass in u_range:
-        dummy = (mass)
+    for x in v_range:
+        dummy = integrand(5, 2, x, 1)
         dist = np.append(dist, dummy)
 
     fig, ax1 = plt.subplots()
-    ax1.plot(u_range, dist)
+    ax1.plot(v_range, dist)
     #ax1.set_xscale('log')
     plt.show()
+
+    make_plot()
