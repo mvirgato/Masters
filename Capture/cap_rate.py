@@ -4,12 +4,12 @@ from scipy import integrate
 import matplotlib.pyplot as plt
 
 '''
-Global Constants
+GLOBAL CONSTANTS
 '''
 
 w = escape_vel = np.sqrt( (2 * cnts.G * 1.4 * 2e30) / 1e3 )
 
-temp = (1e7/ 1.16e4) * 1e-9
+temp = (1e3/ 1.16e4) * 1e-9
 
 therm_time = (1e10 * 3.145e7 * 1e9) / 6.58e-16
 
@@ -22,7 +22,7 @@ vd = 270e3
 vs = 200e3
 
 '''
-Set up Functions
+SET  UP FUNCTIONS
 '''
 
 def mu(dm):
@@ -43,26 +43,32 @@ def init_energy(s, t, dm):
 def final_energy(s,t,v,dm):
     return 0.5 * nm * final_vel_sqr(s,t,v,dm)
 
+'''
+DISTRIBUTION FUNCTIONS
+'''
 def init_FD(s, t, dm):
-    if abs(init_energy(s, t, dm)/fermi_energy) > 10:
-        if (init_energy(s, t, dm) - fermi_energy) > 0:
+    a = (init_energy(s, t, dm) - fermi_energy)
+    if  abs(a) >1:
+        if a > 0:
             return 0
-        elif  (init_energy(s, t, dm) - fermi_energy) < 0:
+        elif a < 0:
             return 1
     else:
         return 1 / (1 + np.exp((init_energy(s, t, dm) - fermi_energy) / temp))
 
 def final_FD(s, t, v, dm):
-    if abs(final_energy(s, t, v, dm)/fermi_energy) > 10:
-        if (final_energy(s, t, v, dm) - fermi_energy) > 0:
+    a = (-final_energy(s, t, v, dm) + fermi_energy)
+    if abs(a) > 1:
+        if a> 0:
             return 0
-        elif  (final_energy(s, t, v, dm) - fermi_energy) < 0:
+        elif  a < 0:
             return 1
     else:
         return 1 / (1 + np.exp((-final_energy(s, t, v, dm) + fermi_energy) / temp))
 
+
 '''
-trig functions
+TRIG FUNCTIONS
 '''
 def incoming_cos(s, t):
     return (w**2 - s**2 -t**2 ) / (2 * s * t)
@@ -71,7 +77,7 @@ def outgoing_cos(s, t, v):
     return (v**2 - s**2 -t**2 ) / (2 * s * t)
 
 '''
-Step functions
+STEP FUNCTIONS
 '''
 def incoming_step(s, t):
     if abs(incoming_cos(s, t)) > 1:
@@ -90,14 +96,41 @@ def heaviside_product(s, t, v):
 
 
 '''
-Integrand
+INTEGRAND
 '''
 def integrand(s, t, v, dm):
-    return v * t   * heaviside_product(s, t, v) * init_FD(s, t, dm) * final_FD(s, t, v, dm)
+    return v * t * heaviside_product(s, t, v) * init_FD(s, t, dm) * final_FD(s, t, v, dm)
 
 
 '''
-main
+MAIN
+'''
+def cap_rate_integral(x):
+    res, err = integrate.tplquad(integrand, 0, np.inf, 0, np.inf, 0, w, args = [x])
+    return res
+
+
+def cap_plot():
+    mass_range = np.logspace(-6, 6, 1000)
+    dist1 = np.empty(0)
+
+    for x in mass_range:
+        dummy1 = cap_rate_integral(x)
+        dist1 = np.append(dist1, dummy1)
+
+
+    fig, ax1 = plt.subplots()
+    ax1.plot(mass_range, dist1)
+    #ax1.set_xscale('log')
+    plt.show()
+
+cap_plot()
+
+#print(final_FD(0,0,0,1))
+
+
+'''
+MESSING AROUND
 '''
 def init_FD_test(E):
     if abs(E/fermi_energy) > 100:
@@ -115,11 +148,11 @@ def final_FD_test(E):
         elif  (E - fermi_energy) < 0:
             return 1
     else:
-        return 1 / (1 + np.exp((-E + fermi_energy) / temp))
+        return 1 - (1 / (1 + np.exp((E  - fermi_energy) / temp)))
 
 
 def make_plot():
-    v_range = np.linspace(0.08499, 0.08501, 1000)
+    v_range = np.linspace(0, 1, 1000)
     dist1 = np.empty(0)
     dist2 = np.empty(0)
 
@@ -132,9 +165,6 @@ def make_plot():
 
 
     fig, ax1 = plt.subplots()
-    ax1.plot(v_range, dist1)
-    ax1.plot(v_range, dist2)
+    ax1.plot(v_range, dist1, v_range, dist2)
     #ax1.set_xscale('log')
     plt.show()
-
-print(init_FD_test(-100*fermi_energy))
