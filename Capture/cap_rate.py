@@ -1,6 +1,7 @@
 import numpy as np
 from scipy import constants as cnts
 from scipy import integrate
+from scipy import special
 import matplotlib.pyplot as plt
 
 '''
@@ -47,24 +48,10 @@ def final_energy(s,t,v,dm):
 DISTRIBUTION FUNCTIONS
 '''
 def init_FD(s, t, dm):
-    a = (init_energy(s, t, dm) - fermi_energy)
-    if  abs(a) >1:
-        if a > 0:
-            return 0
-        elif a < 0:
-            return 1
-    else:
-        return 1 / (1 + np.exp((init_energy(s, t, dm) - fermi_energy) / temp))
+    return special.expit(-(init_energy(s, t, dm) - fermi_energy) / temp)
 
 def final_FD(s, t, v, dm):
-    a = (-final_energy(s, t, v, dm) + fermi_energy)
-    if abs(a) > 1:
-        if a> 0:
-            return 0
-        elif  a < 0:
-            return 1
-    else:
-        return 1 / (1 + np.exp((-final_energy(s, t, v, dm) + fermi_energy) / temp))
+    return 1 - special.expit(-(final_energy(s, t, v, dm) - fermi_energy) / temp)
 
 
 '''
@@ -124,7 +111,7 @@ def cap_plot():
     #ax1.set_xscale('log')
     plt.show()
 
-cap_plot()
+print(cap_rate_integral(1))
 
 #print(final_FD(0,0,0,1))
 
