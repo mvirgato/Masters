@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-<<<<<<< HEAD
 
 #include "cubature.h"
 
@@ -133,8 +132,11 @@ double doing_integral(double dm){
 }
 
 //MAIN
-int main(){
-    double a = doing_integral(1e-2);
-    printf("%f\n", a);
+int main(/* int argc, char *argv[] */){
+	
+	//double mass = atof(argv[1]);
+
+	double a = doing_integral(1.0);
+	printf("%f\n", a);
 	return 0;
 }
