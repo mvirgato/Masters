@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+<<<<<<< HEAD
 
 #include "cubature.h"
 
@@ -134,6 +135,6 @@ double doing_integral(double dm){
 //MAIN
 int main(){
     double a = doing_integral(1e-2);
-    printf("%.10e\n", a);
+    printf("%f\n", a);
 	return 0;
 }
