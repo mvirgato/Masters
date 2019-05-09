@@ -16,7 +16,7 @@
 #define ESCAPE_VEL sqrt((2 * 6.67408E-11 * 1.4 * 2E30) / (10E3))	//NS escape velocity in m/s. Need to make into function of radius
 #define TEMP (1E3 * 1E-9) / (1.16E4)	//NS temp in GeV
 #define NM 0.939	//neutron mass in GeV
-#define FERMI_ENERGY 0.085 // in GeV
+#define FERMI_ENERGY 0.085 // in GeV (will need to make a variable)
 #define FERMI_VEL (2 * FERMI_ENERGY) / NM
 #define SOL 299792458.0 // speed of light in vacuum m/s
 #define VELDISP 270e3 //DM velocity dispersion for MB dist
@@ -35,16 +35,10 @@ double mu_plus(double dm){
 }
 
 //TRIG FUNCTIONS
-double initial_cos(double s, double t){
-	/* angle between incoming DM and neutron */
-    double num = ESCAPE_VEL * ESCAPE_VEL - s * s - t * t;
-	double den = 2 * s * t;
 
-	return num / den;
-}
 
-double final_cos(double s, double t, double v){
-	/* angle between outgoing DM and neutron */
+double cosine(double s, double t, double v){
+	/* v = escape_vel for initial */
 
 	double num = v * v - s * s - t * t;
 	double den = 2 * s * t;
@@ -55,7 +49,7 @@ double final_cos(double s, double t, double v){
 //STEP FUNCTIONS
 double step(double f){
 	/* a step function to constrain integration region */
-	if ( f > 1 || f < -1){
+	if ( fabs(f) > 1){
 		return 0;
 	}
 	else{
@@ -63,22 +57,22 @@ double step(double f){
 	}
 }
 
-int heaviside_product(double s, double t, double v){
+double heaviside_product(double s, double t, double v){
 	/* product of relevant step functions */
-	return step(initial_cos(s, t)) * step(final_cos(s, t, v));
+	return step(cosine(s, t, ESCAPE_VEL)) * step(cosine(s, t, v));
 }
 
 //ENERGIES
 
 
 double velsqr(double s, double t, double v, double dm){
-	/*centre of mass value of final neutron velocity */
+	/* square of velocity: v = ESCAPE_VEL for initial particle */
 	double a = 2 * mu(dm) * mu_plus(dm) * t * t + 2 * mu_plus(dm) * s*s- mu(dm) * v * v;
 	return a / (SOL*SOL);
 }
 
-double energy(double s, double t, double v, double dm){
-	return 0.5 * NM * velsqr(s, t, v, dm);
+double energy(double s, double t, double vel, double dm){
+	return 0.5 * NM * velsqr(s, t, vel, dm);
 }
 
 
@@ -88,55 +82,57 @@ double FD(double s, double t, double v, double dm){
 	return 1 / (double)( 1 + exp( ( energy(s, t, v , dm) - FERMI_ENERGY ) / TEMP ) );
 }
 
-struct int_params {double dm;};
+
+// SETTING UP INTEGRATION
+
+struct int_params {double dm; double final_vel;};
 
 int myintegrand(unsigned ndim, const double *x, void *p, unsigned fdim, double *fval){
 
     struct int_params *params = (struct int_params *)p;
-    
+
     double dm = (params->dm);
-    
-    fval[0] = heaviside_product(x[1], x[2], x[0]) * FD(x[1], x[2], ESCAPE_VEL, dm) * (1 - FD(x[1], x[2], x[0], dm));
-    
+		double v = (params->final_vel);
+
+    fval[0] = heaviside_product(x[0], x[1], v) * FD(x[0], x[1], ESCAPE_VEL, dm) * (1 - FD(x[0], x[1], v, dm));
+
     return 0;
 }
 
 double tbound(double dm){
-    return 1.05 * sqrt( (SOL*SOL * FERMI_VEL + mu(dm) * ESCAPE_VEL*ESCAPE_VEL) / (2 * mu(dm) * mu_plus(dm) ));
+    return 1.05 * sqrt( (SOL * SOL * FERMI_VEL + mu(dm) * ESCAPE_VEL * ESCAPE_VEL) / ( 2.0 * mu(dm) * mu_plus(dm) ) );
 }
 
 double sbound(double dm){
-    return 1.05 * sqrt( (SOL*SOL * FERMI_VEL + mu(dm) * ESCAPE_VEL*ESCAPE_VEL) / (2 * mu(dm)));
+    return 1.05 * sqrt( (SOL * SOL * FERMI_VEL + mu(dm) * ESCAPE_VEL * ESCAPE_VEL) / ( 2.0 * mu(dm) ) );
 }
 
 
 
-double doing_integral(double dm){
-    
+double doing_integral(double dm, double final_vel){
+
     double val, error;
-    
-    struct int_params params = {dm};
-    
+
+    struct int_params params = {dm, final_vel};
+
     double smax = sbound(dm);
     double tmax = tbound(dm);
-    double vmax = ESCAPE_VEL;
-    
-    double xl[3] = {0, 0, 0};
-    double xu[3] = {vmax, smax, tmax};
-    
-    hcubature(1, &myintegrand, &params, 3, xl, xu, 0, 1e-6, 1e-6, ERROR_INDIVIDUAL, &val, &error);
-    
-    return val;
-    
+    //double vmax = ESCAPE_VEL;
 
+    double xl[2] = {0, 0}; // lower bounds for (s, t)
+    double xu[2] = {smax, tmax}; // upper bounds for (s, t)
+
+    hcubature(1, &myintegrand, &params, 2, xl, xu, 0, 1e-6, 1e-6, ERROR_INDIVIDUAL, &val, &error);
+
+    return val;
 }
 
 //MAIN
-int main(/* int argc, char *argv[] */){
-	
-	//double mass = atof(argv[1]);
+int main( int argc, char *argv[] ){
 
-	double a = doing_integral(1.0);
-	printf("%f\n", a);
+	double mass = atof(argv[1]);
+
+	double a = doing_integral(mass, ESCAPE_VEL);
+	printf("%0.8e\n", a);
 	return 0;
 }
