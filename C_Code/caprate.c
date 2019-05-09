@@ -87,16 +87,15 @@ double FD(double s, double t, double v, double dm){
 
 // SETTING UP INTEGRATION
 
-struct int_params {double dm; double final_vel;};
+struct int_params {double dm;};
 
 int myintegrand(unsigned ndim, const double *x, void *p, unsigned fdim, double *fval){
 
     struct int_params *params = (struct int_params *)p;
 
     double dm = (params->dm);
-		double v = (params->final_vel);
 
-    fval[0] = heaviside_product(x[0], x[1], v) * FD(x[0], x[1], ESCAPE_VEL, dm) * (1 - FD(x[0], x[1], v, dm));
+    fval[0] = heaviside_product(x[1], x[2], x[0]) * FD(x[1], x[2], ESCAPE_VEL, dm) * (1 - FD(x[1], x[2], x[0], dm));
 
     return 0;
 }
@@ -111,20 +110,20 @@ double sbound(double dm){
 
 
 
-double doing_integral(double dm, double final_vel){
+double doing_integral(double dm){
 
     double val, error;
 
-    struct int_params params = {dm, final_vel};
+    struct int_params params = {dm};
 
     double smax = sbound(dm);
     double tmax = tbound(dm);
-    //double vmax = ESCAPE_VEL;
+    double vmax = ESCAPE_VEL;
 
-    double xl[2] = {0, 0}; // lower bounds for (s, t)
-    double xu[2] = {smax, tmax}; // upper bounds for (s, t)
+    double xl[3] = {0, 0, 0}; // lower bounds for (v, s, t)
+    double xu[3] = {vmax, smax, tmax}; // upper bounds for (v, s, t)
 
-    hcubature(1, &myintegrand, &params, 2, xl, xu, 0, 1e-6, 1e-6, ERROR_INDIVIDUAL, &val, &error);
+    hcubature(1, &myintegrand, &params, 3, xl, xu, 0, 1e-6, 1e-6, ERROR_INDIVIDUAL, &val, &error);
 
     return val;
 }
@@ -134,7 +133,7 @@ int main( int argc, char *argv[] ){
 
 	double mass = atof(argv[1]);
 
-	double a = doing_integral(mass, (ESCAPE_VEL) );
+	double a = doing_integral(mass);
 	printf("%0.8e\n", a);
 
 	return 0;
