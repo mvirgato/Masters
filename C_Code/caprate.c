@@ -31,11 +31,10 @@ double mu(double dm){
 
 double mu_plus(double dm){
 
-	return ( 1 + mu(dm)) / (double)2;
+	return ( 1 + mu(dm)) / 2.0;
 }
 
 //TRIG FUNCTIONS
-
 
 double cosine(double s, double t, double v){
 	/* v = escape_vel for initial */
@@ -79,7 +78,10 @@ double energy(double s, double t, double vel, double dm){
 //FERMI-DIRAC DISTRIBUTION FUNCTIONS
 
 double FD(double s, double t, double v, double dm){
-	return 1 / (double)( 1 + exp( ( energy(s, t, v , dm) - FERMI_ENERGY ) / TEMP ) );
+
+
+ return 1 / (double)( 1 + exp( ( energy(s, t, v , dm) - FERMI_ENERGY ) / TEMP ) );
+
 }
 
 
@@ -132,7 +134,8 @@ int main( int argc, char *argv[] ){
 
 	double mass = atof(argv[1]);
 
-	double a = doing_integral(mass, ESCAPE_VEL);
+	double a = doing_integral(mass, (ESCAPE_VEL) );
 	printf("%0.8e\n", a);
+
 	return 0;
 }
