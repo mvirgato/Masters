@@ -1,1 +1,0 @@
-1 / (1 + np.exp((E + fermi_energy/2 - fermi_energy) / temp))
