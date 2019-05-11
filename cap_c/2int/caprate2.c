@@ -131,11 +131,9 @@ double doing_integral(double dm, double vel){
 }
 
 //MAIN
-int main( int argc, char *argv[] ){
+int main(){
 
-	double mass = atof(argv[1]);
-
-	double a = doing_integral(mass, ESCAPE_VEL/2);
+	double a = doing_integral(1, ESCAPE_VEL);
 	printf("%0.8e\n", a);
 
 	return 0;

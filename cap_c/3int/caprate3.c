@@ -129,11 +129,9 @@ double doing_integral(double dm){
 }
 
 //MAIN
-int main( int argc, char *argv[] ){
+int main( ){
 
-	double mass = atof(argv[1]);
-
-	double a = doing_integral(mass);
+	double a = doing_integral(1);
 	printf("%0.8e\n", a);
 
 	return 0;
