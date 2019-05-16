@@ -4,6 +4,9 @@
 
 #include "cubature.h"
 
+#define FILE_NAME "integral_test.txt"
+
+
 #define VERBOSE 0
 
 #if defined(PCUBATURE)
@@ -88,8 +91,14 @@ double doing_second_integral(double parone, double partwo, double parthree){
 //MAIN
 int main( ){
 	
+	
 	double output = doing_second_integral(1, 1, 1);
-	printf("%0.10e\n", output);
+//	printf("%0.10e\n", output);
+
+
+	FILE *file_ptr = fopen(FILE_NAME, "w");
+	fprintf(file_ptr, " Integral Evaluation\n %0.8e\n ", output);
+	fclose(file_ptr);
 
 	return 0;
 }
