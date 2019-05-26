@@ -22,6 +22,9 @@
 #define VELDISP 270e3 //DM velocity dispersion for MB dist
 #define NSVEL 200e3 // NS velocity in galactic frame
 
+
+#define FILE_NAME "triple_integral_output.txt"
+
 //GENERAL FUNCTIONS
 double mu(double dm){
 	/* RATIO OF DARK MATTER TO NEUTRON MASS */
@@ -131,8 +134,11 @@ double doing_integral(double dm){
 //MAIN
 int main( ){
 
-	double a = doing_integral(1);
-	printf("%0.8e\n", a);
+	double output = doing_integral(1);
+//	printf("%0.8e\n", a);
 
+	FILE *file_ptr = fopen(FILE_NAME, "w");
+	fprintf(file_ptr, " The anser is\n %0.8e\n ", output);
+	fclose(file_ptr);	
 	return 0;
 }
