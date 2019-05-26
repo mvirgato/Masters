@@ -23,9 +23,9 @@ def coupling_squared(DM_mass):
     k_n = np.sqrt(4*DM_mass*Temp)
     k_0 = DM_mass/3
 
-    bracket = (1/(k_n)**4 - 1/(k_0)**4)
-    numerator = 105 * pi**3 * DM_mass * bracket
-    denominator = 4 * neutron_mass**2 * therm_time
+    bracket = (1/(k_n)**8 - 1/(k_0)**8)
+    numerator = 495 * pi**3 * DM_mass**3 * bracket
+    denominator = 4 * therm_time
 
     return numerator/denominator
 
