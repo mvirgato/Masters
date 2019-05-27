@@ -5,9 +5,9 @@ from scipy import special
 import matplotlib.pyplot as plt
 
 
-SMALL_SIZE = 14
-MEDIUM_SIZE = 16
-BIGGER_SIZE = 18
+SMALL_SIZE = 30
+MEDIUM_SIZE = 40
+BIGGER_SIZE = 50
 
 plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
 plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
@@ -66,6 +66,7 @@ def make_plot_cross_section():
     ax1.grid(linestyle='--')
     ax1.fill_between(mass_range, cross_section_array, facecolor='forestgreen', alpha = 0.9)
     ax1.text(1e-2, 4e-48, 'No thermalization', fontsize=40)
+    ax1.text(5e2, 5e-44, r'$G[\bar{\chi}\gamma^5\chi][\bar{\psi}\psi]$', fontsize=40)
     plt.savefig('mom_2.png')
 
 
