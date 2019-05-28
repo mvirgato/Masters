@@ -1,0 +1,2 @@
+qsub -q long -o /data/pchan1/B2Kspi0/1-SignalSkim/log/B2Kspi0-Skim.log -e /data/pchan1/B2Kspi0/1-SignalSkim/log/B2Kspi0-Skim.err -N Skim-B2Kspi0 Skim-B2Kspi0.sh
+
