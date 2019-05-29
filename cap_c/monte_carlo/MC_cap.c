@@ -12,14 +12,15 @@ void
 display_results (char *title, double result, double error)
 {
   printf ("%s ==================\n", title);
-  printf ("result           = % .6e\n", result);
-  printf ("sigma            = % .6e\n", error);
-  printf ("frac error = % .6e\n", error/result );
+  printf ("result           = % .8e\n", result);
+  printf ("sigma            = % .8e\n", error);
+  printf ("percent error = % .3f\n", error/result * 100);
 }
 
 
 
 double doing_integral(double dm){
+  printf("mass = %0.3e GeV\n", dm);
 
   double res, err;
 
@@ -38,7 +39,7 @@ double doing_integral(double dm){
 
   gsl_monte_function G = { &myintegrand, 3, &params }; // {function, dimension, params}
 
-  size_t calls = 500000;
+  size_t calls = 700000;
 
   gsl_rng_env_setup ();
 
@@ -66,7 +67,7 @@ double doing_integral(double dm){
   {
     gsl_monte_vegas_state *s = gsl_monte_vegas_alloc (3);
 
-    gsl_monte_vegas_integrate (&G, xl, xu, 3, 10000, r, s,
+    gsl_monte_vegas_integrate (&G, xl, xu, 3, 500000, r, s,
                                &res, &err);
     display_results ("vegas warm-up", res, err);
 
@@ -76,8 +77,8 @@ double doing_integral(double dm){
       {
         gsl_monte_vegas_integrate (&G, xl, xu, 3, calls/5, r, s,
                                    &res, &err);
-        printf ("result = % .6e sigma = % .6f "
-                "chisq/dof = %.1e\n", res, err, gsl_monte_vegas_chisq (s));
+        // printf ("result = % .6e sigma = % .6f "
+        //         "chisq/dof = %.1e\n", res, err, gsl_monte_vegas_chisq (s));
       }
     while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.5);
 
@@ -95,7 +96,7 @@ double doing_integral(double dm){
   main ()
   {
 
-    doing_integral(2);
+    doing_integral(1e-9);
 
   return 0;
 }
