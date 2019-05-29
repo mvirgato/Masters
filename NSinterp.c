@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 
 #include <gsl/gsl_spline.h>
 
@@ -33,7 +32,7 @@ int readdata(char * filename){
    else {
       printf("File %s opened successfully.\n",filename);
       // Skip header
-      fscanf(datafile, "%*[^\n]\n", NULL);
+      fscanf(datafile, " %[^\n]\n", NULL);
       i = 0;
 
       while (!feof(datafile)) {
@@ -81,7 +80,7 @@ double nb_interp(double r, int npts) {
 
 
 
-int main(int argc, char** argv)
+int main(int argc,char** argv)
 {
    int npts;
    int i;
