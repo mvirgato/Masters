@@ -74,8 +74,8 @@ double FD(double s, double t, double v, double dm){
 }
 
 //INTEGRAND
-
-
+//for double int: s = x[0], t = x[1]
+//for tripple int: v = x[0], s = x[1], t = x[2]
 
 double tbound(double dm){
     return 1.05 * sqrt( (SOL * SOL * FERMI_VEL + mu(dm) * ESCAPE_VEL * ESCAPE_VEL) / ( 2.0 * mu(dm) * mu_plus(dm) ) );
@@ -83,4 +83,17 @@ double tbound(double dm){
 
 double sbound(double dm){
     return 1.05 * sqrt( (SOL * SOL * FERMI_VEL + mu(dm) * ESCAPE_VEL * ESCAPE_VEL) / ( 2.0 * mu(dm) ) );
+}
+
+struct int_params {double dm_mass;};
+
+double myintegrand(double *x, size_t dim, void *p){
+
+    struct int_params *params = (struct int_params *)p;
+
+    double dm = (params->dm_mass);
+
+
+    return heaviside_product(x[1], x[2], x[0]) * FD(x[1], x[2], ESCAPE_VEL, dm) * (1 - FD(x[1], x[2], x[0], dm));
+
 }
