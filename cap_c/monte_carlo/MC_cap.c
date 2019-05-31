@@ -96,7 +96,7 @@ double doing_integral(double dm){
   main ()
   {
 
-    doing_integral(1e-9);
+    doing_integral(1e2);
 
   return 0;
 }
