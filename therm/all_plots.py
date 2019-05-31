@@ -4,6 +4,7 @@ from scipy import integrate
 from scipy import special
 import matplotlib.pyplot as plt
 
+plt.style.use('science')
 
 SMALL_SIZE = 30
 MEDIUM_SIZE = 40
@@ -126,13 +127,13 @@ def make_plot_cross_section():
     ax1.loglog(mass_range, cross_section_array_mom_4, color='black')
     ax1.axis([1e-6, 1e6, 1e-55, 1e-32])
     ax1.set(xlabel = r'$m_\chi$ [GeV]', ylabel = r'$\sigma$ [cm$^2$]')
-    ax1.grid(linestyle='--')
-    ax1.fill_between(mass_range, cross_section_array_mom_2, cross_section_array_mom_4, facecolor='red', alpha = 0.5)
-    ax1.fill_between(mass_range ,cross_section_array_bert, cross_section_array_mom_2, facecolor='forestgreen', alpha = 0.5)
-    ax1.fill_between(mass_range, cross_section_array_bert, facecolor='blue', alpha = 0.5)
-    ax1.text(1e-1, 1e-40, r'$G[\bar{\chi}\gamma^5\chi][\bar{\psi}\gamma^5\psi]$', fontsize=30)
-    ax1.text(1e-1, 1e-47, r'$G[\bar{\chi}\gamma^5\chi][\bar{\psi}\psi]$', fontsize=30)
-    ax1.text(0.5e-1, 1e-54, r'Bertoni ($G[\bar{\chi}\chi][\bar{\psi}\psi]$)', fontsize=30)
+    # ax1.grid(linestyle='--')
+    ax1.fill_between(mass_range, cross_section_array_mom_2, cross_section_array_mom_4, facecolor='red', alpha = 0.3)
+    ax1.fill_between(mass_range ,cross_section_array_bert, cross_section_array_mom_2, facecolor='forestgreen', alpha = 0.3)
+    ax1.fill_between(mass_range, cross_section_array_bert, facecolor='blue', alpha = 0.3)
+    ax1.text(1e-1, 5e-40, r'$G[\bar{\chi}\gamma^5\chi][\bar{\psi}\gamma^5\psi]$', fontsize=30)
+    ax1.text(1e-1, 5e-47, r'$G[\bar{\chi}\gamma^5\chi][\bar{\psi}\psi]$', fontsize=30)
+    ax1.text(0.5e-1, 5e-54, r'Bertoni ($G[\bar{\chi}\chi][\bar{\psi}\psi]$)', fontsize=30)
 
     plt.savefig('all.png')
 
