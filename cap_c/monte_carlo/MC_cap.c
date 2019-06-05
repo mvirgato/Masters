@@ -20,7 +20,7 @@ display_results (char *title, double result, double error)
 
 
 double doing_integral(double dm){
-  printf("mass = %0.3e GeV\n", dm);
+  // printf("mass = %0.3e GeV\n", dm);
 
   double res, err;
 
@@ -40,7 +40,7 @@ double doing_integral(double dm){
 
   gsl_monte_function G = { &myintegrand, 3, &params }; // {function, dimension, params}
 
-  size_t calls = 700000;
+  size_t calls = 500000;
 
   gsl_rng_env_setup ();
 
@@ -97,7 +97,7 @@ double doing_integral(double dm){
   main ()
   {
 
-    int range = 100;
+    int range = 200;
     double mass_vals[range];
 
     logspace(-8, 1, range, mass_vals);
