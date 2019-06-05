@@ -135,6 +135,34 @@ double muFn_interp(double r, int npts) {
 
 }
 
+double mass_interp(double r, int npts) {
+
+   double mass_r;
+
+   if (r >= rad[0] && r <= rad[npts-1]) {
+
+      gsl_interp_accel *acc = gsl_interp_accel_alloc ();
+
+      //Linear splines
+/*      gsl_spline *spline = gsl_spline_alloc (gsl_interp_linear, npts);*/
+
+      // Cubic splines
+      gsl_spline *spline = gsl_spline_alloc (gsl_interp_cspline, npts);
+
+      gsl_spline_init (spline, rad, mass, npts);
+
+      mass_r = gsl_spline_eval (spline, r, acc);
+
+      gsl_spline_free (spline);
+      gsl_interp_accel_free (acc);
+
+      return mass_r;
+   }
+   else
+      return 0.;
+
+}
+
 
 int main(int argc, char** argv)
 {
@@ -176,6 +204,17 @@ int main(int argc, char** argv)
    }
 
    fclose(outfile3);
+
+   FILE *outfile4 = fopen("mass_ns.dat","w");
+
+   for (i=0;i<=N;i++) {
+      // linear interpolation
+      double radius = rad[0]+(rad[npts-1]-rad[0])*((double) i)/N;
+      fprintf(outfile,"%.10E\t%.10E\n",radius,mass_interp(radius,npts));
+//      printf("%d\t%.10E\t%.10E\n",i,radius,nb_interp(radius,npts));
+   }
+
+   fclose(outfile4);
 
    return 0;
 }

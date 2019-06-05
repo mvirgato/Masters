@@ -97,10 +97,10 @@ double doing_integral(double dm){
   main ()
   {
 
-    int range = 200;
+    int range = 300;
     double mass_vals[range];
 
-    logspace(-8, 1, range, mass_vals);
+    logspace(-4, 1, range, mass_vals);
 
 
     int i;

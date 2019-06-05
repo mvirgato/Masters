@@ -17,7 +17,8 @@ current_file.close
 def make_plot():
     fig, ax1 = plt.subplots(figsize = (20, 11   ), dpi = 500)
     ax1.loglog(mass, integraleval, color='black')
-    plt.savefig('initial_integrals.png')
+    ax1.axis([1e-4, 1e1, 1e12, 1e24])
+    plt.savefig('some_plot.png')
 
 
 make_plot()
