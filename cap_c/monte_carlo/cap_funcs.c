@@ -97,3 +97,29 @@ double myintegrand(double *x, size_t dim, void *p){
     return heaviside_product(x[1], x[2], x[0]) * FD(x[1], x[2], ESCAPE_VEL, dm) * (1 - FD(x[1], x[2], x[0], dm));
 
 }
+
+
+// LOGSPACE
+
+double* logspace(double a, double b, int n, double u[])
+{
+    double c;
+    int i;
+
+    /* make sure number of points and array are valid */
+    if(n < 2 || u == 0)
+        return (void*)0;
+
+    /* step size */
+    c = (b - a)/(n - 1);
+
+    /* fill vector */
+    for(i = 0; i < n - 1; ++i)
+        u[i] = pow(10., a + i*c);
+
+    /* fix last entry to 10^b */
+    u[n - 1] = pow(10., b);
+
+    /* done */
+    return u;
+}

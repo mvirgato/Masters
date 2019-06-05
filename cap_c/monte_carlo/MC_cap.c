@@ -30,6 +30,7 @@ double doing_integral(double dm){
   double tmax = tbound(dm);
   double vmax = ESCAPE_VEL;
 
+
   double xl[3] = {0, 0, 0}; // lower bounds for (v, s, t)
   double xu[3] = {vmax, smax, tmax}; // upper bounds for (v, s, t)
 
@@ -46,32 +47,32 @@ double doing_integral(double dm){
   T = gsl_rng_default;
   r = gsl_rng_alloc (T);
 
-  {
-    gsl_monte_plain_state *s = gsl_monte_plain_alloc (3);
-    gsl_monte_plain_integrate (&G, xl, xu, 3, calls, r, s,
-                               &res, &err);
-    gsl_monte_plain_free (s);
-
-    display_results ("plain", res, err);
-  }
-
-  {
-    gsl_monte_miser_state *s = gsl_monte_miser_alloc (3);
-    gsl_monte_miser_integrate (&G, xl, xu, 3, calls, r, s,
-                               &res, &err);
-    gsl_monte_miser_free (s);
-
-    display_results ("miser", res, err);
-  }
+  // {
+  //   gsl_monte_plain_state *s = gsl_monte_plain_alloc (3);
+  //   gsl_monte_plain_integrate (&G, xl, xu, 3, calls, r, s,
+  //                              &res, &err);
+  //   gsl_monte_plain_free (s);
+  //
+  //   // display_results ("plain", res, err);
+  // }
+  //
+  // {
+  //   gsl_monte_miser_state *s = gsl_monte_miser_alloc (3);
+  //   gsl_monte_miser_integrate (&G, xl, xu, 3, calls, r, s,
+  //                              &res, &err);
+  //   gsl_monte_miser_free (s);
+  //
+  //   // display_results ("miser", res, err);
+  // }
 
   {
     gsl_monte_vegas_state *s = gsl_monte_vegas_alloc (3);
 
-    gsl_monte_vegas_integrate (&G, xl, xu, 3, 500000, r, s,
+    gsl_monte_vegas_integrate (&G, xl, xu, 3, 100000, r, s,
                                &res, &err);
-    display_results ("vegas warm-up", res, err);
+    // display_results ("vegas warm-up", res, err);
 
-    printf ("converging...\n");
+    // printf ("converging...\n");
 
     do
       {
@@ -82,21 +83,39 @@ double doing_integral(double dm){
       }
     while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.5);
 
-    display_results ("vegas final", res, err);
+    // display_results ("vegas final", res, err);
 
     gsl_monte_vegas_free (s);
   }
 
   gsl_rng_free (r);
 
-  return 0;
+  return res;
 }
 
   int
   main ()
   {
 
-    doing_integral(1e2);
+    int range = 100;
+    double mass_vals[range];
+
+    logspace(-8, 1, range, mass_vals);
+
+
+    int i;
+
+    // for (i = 0; i < range; i++){
+    //   printf("%0.10e\n", mass_vals[i]);
+    // }
+    FILE *outfile = fopen("cap_rate_MC.dat", "w");
+
+    for (i = 0; i < range; i++) {
+       // linear interpolation
+       fprintf(outfile,"%.10E\t%.10E\n",mass_vals[i], doing_integral( mass_vals[i] ) );
+    }
+
+    fclose(outfile);
 
   return 0;
 }
