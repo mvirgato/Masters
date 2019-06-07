@@ -24,7 +24,7 @@ double doing_integral_1(double dm, double radius, int npts){
 
   double res, err;
 
-  struct int_params params = {dm};
+  struct int_params params = {dm, radius, npts};
 
   double smax = sbound(dm);
   double tmax = tbound(dm);
