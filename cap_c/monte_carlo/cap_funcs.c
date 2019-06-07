@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include "NSinterp.c"
+
 #define ESCAPE_VEL sqrt((2 * 6.67408E-11 * 1.4 * 2E30) / (10E3))	//NS escape velocity in m/s. Need to make into function of radius
 #define TEMP (1E3 * 1E-9) / (1.16E4)	//NS temp in GeV
 #define NM 0.939	//neutron mass in GeV
@@ -21,6 +23,11 @@ double mu(double dm){
 double mu_plus(double dm){
 
 	return ( 1 + mu(dm)) / 2.0;
+}
+
+double esc_vel(double radius, int npts){ //rad in km
+
+	return sqrt((2 * 6.67408E-11 * mass_interp(radius, npts) * 2E30) / (radius*1E3));
 }
 
 //TRIG FUNCTIONS
@@ -85,13 +92,15 @@ double sbound(double dm){
     return 1.05 * sqrt( (SOL * SOL * FERMI_VEL + mu(dm) * ESCAPE_VEL * ESCAPE_VEL) / ( 2.0 * mu(dm) ) );
 }
 
-struct int_params {double dm_mass;};
+struct int_params {double dm_mass; double radius; int npoints;};
 
 double myintegrand(double *x, size_t dim, void *p){
 
     struct int_params *params = (struct int_params *)p;
 
     double dm = (params->dm_mass);
+		double radius = (params->radius);
+		int npts = (params->npoints);
 
 
     return heaviside_product(x[1], x[2], x[0]) * FD(x[1], x[2], ESCAPE_VEL, dm) * (1 - FD(x[1], x[2], x[0], dm));

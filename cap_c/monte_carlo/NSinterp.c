@@ -13,6 +13,9 @@ double Yn[N];
 double muFn[N];  // Neutron chemical potential (GeV)
 
 
+
+
+
 /*#################################################
                 Reading the data
 ##################################################*/
@@ -27,7 +30,7 @@ int readdata(char * filename){
    datafile = fopen(filename, "r");
 
    if (datafile == NULL) {
-      printf("Error: can't open file %s\n",filename);
+      // printf("Error: can't open file %s\n",filename);
       return 1;
    }
    else {
@@ -46,7 +49,7 @@ int readdata(char * filename){
    }
    npts=i;
    fclose(datafile);
-   printf("Npts: %d\n",npts);
+  //  printf("Npts: %d\n",npts);
    return npts;
 }
 
@@ -163,58 +166,71 @@ double mass_interp(double r, int npts) {
 
 }
 
+// int main(){
+//   int npts;
+//   int i;
+//
+//   //readdata(argv[1]);
+//   npts = readdata("eos_24_lowmass.dat");
+//
+//   double vmax = mass_interp(12, npts);
+//   printf("%0.8e\n", vmax);
+//
+//   return 0;
+// }
 
-int main(int argc, char** argv)
-{
-   int npts;
-   int i;
 
-   //readdata(argv[1]);
-   npts = readdata("eos_24_lowmass.dat");
-
-   FILE *outfile = fopen("nbdensity.dat","w");
-
-   for (i=0;i<=N;i++) {
-      // linear interpolation
-      double radius = rad[0]+(rad[npts-1]-rad[0])*((double) i)/N;
-      fprintf(outfile,"%.10E\t%.10E\n",radius,nb_interp(radius,npts));
-//      printf("%d\t%.10E\t%.10E\n",i,radius,nb_interp(radius,npts));
-   }
-
-   fclose(outfile);
-
-   FILE *outfile2 = fopen("Ynabund.dat","w");
-
-   for (i=0;i<=N;i++) {
-      // linear interpolation
-      double radius = rad[0]+(rad[npts-1]-rad[0])*((double) i)/N;
-      fprintf(outfile,"%.10E\t%.10E\n",radius,Yn_interp(radius,npts));
-//      printf("%d\t%.10E\t%.10E\n",i,radius,nb_interp(radius,npts));
-   }
-
-   fclose(outfile2);
-
-   FILE *outfile3 = fopen("muFnchempot.dat","w");
-
-   for (i=0;i<=N;i++) {
-      // linear interpolation
-      double radius = rad[0]+(rad[npts-1]-rad[0])*((double) i)/N;
-      fprintf(outfile,"%.10E\t%.10E\n",radius,muFn_interp(radius,npts));
-//      printf("%d\t%.10E\t%.10E\n",i,radius,nb_interp(radius,npts));
-   }
-
-   fclose(outfile3);
-
-   FILE *outfile4 = fopen("mass_ns.dat","w");
-
-   for (i=0;i<=N;i++) {
-      // linear interpolation
-      double radius = rad[0]+(rad[npts-1]-rad[0])*((double) i)/N;
-      fprintf(outfile,"%.10E\t%.10E\n",radius,mass_interp(radius,npts));
-//      printf("%d\t%.10E\t%.10E\n",i,radius,nb_interp(radius,npts));
-   }
-
-   fclose(outfile4);
-
-   return 0;
-}
+// int main(int argc, char** argv)
+// {
+//    int npts;
+//    int i;
+//
+//    //readdata(argv[1]);
+//    npts = readdata("eos_24_lowmass.dat");
+//
+//    FILE *outfile = fopen("nbdensity.dat","w");
+//
+//    for (i=0;i<=N;i++) {
+//       // linear interpolation
+//       double radius = rad[0] + (12.1- rad[0])*((double) i)/N;
+//       fprintf(outfile,"%.10E\t%.10E\n",radius,nb_interp(radius,npts));
+// //      printf("%d\t%.10E\t%.10E\n",i,radius,nb_interp(radius,npts));
+//    }
+//
+//    fclose(outfile);
+//
+//    FILE *outfile2 = fopen("Ynabund.dat","w");
+//
+//    for (i=0;i<=N;i++) {
+//       // linear interpolation
+//       double radius = rad[0] + (12.1- rad[0])*((double) i)/N;
+//       fprintf(outfile,"%.10E\t%.10E\n",radius,Yn_interp(radius,npts));
+// //      printf("%d\t%.10E\t%.10E\n",i,radius,nb_interp(radius,npts));
+//    }
+//
+//    fclose(outfile2);
+//
+//    FILE *outfile3 = fopen("muFnchempot.dat","w");
+//
+//    for (i=0;i<=N;i++) {
+//       // linear interpolation
+//       double radius = rad[0] + (12.1- rad[0])*((double) i)/N;
+//       fprintf(outfile,"%.10E\t%.10E\n",radius,muFn_interp(radius,npts));
+// //      printf("%d\t%.10E\t%.10E\n",i,radius,nb_interp(radius,npts));
+//    }
+//
+//    fclose(outfile3);
+//
+//    FILE *outfile4 = fopen("mass_ns.dat","w");
+//
+//    for (i=0;i<=N;i++) {
+//       // linear interpolation
+//       double radius = rad[0] + (12.1- rad[0])*((double) i)/N;
+//       fprintf(outfile,"%.10E\t%.10E\n",radius,mass_interp(radius,npts));
+// //      printf("%d\t%.10E\t%.10E\n",i,radius,nb_interp(radius,npts));
+//    }
+//
+//    fclose(outfile4);
+//
+//    return 0;
+// }

@@ -1,24 +1,30 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-
-current_file = open('cap_rate_MC.dat', 'r')
-lines = current_file.readlines()
-mass = np.empty(0)
-integraleval = np.empty(0)
+file_names = ['mass_ns', 'muFnchempot', 'nbdensity', 'Ynabund']
 
 
-for x in lines:
-    x = x.split('\t')
-    mass = np.append(mass, float(x[0]))
-    integraleval = np.append(integraleval, float(x[1]))
-current_file.close
 
-def make_plot():
-    fig, ax1 = plt.subplots(figsize = (20, 11   ), dpi = 500)
-    ax1.loglog(mass, integraleval, color='black')
-    ax1.axis([1e-4, 1e1, 1e12, 1e24])
-    plt.savefig('some_plot.png')
+for name in file_names:
+
+    lines = []
+    domain = np.empty(0)
+    range = np.empty(0)
+
+    current_file = open(name + '.dat', 'r')
+    lines = current_file.readlines()
 
 
-make_plot()
+    for x in lines:
+        x = x.split('\t')
+        domain = np.append(domain, float(x[0]))
+        range = np.append(range, float(x[1]))
+
+
+    current_file.close
+
+    fig, ax1 = plt.subplots()
+    ax1.plot(domain, range, color='blue')
+    ax1.set(xlabel = r'$radius$ [km]', ylabel = name)
+    # ax1.set_yscale('log')
+    plt.savefig(name + '.png')

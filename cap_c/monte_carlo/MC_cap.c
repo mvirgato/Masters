@@ -19,8 +19,8 @@ display_results (char *title, double result, double error)
 
 
 
-double doing_integral(double dm){
-  // printf("mass = %0.3e GeV\n", dm);
+
+double doing_integral_1(double dm, double radius, int npts){
 
   double res, err;
 
@@ -28,7 +28,7 @@ double doing_integral(double dm){
 
   double smax = sbound(dm);
   double tmax = tbound(dm);
-  double vmax = ESCAPE_VEL;
+  double vmax = esc_vel(radius, npts) ;
 
 
   double xl[3] = {0, 0, 0}; // lower bounds for (v, s, t)
@@ -93,29 +93,46 @@ double doing_integral(double dm){
   return res;
 }
 
-  int
-  main ()
+
+double r_integrand(double *x, size_t dim, void *p){
+
+  struct int_params *params = (struct int_params *)p;
+
+  double dm = (params->dm_mass);
+  int npts = (params->npoints);
+
+  return doing_integral_1(dm, x[0], npts);
+}
+
+
+int main ()
   {
-
-    int range = 300;
-    double mass_vals[range];
-
-    logspace(-4, 1, range, mass_vals);
+    int npts;
+    npts = readdata("eos_24_lowmass.dat");
 
 
-    int i;
+    double test = doing_integral_1(1 , 12 , npts);
+    printf("%0.10e\n", test);
 
-    // for (i = 0; i < range; i++){
-    //   printf("%0.10e\n", mass_vals[i]);
+    // int range = 300;
+    // double mass_vals[range];
+    //
+    // logspace(-9, 1, range, mass_vals);
+    //
+    //
+    // int i;
+    //
+    // // for (i = 0; i < range; i++){
+    // //   printf("%0.10e\n", mass_vals[i]);
+    // // }
+    // FILE *outfile = fopen("cap_rate_MC.dat", "w");
+    //
+    // for (i = 0; i < range; i++) {
+    //    // linear interpolation
+    //    fprintf(outfile,"%.10E\t%.10E\n",mass_vals[i], doing_integral( mass_vals[i] ) );
     // }
-    FILE *outfile = fopen("cap_rate_MC.dat", "w");
-
-    for (i = 0; i < range; i++) {
-       // linear interpolation
-       fprintf(outfile,"%.10E\t%.10E\n",mass_vals[i], doing_integral( mass_vals[i] ) );
-    }
-
-    fclose(outfile);
+    //
+    // fclose(outfile);
 
   return 0;
 }

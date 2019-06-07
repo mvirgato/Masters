@@ -24,11 +24,10 @@ struct int_params {double alpha; double beta; double gamma; double zcoord;};
 int firstintegrand(unsigned ndim, const double *x, void *p, unsigned fdim, double *fval){
 
     struct int_params *params = (struct int_params *)p;
-
     double a = (params->alpha);
-	double b = (params->beta);
-	double c = (params->gamma);
-	double z = (params->zcoord);
+    double b = (params->beta);
+    double c = (params->gamma);
+    double z = (params->zcoord);
 
     fval[0] = a * x[0] * x[0] + b * x[1] * x[1] + c * z * z; // z = x[0], y = x[1], z = x[2]
 
@@ -53,16 +52,16 @@ double doing_first_integral(double parone, double partwo, double parthree, doubl
 }
 
 
-struct second_int_params {double alpha2; double beta2; double gamma2;};
+// struct second_int_params {double alpha2; double beta2; double gamma2;};
 
 int secondintegrand(unsigned ndim, const double *x, void *p, unsigned fdim, double *fval){
-	
+
 	struct int_params *params = (struct int_params *)p;
 
 	double a = (params->alpha);
 	double b = (params->beta);
 	double c = (params->gamma);
-	
+
 	fval[0] = doing_first_integral(a, b, c, x[0]);
 
 	return 0;
@@ -90,15 +89,15 @@ double doing_second_integral(double parone, double partwo, double parthree){
 
 //MAIN
 int main( ){
-	
-	
+
+
 	double output = doing_second_integral(1, 1, 1);
 //	printf("%0.10e\n", output);
 
 
-	FILE *file_ptr = fopen(FILE_NAME, "w");
-	fprintf(file_ptr, " Integral Evaluation\n %0.8e\n ", output);
-	fclose(file_ptr);
+	// FILE *file_ptr = fopen(FILE_NAME, "w");
+	printf(" Integral Evaluation\n %0.8e\n ", output);
+	// fclose(file_ptr);
 
 	return 0;
 }
