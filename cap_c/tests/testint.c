@@ -21,6 +21,8 @@
 
 struct int_params {double alpha; double beta; double gamma; double zcoord;};
 
+//=========================================================
+
 int firstintegrand(unsigned ndim, const double *x, void *p, unsigned fdim, double *fval){
 
     struct int_params *params = (struct int_params *)p;
@@ -34,6 +36,7 @@ int firstintegrand(unsigned ndim, const double *x, void *p, unsigned fdim, doubl
     return 0;
 }
 
+//=========================================================
 
 double doing_first_integral(double parone, double partwo, double parthree, double z){
 
@@ -54,6 +57,8 @@ double doing_first_integral(double parone, double partwo, double parthree, doubl
 
 // struct second_int_params {double alpha2; double beta2; double gamma2;};
 
+//=========================================================
+
 int secondintegrand(unsigned ndim, const double *x, void *p, unsigned fdim, double *fval){
 
 	struct int_params *params = (struct int_params *)p;
@@ -68,6 +73,7 @@ int secondintegrand(unsigned ndim, const double *x, void *p, unsigned fdim, doub
 
 }
 
+//=========================================================
 
 double doing_second_integral(double parone, double partwo, double parthree){
 

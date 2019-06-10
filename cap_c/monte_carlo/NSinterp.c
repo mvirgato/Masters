@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include <gsl/gsl_spline.h>
 
@@ -164,29 +165,18 @@ double mass_interp(double r, int npts) {
    else
       return 0.;
 
-}
-
-// int main(){
-//   int npts;
-//   int i;
-//
-//   //readdata(argv[1]);
-//   npts = readdata("eos_24_lowmass.dat");
-//
-//   double vmax = mass_interp(12, npts);
-//   printf("%0.8e\n", vmax);
-//
-//   return 0;
-// }
 
 
 // int main(int argc, char** argv)
 // {
-//    int npts;
-//    int i;
 //
-//    //readdata(argv[1]);
-//    npts = readdata("eos_24_lowmass.dat");
+//      int npts;
+//      int i;
+//
+//      //readdata(argv[1]);
+//      npts = readdata("eos_24_lowmass.dat");
+
+
 //
 //    FILE *outfile = fopen("nbdensity.dat","w");
 //
@@ -204,7 +194,7 @@ double mass_interp(double r, int npts) {
 //    for (i=0;i<=N;i++) {
 //       // linear interpolation
 //       double radius = rad[0] + (12.1- rad[0])*((double) i)/N;
-//       fprintf(outfile,"%.10E\t%.10E\n",radius,Yn_interp(radius,npts));
+//       fprintf(outfile2,"%.10E\t%.10E\n",radius,Yn_interp(radius,npts));
 // //      printf("%d\t%.10E\t%.10E\n",i,radius,nb_interp(radius,npts));
 //    }
 //
@@ -215,7 +205,7 @@ double mass_interp(double r, int npts) {
 //    for (i=0;i<=N;i++) {
 //       // linear interpolation
 //       double radius = rad[0] + (12.1- rad[0])*((double) i)/N;
-//       fprintf(outfile,"%.10E\t%.10E\n",radius,muFn_interp(radius,npts));
+//       fprintf(outfile3,"%.10E\t%.10E\n",radius,muFn_interp(radius,npts));
 // //      printf("%d\t%.10E\t%.10E\n",i,radius,nb_interp(radius,npts));
 //    }
 //
@@ -226,11 +216,11 @@ double mass_interp(double r, int npts) {
 //    for (i=0;i<=N;i++) {
 //       // linear interpolation
 //       double radius = rad[0] + (12.1- rad[0])*((double) i)/N;
-//       fprintf(outfile,"%.10E\t%.10E\n",radius,mass_interp(radius,npts));
+//       fprintf(outfile4,"%.10E\t%.10E\n",radius,mass_interp(radius,npts));
 // //      printf("%d\t%.10E\t%.10E\n",i,radius,nb_interp(radius,npts));
 //    }
 //
 //    fclose(outfile4);
 //
 //    return 0;
-// }
+}

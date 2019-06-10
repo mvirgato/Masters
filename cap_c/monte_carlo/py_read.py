@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-file_names = ['mass_ns', 'muFnchempot', 'nbdensity', 'Ynabund']
+file_names = ['mass_ns', 'muFnchempot', 'nbdensity', 'Ynabund', 'esc_vel']
 
 
 
