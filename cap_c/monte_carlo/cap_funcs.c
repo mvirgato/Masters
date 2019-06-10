@@ -8,29 +8,51 @@
 #define TEMP (1E3 * 1E-9) / (1.16E4)	//NS temp in GeV
 #define NM 0.939	//neutron mass in GeV
 #define FERMI_ENERGY 0.085 // in GeV (will need to make a variable)
-#define FERMI_VEL (2 * FERMI_ENERGY) / NM
 #define SOL 299792458.0 // speed of light in vacuum m/s
 #define VELDISP 270e3 //DM velocity dispersion for MB dist
 #define NSVEL 200e3 // NS velocity in galactic frame
 
+//=========================================================
+
 //GENERAL FUNCTIONS
+
+//=========================================================
+
 double mu(double dm){
 	/* RATIO OF DARK MATTER TO NEUTRON MASS */
 
 	return dm / NM;
 }
 
+//=========================================================
+
 double mu_plus(double dm){
 
 	return ( 1 + mu(dm)) / 2.0;
 }
+
+//=========================================================
 
 double esc_vel(double radius, int npts){ //rad in km
 
 	return sqrt((2 * 6.67408E-11 * mass_interp(radius, npts) * 2E30) / (radius*1E3));
 }
 
+
+//=========================================================
+
+
+double FERMI_VEL(double r, int npts){
+
+	return  (2 * muFn_interp(r, npts) * 1e-3) / NM ;
+
+}
+
+//=========================================================
+
 //TRIG FUNCTIONS
+
+//=========================================================
 
 double cosine(double s, double t, double v){
 	/* v = escape_vel for initial */
@@ -41,7 +63,12 @@ double cosine(double s, double t, double v){
 	return num / den;
 }
 
+//=========================================================
+
 //STEP FUNCTIONS
+
+//=========================================================
+
 double step(double f){
 	/* a step function to constrain integration region */
 	if ( fabs(f) > 1){
@@ -52,13 +79,18 @@ double step(double f){
 	}
 }
 
-double heaviside_product(double s, double t, double v){
+//=========================================================
+
+double heaviside_product(double s, double t, double vi, double vf){
 	/* product of relevant step functions */
-	return step(cosine(s, t, ESCAPE_VEL)) * step(cosine(s, t, v));
+	return step( cosine( s, t, vi ) * step( cosine(s, t, vf) ) );
 }
+
+//=========================================================
 
 //ENERGIES
 
+//=========================================================
 
 double velsqr(double s, double t, double v, double dm){
 	/* square of velocity: v = ESCAPE_VEL for initial particle */
@@ -66,33 +98,48 @@ double velsqr(double s, double t, double v, double dm){
 	return a / (SOL*SOL);
 }
 
+//=========================================================
+
 double energy(double s, double t, double vel, double dm){
 	return 0.5 * NM * velsqr(s, t, vel, dm);
 }
 
+//=========================================================
 
 //FERMI-DIRAC DISTRIBUTION FUNCTIONS
 
-double FD(double s, double t, double v, double dm){
+double FD(double s, double t, double v, double radius, int npts, double dm){
 
 
- return 1 / (double)( 1 + exp( ( energy(s, t, v , dm) - FERMI_ENERGY ) / TEMP ) );
+ return 1 / (double)( 1 + exp( ( energy(s, t, v , dm) - ( muFn_interp(radius, npts) * 1e-3 ) ) / TEMP ) );
 
 }
+
+//=========================================================
 
 //INTEGRAND
-//for double int: s = x[0], t = x[1]
-//for tripple int: v = x[0], s = x[1], t = x[2]
 
-double tbound(double dm){
-    return 1.05 * sqrt( (SOL * SOL * FERMI_VEL + mu(dm) * ESCAPE_VEL * ESCAPE_VEL) / ( 2.0 * mu(dm) * mu_plus(dm) ) );
+//=========================================================
+
+/*
+for double int: s = x[0], t = x[1]
+for tripple int: v = x[0], s = x[1], t = x[2]
+*/
+double tbound( double dm, double radius, int npts){
+    return 1.05 * sqrt( (SOL * SOL * FERMI_VEL(radius, npts) + mu(dm) * esc_vel(radius, npts) * esc_vel(radius, npts)) / ( 2.0 * mu(dm) * mu_plus(dm) ) );
 }
 
-double sbound(double dm){
-    return 1.05 * sqrt( (SOL * SOL * FERMI_VEL + mu(dm) * ESCAPE_VEL * ESCAPE_VEL) / ( 2.0 * mu(dm) ) );
+//=========================================================
+
+double sbound( double dm, double radius, int npts){
+    return 1.05 * sqrt( (SOL * SOL * FERMI_VEL(radius, npts) + mu(dm) * esc_vel(radius, npts) * esc_vel(radius, npts) )/ ( 2.0 * mu(dm) ) );
 }
 
-struct int_params {double dm_mass; double radius; int npoints;};
+//=========================================================
+
+struct int_params {double dm_mass; int npoints; double radius;};
+
+//=========================================================
 
 double myintegrand(double *x, size_t dim, void *p){
 
@@ -102,11 +149,15 @@ double myintegrand(double *x, size_t dim, void *p){
 		double radius = (params->radius);
 		int npts = (params->npoints);
 
+		double v_i= esc_vel(radius, npts);
 
-    return heaviside_product(x[1], x[2], x[0]) * FD(x[1], x[2], ESCAPE_VEL, dm) * (1 - FD(x[1], x[2], x[0], dm));
+
+    return 16 * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * nb_interp(radius, npts) * Yn_interp(radius, npts) * (x[0] / v_i) * x[2] * heaviside_product(x[1], x[2], v_i,x[0]) *
+		 FD(x[1], x[2], v_i, radius, npts, dm) * (1 - FD(x[1], x[2], x[0], radius, npts, dm));
 
 }
 
+//=========================================================
 
 // LOGSPACE
 

@@ -26,8 +26,8 @@ double doing_integral_1(double dm, double radius, int npts){
 
   struct int_params params = {dm, npts, radius };
 
-  double smax = sbound(dm);
-  double tmax = tbound(dm);
+  double smax = sbound(dm, radius, npts);
+  double tmax = tbound(dm, radius, npts);
   double vmax = esc_vel(radius, npts);
 
 
@@ -172,8 +172,7 @@ int main ()
     int npts;
     npts = readdata("eos_24_lowmass.dat");
 
-
-    double test = all_integrals(1 ,  npts);
+    double test = doing_integral_1(1, 12, npts);
     printf("%0.10e\n", test);
 
     // int range = 300;
