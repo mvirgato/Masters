@@ -53,7 +53,7 @@ double doing_integral_1(double dm, double radius, int npts){
                                &res, &err);
     gsl_monte_plain_free (s);
 
-    display_results ("plain", res, err);
+    // display_results ("plain", res, err);
   }
 
   // {
@@ -193,10 +193,7 @@ int main ()
 
     FILE *outfile = fopen("cap_rate_MC.dat", "w");
 
-    for (i = 0; i < range; i++) {
-       // linear interpolation
-       fprintf(outfile,"%.10E\t\n", all_integrals( 1, npts ) );
-    }
+    fprintf(outfile,"1\t%.10E\n", doing_integral_1( 1, 12, npts ) );
 
     fclose(outfile);
 
