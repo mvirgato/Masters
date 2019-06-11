@@ -189,8 +189,16 @@ int main ()
     int npts;
     npts = readdata("eos_24_lowmass.dat");
 
-    double test = all_integrals(1, npts);
-    printf("%0.10e\n", test);
+    // double test = all_integrals(1, npts);
+
+    FILE *outfile = fopen("cap_rate_MC.dat", "w");
+
+    for (i = 0; i < range; i++) {
+       // linear interpolation
+       fprintf(outfile,"%.10E\t\n", all_integrals( 1, npts ) );
+    }
+
+    fclose(outfile);
 
     // int range = 300;
     // double mass_vals[range];
@@ -203,14 +211,7 @@ int main ()
     // for (i = 0; i < range; i++){
     //   printf("%0.10e\n", mass_vals[i]);
     // }
-    // FILE *outfile = fopen("cap_rate_MC.dat", "w");
-    //
-    // for (i = 0; i < range; i++) {
-    //    // linear interpolation
-    //    fprintf(outfile,"%.10E\t%.10E\n",mass_vals[i], doing_integral( mass_vals[i] ) );
-    // }
-    //
-    // fclose(outfile);
+
 
   return 0;
 }
