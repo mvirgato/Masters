@@ -189,13 +189,14 @@ int main ()
     int npts;
     npts = readdata("eos_24_lowmass.dat");
 
-    // double test = all_integrals(1, npts);
+    double test = all_integrals(1, npts);
 
-    FILE *outfile = fopen("cap_rate_MC.dat", "w");
-
-    fprintf(outfile,"1\t%.10E\n", doing_integral_1( 1, 12, npts ) );
-
-    fclose(outfile);
+    printf("%0.10e\n", test);
+    // FILE *outfile = fopen("cap_rate_MC.dat", "w");
+    //
+    // fprintf(outfile,"1\t%.10E\n", doing_integral_1( 1, 12, npts ) );
+    //
+    // fclose(outfile);
 
     // int range = 300;
     // double mass_vals[range];
