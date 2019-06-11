@@ -56,6 +56,7 @@ int readdata(char * filename){
 
 // Baryon number density interpolation
 double nb_interp(double r, int npts) {
+  // printf("called nb_interp\n", );
 
    double nb_r;
 

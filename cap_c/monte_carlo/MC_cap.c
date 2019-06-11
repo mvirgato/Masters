@@ -47,46 +47,46 @@ double doing_integral_1(double dm, double radius, int npts){
   T = gsl_rng_default;
   r = gsl_rng_alloc (T);
 
-  // {
-  //   gsl_monte_plain_state *s = gsl_monte_plain_alloc (3);
-  //   gsl_monte_plain_integrate (&G, xl, xu, 3, calls, r, s,
-  //                              &res, &err);
-  //   gsl_monte_plain_free (s);
-  //
-  //   // display_results ("plain", res, err);
-  // }
-  //
+  {
+    gsl_monte_plain_state *s = gsl_monte_plain_alloc (3);
+    gsl_monte_plain_integrate (&G, xl, xu, 3, calls, r, s,
+                               &res, &err);
+    gsl_monte_plain_free (s);
+
+    display_results ("plain", res, err);
+  }
+
   // {
   //   gsl_monte_miser_state *s = gsl_monte_miser_alloc (3);
   //   gsl_monte_miser_integrate (&G, xl, xu, 3, calls, r, s,
   //                              &res, &err);
   //   gsl_monte_miser_free (s);
   //
-  //   // display_results ("miser", res, err);
+  //   display_results ("miser", res, err);
   // }
-
-  {
-    gsl_monte_vegas_state *s = gsl_monte_vegas_alloc (3);
-
-    gsl_monte_vegas_integrate (&G, xl, xu, 3, 100000, r, s,
-                               &res, &err);
-    // display_results ("vegas warm-up", res, err);
-
-    // printf ("converging...\n");
-
-    do
-      {
-        gsl_monte_vegas_integrate (&G, xl, xu, 3, calls/5, r, s,
-                                   &res, &err);
-        // printf ("result = % .6e sigma = % .6f "
-        //         "chisq/dof = %.1e\n", res, err, gsl_monte_vegas_chisq (s));
-      }
-    while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.5);
-
-    // display_results ("vegas final", res, err);
-
-    gsl_monte_vegas_free (s);
-  }
+  //
+  // {
+  //   gsl_monte_vegas_state *s = gsl_monte_vegas_alloc (3);
+  //
+  //   gsl_monte_vegas_integrate (&G, xl, xu, 3, 100000, r, s,
+  //                              &res, &err);
+  //   display_results ("vegas warm-up", res, err);
+  //
+  //   printf ("converging...\n");
+  //
+  //   do
+  //     {
+  //       gsl_monte_vegas_integrate (&G, xl, xu, 3, calls/5, r, s,
+  //                                  &res, &err);
+  //       printf ("result = % .6e sigma = % .6f "
+  //               "chisq/dof = %.1e\n", res, err, gsl_monte_vegas_chisq (s));
+  //     }
+  //   while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.5);
+  //
+  //   display_results ("vegas final", res, err);
+  //
+  //   gsl_monte_vegas_free (s);
+  // }
 
   gsl_rng_free (r);
 
@@ -133,30 +133,47 @@ double all_integrals(double dm, int npoints){
     T = gsl_rng_default;
     r = gsl_rng_alloc (T);
 
+    {
+      gsl_monte_plain_state *s = gsl_monte_plain_alloc (1);
+      gsl_monte_plain_integrate (&F, xl, xu, 1, calls, r, s,
+                                 &res, &err);
+      gsl_monte_plain_free (s);
+
+      display_results ("plain", res, err);
+    }
+
+    // {
+    //   gsl_monte_miser_state *s = gsl_monte_miser_alloc (1);
+    //   gsl_monte_miser_integrate (&F, xl, xu, 1, calls, r, s,
+    //                              &res, &err);
+    //   gsl_monte_miser_free (s);
+    //
+    //   display_results ("miser", res, err);
+    // }
 
 
-  {
-    gsl_monte_vegas_state *s = gsl_monte_vegas_alloc (1);
-
-    gsl_monte_vegas_integrate (&F, xl, xu, 1, 100000, r, s,
-                               &res, &err);
-    // display_results ("vegas warm-up", res, err);
-
-    // printf ("converging...\n");
-
-    do
-      {
-        gsl_monte_vegas_integrate (&F, xl, xu, 1, calls/5, r, s,
-                                   &res, &err);
-        // printf ("result = % .6e sigma = % .6f "
-        //         "chisq/dof = %.1e\n", res, err, gsl_monte_vegas_chisq (s));
-      }
-    while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.5);
-
-    // display_results ("vegas final", res, err);
-
-    gsl_monte_vegas_free (s);
-  }
+  // {
+  //   gsl_monte_vegas_state *s = gsl_monte_vegas_alloc (1);
+  //
+  //   gsl_monte_vegas_integrate (&F, xl, xu, 1, 100000, r, s,
+  //                              &res, &err);
+  //   display_results ("vegas warm-up", res, err);
+  //
+  //   printf ("converging...\n");
+  //
+  //   do
+  //     {
+  //       gsl_monte_vegas_integrate (&F, xl, xu, 1, calls/5, r, s,
+  //                                  &res, &err);
+  //       printf ("result = % .6e sigma = % .6f "
+  //               "chisq/dof = %.1e\n", res, err, gsl_monte_vegas_chisq (s));
+  //     }
+  //   while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.5);
+  //
+  //   display_results ("vegas final", res, err);
+  //
+  //   gsl_monte_vegas_free (s);
+  // }
 
   gsl_rng_free (r);
 
@@ -172,7 +189,7 @@ int main ()
     int npts;
     npts = readdata("eos_24_lowmass.dat");
 
-    double test = doing_integral_1(1, 12, npts);
+    double test = all_integrals(1, npts);
     printf("%0.10e\n", test);
 
     // int range = 300;
