@@ -226,28 +226,28 @@ double mass_interp(double r, int npts) {
 
 
 
-
-int main(int argc, char** argv)
-{
+// 
+// int main(int argc, char** argv)
+// {
+// //
+//      int npts;
+//      int i;
 //
-     int npts;
-     int i;
-
-     readdata(argv[1]);
-     npts = readdata("eos_24_lowmass.dat");
-
-
+//      readdata(argv[1]);
+//      npts = readdata("eos_24_lowmass.dat");
 //
-   FILE *outfile = fopen("n_density.dat","w");
-
-   for (i=0;i<=N;i++) {
-      // linear interpolation
-      double radius = rad[0] + (12.1- rad[0])*((double) i)/N;
-      fprintf(outfile,"%.10E\t%.10E\n",radius,nd_interp(radius,npts));
-//      printf("%d\t%.10E\t%.10E\n",i,radius,nb_interp(radius,npts));
-   }
-
-   fclose(outfile);
+//
+// //
+//    FILE *outfile = fopen("n_density.dat","w");
+//
+//    for (i=0;i<=N;i++) {
+//       // linear interpolation
+//       double radius = rad[0] + (12.1- rad[0])*((double) i)/N;
+//       fprintf(outfile,"%.10E\t%.10E\n",radius,nd_interp(radius,npts));
+// //      printf("%d\t%.10E\t%.10E\n",i,radius,nb_interp(radius,npts));
+//    }
+//
+//    fclose(outfile);
 //
 //    FILE *outfile2 = fopen("Ynabund.dat","w");
 //
