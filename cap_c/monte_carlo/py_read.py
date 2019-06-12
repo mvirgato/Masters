@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-file_names = ['mass_ns', 'muFnchempot', 'nbdensity', 'Ynabund', 'esc_vel']
+file_names = ['mass_ns', 'muFnchempot', 'nbdensity', 'Ynabund', 'esc_vel', 'n_density']
 
 
 
@@ -51,4 +51,4 @@ def cap_rate_plots():
     ax1.set(xlabel = r'$m$ [GeV]', ylabel = r'$C$')
     plt.savefig('cap_rate_plot.png')
 
-cap_rate_plots()
+eos_plots()
