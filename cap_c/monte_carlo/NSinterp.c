@@ -12,9 +12,10 @@ double mass[N]; // Msun
 double nb[N];  // Baryon number density (fm^-3)
 double Yn[N];
 double muFn[N];  // Neutron chemical potential (GeV)
+double nd[N]; //neutron number densite
 
 
-
+//=========================================================
 
 
 /*#################################################
@@ -50,13 +51,25 @@ int readdata(char * filename){
    }
    npts=i;
    fclose(datafile);
+
+   int j;
+   for (j=0;j<=N;j++){
+
+     nd[i] = nb[j] * Yn[j];
+
+   }
   //  printf("Npts: %d\n",npts);
    return npts;
 }
 
+//=========================================================
+
+
+
+
 // Baryon number density interpolation
 double nb_interp(double r, int npts) {
-  // printf("called nb_interp\n", );
+  // printf("called nb_interp\n" );
 
    double nb_r;
 
@@ -84,7 +97,10 @@ double nb_interp(double r, int npts) {
 
 }
 
+//=========================================================
+
 double Yn_interp(double r, int npts) {
+  // printf("called Yn\n");
 
    double Yn_r;
 
@@ -112,7 +128,43 @@ double Yn_interp(double r, int npts) {
 
 }
 
+//=========================================================
+
+
+double nd_interp(double r, int npts) {
+  // printf("called nd\n");
+
+   double nd_r;
+
+   if (r >= rad[0] && r <= rad[npts-1]) {
+
+      gsl_interp_accel *acc = gsl_interp_accel_alloc ();
+
+      //Linear splines
+/*      gsl_spline *spline = gsl_spline_alloc (gsl_interp_linear, npts);*/
+
+      // Cubic splines
+      gsl_spline *spline = gsl_spline_alloc (gsl_interp_cspline, npts);
+
+      gsl_spline_init (spline, rad, nd, npts);
+
+      nd_r = gsl_spline_eval (spline, r, acc);
+
+      gsl_spline_free (spline);
+      gsl_interp_accel_free (acc);
+
+      return nd_r;
+   }
+   else
+      return 0.;
+
+}
+
+//=========================================================
+
 double muFn_interp(double r, int npts) {
+
+  // printf("called muFn\n");
 
    double muFn_r;
 
@@ -141,6 +193,7 @@ double muFn_interp(double r, int npts) {
 }
 
 double mass_interp(double r, int npts) {
+  // printf("called mass\n");
 
    double mass_r;
 
@@ -165,6 +218,11 @@ double mass_interp(double r, int npts) {
    }
    else
       return 0.;
+
+
+
+
+
 
 
 

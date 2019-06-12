@@ -92,9 +92,9 @@ double heaviside_product(double s, double t, double vi, double vf){
 
 //=========================================================
 
-double velsqr(double s, double t, double v, double dm){
+double velsqr(double s, double t, double vel, double dm){
 	/* square of velocity: v = ESCAPE_VEL for initial particle */
-	double a = 2 * mu(dm) * mu_plus(dm) * t * t + 2 * mu_plus(dm) * s*s- mu(dm) * v * v;
+	double a = 2 * mu(dm) * mu_plus(dm) * t * t + 2 * mu_plus(dm) * s*s- mu(dm) * vel * vel;
 	return a / (SOL*SOL);
 }
 
@@ -108,10 +108,10 @@ double energy(double s, double t, double vel, double dm){
 
 //FERMI-DIRAC DISTRIBUTION FUNCTIONS
 
-double FD(double s, double t, double v, double radius, int npts, double dm){
+double FD(double s, double t, double vel, double chempot, double dm){
 
 
- return 1 / (double)( 1 + exp( ( energy(s, t, v , dm) - ( muFn_interp(radius, npts) * 1e-3 ) ) / TEMP ) );
+ return 1 /( (double)( 1 + exp( ( energy(s, t, vel , dm) - ( chempot) ) / TEMP ) ) );
 
 }
 
@@ -149,11 +149,12 @@ double myintegrand(double *x, size_t dim, void *p){
 		double radius = (params->radius);
 		int npts = (params->npoints);
 
-		double v_i= esc_vel(radius, npts);
+		double v_i = esc_vel(radius, npts);
+		double chempot = muFn_interp(radius, npts) * 1e-3;
 
 
-    return 16 * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * nb_interp(radius, npts) * Yn_interp(radius, npts) * (x[0] / v_i) * x[2] * heaviside_product(x[1], x[2], v_i,x[0]) *
-		 FD(x[1], x[2], v_i, radius, npts, dm) * (1 - FD(x[1], x[2], x[0], radius, npts, dm));
+    return 16 * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * nd_interp(radius, npts) * (x[0] / v_i) * x[2] * heaviside_product(x[1], x[2], v_i, x[0]) *
+		 FD(x[1], x[2], v_i, chempot, dm) * (1 - FD(x[1], x[2], x[0], chempot, dm));
 
 }
 
