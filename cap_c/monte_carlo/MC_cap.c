@@ -116,25 +116,26 @@ double all_integrals(double dm, int npoints){
 
     int NP = 100;
 
-    gsl_integration_workspace * w = gsl_integration_workspace_alloc (NP);
+//    gsl_integration_workspace * w = gsl_integration_workspace_alloc (NP);
 
 
     double res, err;
 
     struct int_params2 params2 = {dm, npoints};
 
-    double xl[1] = {1};
-    double xu[1] = {12}; // r in km
+//    double xl[1] = {1};
+//    double xu[1] = {12}; // r in km
 
     gsl_function F;
     F.function = &r_integrand;
     F.params = &params2; // {function, dimension, params}
 
+    size_t calls = 100;
 
-    gsl_integration_qags (&F, 1. , 11. , 0. , 1e-7, 100, w, &res, &err);
+    gsl_integration_qng (&F, 1. , 11. , 0.0 , 1e-7, &res, &err, &calls );
 
 
-    gsl_integration_workspace_free (w);
+  //  gsl_integration_workspace_free (w);
     // size_t calls = 500000;
     //
     // gsl_rng_env_setup ();
@@ -196,26 +197,26 @@ int main ()
     int npts;
     npts = readdata("eos_24_lowmass.dat");
 
-    double test = rate_integral(1, 11, npts);
-    printf("%0.10E\n", test);
+    double test = all_integrals(1, npts);
+    printf("all integrals = %0.10E\n", test);
 
-    // int i;
-    //
-    // int range = 20;
-    // double mass_vals[range];
-    //
-    // logspace(-6, 1, range, mass_vals);
-    //
-    //
-    // FILE *outfile = fopen("cap_rate_MC.dat", "w");
-    //
-    // for (i = 0; i < range; i++){
-    //
-    // fprintf(outfile,"%0.10E\t%.10E\n", mass_vals[i], doing_integral_1( mass_vals[i], 11, npts ) );
-    //
-    // }
-    //
-    // fclose(outfile);
+  //   int i;
+  //  
+  //   int range = 20;
+  //   double mass_vals[range];
+  //  
+  //   logspace(-6, 1, range, mass_vals);
+  //  
+  //  
+  //   FILE *outfile = fopen("cap_rate_MC.dat", "w");
+  //  
+  //   for (i = 0; i < range; i++){
+  //  
+  //   fprintf(outfile,"%0.10E\t%.10E\n", mass_vals[i], rate_integral( mass_vals[i], 11, npts ) );
+  //  
+  //   }
+  //  
+  //   fclose(outfile);
 
     return 0;
   }
