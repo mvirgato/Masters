@@ -131,7 +131,7 @@ double all_integrals(double dm, int npoints){
 
     size_t calls = 1000;
 
-    gsl_integration_qng (&F, 1. , 11. , 0.0 , 1e-2, &res, &err, &calls );
+    gsl_integration_qng (&F, 1e2 , 11. , 0.0 , 1e-2, &res, &err, &calls );
 
 
   //  gsl_integration_workspace_free (w);
