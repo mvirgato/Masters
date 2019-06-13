@@ -51,4 +51,4 @@ def cap_rate_plots():
     ax1.set(xlabel = r'$m$ [GeV]', ylabel = r'$C$')
     plt.savefig('cap_rate_plot.png')
 
-eos_plots()
+cap_rate_plots()
