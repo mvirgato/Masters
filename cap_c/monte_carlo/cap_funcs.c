@@ -153,7 +153,7 @@ double myintegrand(double *x, size_t dim, void *p){
 		double chempot = muFn_interp(radius, npts) * 1e-3;
 
 
-    return (16 / dm ) * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * nd_interp(radius, npts) * (x[0] / v_i) * x[2] * heaviside_product(x[1], x[2], v_i, x[0]) *
+    return (16 / dm ) * /* mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) */ nd_interp(radius, npts) * (x[0] / v_i) * x[2] * heaviside_product(x[1], x[2], v_i, x[0]) *
 		 FD(x[1], x[2], v_i, chempot, dm) * (1 - FD(x[1], x[2], x[0], chempot, dm));
 
 }
