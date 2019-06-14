@@ -126,13 +126,13 @@ for double int: s = x[0], t = x[1]
 for tripple int: v = x[0], s = x[1], t = x[2]
 */
 double tbound( double dm, double radius, int npts){
-    return 1.05 * sqrt( (SOL * SOL * FERMI_VEL(radius, npts) + mu(dm) * esc_vel(radius, npts) * esc_vel(radius, npts)) / ( 2.0 * mu(dm) * mu_plus(dm) ) );
+    return 1.5 * sqrt( (SOL * SOL * FERMI_VEL(radius, npts) + mu(dm) * esc_vel(radius, npts) * esc_vel(radius, npts)) / ( 2.0 * mu(dm) * mu_plus(dm) ) );
 }
 
 //=========================================================
 
 double sbound( double dm, double radius, int npts){
-    return 1.05 * sqrt( (SOL * SOL * FERMI_VEL(radius, npts) + mu(dm) * esc_vel(radius, npts) * esc_vel(radius, npts) )/ ( 2.0 * mu(dm) ) );
+    return 1.5 * sqrt( (SOL * SOL * FERMI_VEL(radius, npts) + mu(dm) * esc_vel(radius, npts) * esc_vel(radius, npts) )/ ( 2.0 * mu(dm) ) );
 }
 
 //=========================================================
