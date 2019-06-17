@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <gsl/gsl_integration.h>
 
 #include "NSinterp.c"
 
@@ -33,13 +34,6 @@ double mu_plus(double dm){
 
 //=========================================================
 
-double esc_vel(double radius, int npts){ //rad in km
-
-	return sqrt((2 * 6.67408E-11 * mass_interp(radius, npts) * 2E30) / (radius*1E3));
-}
-
-
-//=========================================================
 
 
 double FERMI_VEL(double r, int npts){
@@ -153,7 +147,7 @@ double myintegrand(double *x, size_t dim, void *p){
 		double chempot = muFn_interp(radius, npts) * 1e-3;
 
 
-    return (16 / dm ) * /* mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) */ nd_interp(radius, npts) * (x[0] / v_i) * x[2] * heaviside_product(x[1], x[2], v_i, x[0]) *
+    return (16 / dm ) *  mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * nd_interp(radius, npts) * (x[0] / v_i) * x[2] * heaviside_product(x[1], x[2], v_i, x[0]) *
 		 FD(x[1], x[2], v_i, chempot, dm) * (1 - FD(x[1], x[2], x[0], chempot, dm));
 
 }

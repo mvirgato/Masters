@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
+#include <gsl/gsl_integration.h>
 #include <gsl/gsl_spline.h>
 
 #define N 1000
@@ -192,6 +192,8 @@ double muFn_interp(double r, int npts) {
 
 }
 
+//=========================================================
+
 double mass_interp(double r, int npts) {
   // printf("called mass\n");
 
@@ -220,6 +222,56 @@ double mass_interp(double r, int npts) {
       return 0.;
     }
 
+//=========================================================
+
+    struct evpars {int num;};
+
+//=========================================================
+
+    double esc_vel_integrand( double x, void *p ){
+
+    	struct evpars *pars = (struct evpars *)p;
+
+      int npoints = (pars->num);
+
+    	return (2 * 6.67408E-11 * mass_interp(x, npoints) * 2E30) / ( (x *1e3) * (x *1e3) );
+
+    }
+
+//=========================================================
+
+    double esc_vel(double radius, int npts){ //rad in km
+
+    	size_t calls = 500;
+
+    	gsl_integration_workspace * w = gsl_integration_workspace_alloc (calls);
+
+
+    	double res, err;
+
+    	struct evpars pars = {npts};
+
+    //    double xl[1] = {1};
+    //    double xu[1] = {12}; // r in km
+
+    	gsl_function F;
+    	F.function = &esc_vel_integrand;
+    	F.params = &pars; // {function, dimension, params}
+
+
+    	gsl_integration_qags (&F, radius , 12 , 0.0 , 1e-7, calls, w, &res, &err );
+
+
+
+    	gsl_integration_workspace_free (w);
+
+    	double inside = res;
+
+    	return sqrt( inside + (2 * 6.67408E-11 * mass_interp(12, npts) * 2E30) / (12*1E3));
+    }
+
+
+    //=========================================================
 
 
 
@@ -238,12 +290,12 @@ double mass_interp(double r, int npts) {
 //
 //
 // //
-//    FILE *outfile = fopen("n_density.dat","w");
+//    FILE *outfile = fopen("esc_vel.dat","w");
 //
 //    for (i=0;i<=N;i++) {
 //       // linear interpolation
-//       double radius = rad[0] + (12.1- rad[0])*((double) i)/N;
-//       fprintf(outfile,"%.10E\t%.10E\n",radius,nd_interp(radius,npts));
+//       double radius = rad[0] + (12- rad[0])*((double) i)/N;
+//       fprintf(outfile,"%.10E\t%.10E\n",radius,esc_vel(radius,npts));
 // //      printf("%d\t%.10E\t%.10E\n",i,radius,nb_interp(radius,npts));
 //    }
 //
@@ -282,5 +334,5 @@ double mass_interp(double r, int npts) {
 //
 //    fclose(outfile4);
 //
-//    return 0;
+  //  return 0;
 // }

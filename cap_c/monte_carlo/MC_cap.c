@@ -67,6 +67,7 @@ double rate_integral(double dm, double radius, int npts){
   // }
   //
   // {
+
   //   gsl_monte_vegas_state *s = gsl_monte_vegas_alloc (3);
   //
   //   gsl_monte_vegas_integrate (&G, xl, xu, 3, 100000, r, s,
