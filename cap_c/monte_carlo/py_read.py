@@ -48,8 +48,8 @@ def single_plot( chosen_file ):
 
     for x in lines:
         x = x.split('\t')
-        domain = np.append(domain, float(x[0])/12.0)
-        range = np.append(range, float(x[1])/3e8 )
+        domain = np.append(domain, float(x[0]))
+        range = np.append(range, float(x[1]))
 
     current_file.close
 
