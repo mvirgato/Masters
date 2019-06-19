@@ -240,37 +240,13 @@ double mass_interp(double r, int npts) {
 
 //=========================================================
 
-    double esc_vel(double radius, int npts){ //rad in km
+double esc_vel(double radius, int npts){ //rad in km
 
-    	size_t calls = 500;
-
-    	gsl_integration_workspace * w = gsl_integration_workspace_alloc (calls);
-
-
-    	double res, err;
-
-    	struct evpars pars = {npts};
-
-    //    double xl[1] = {1};
-    //    double xu[1] = {12}; // r in km
-
-    	gsl_function F;
-    	F.function = &esc_vel_integrand;
-    	F.params = &pars; // {function, dimension, params}
-
-
-    	gsl_integration_qags (&F, radius , 12 , 0.0 , 1e-7, calls, w, &res, &err );
-
-
-
-    	gsl_integration_workspace_free (w);
-
-    	double inside = res;
-
-    	return sqrt( inside + (2 * 6.67408E-11 * mass_interp(12, npts) * 2E30) / (12*1E3));
-    }
-
-
+    //return ESCAPE_VEL;
+    
+       return sqrt((2.0 * 6.67408E-11 * mass_interp(radius, npts) * 2E30) /radius/1e3);
+    
+       } 
     //=========================================================
 
 

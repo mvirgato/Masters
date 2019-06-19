@@ -65,11 +65,11 @@ double cosine(double s, double t, double v){
 
 double step(double f){
 	/* a step function to constrain integration region */
-	if ( fabs(f) > 1){
-		return 0;
+	if (f > 1){
+		return 1;
 	}
 	else{
-		return 1;
+		return 0;
 	}
 }
 
@@ -77,7 +77,7 @@ double step(double f){
 
 double heaviside_product(double s, double t, double vi, double vf){
 	/* product of relevant step functions */
-	return step( cosine( s, t, vi ) * step( cosine(s, t, vf) ) );
+	return step( vi - fabs(s-t) ) * step( s + t - vi ) * step( vf - fabs(s-t) ) * step(s + t -vf) ;
 }
 
 //=========================================================
