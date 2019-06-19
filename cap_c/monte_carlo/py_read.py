@@ -83,6 +83,7 @@ def cap_rate_plots():
     fig, ax1 = plt.subplots()
     ax1.loglog(domain, range, color='blue')
     ax1.set(xlabel = r'$m$ [GeV]', ylabel = r'$C$')
+    ax1.axis([1e-6, 1e2, 1e14, 1e38])
     plt.savefig('cap_rate_plot.png')
 
-single_plot('esc_vel')
+cap_rate_plots()
