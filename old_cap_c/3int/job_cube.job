@@ -1,0 +1,25 @@
+ #!/bin/csh
+
+# --- Start PBS Directives ---
+# Inherit current user environment
+#PBS -V
+
+# Submit to the queue
+#PBS -q long
+
+# Name of my job:
+#PBS -N cubature_int
+
+# Where to write stderr:
+#PBS -e cube_err.err
+
+# Where to write stdout:
+#PBS -o cube_out.out
+
+
+# This command switched to the directory from which the "qsub" command was run:
+cd $PBS_O_WORKDIR
+
+#  Now run my program
+make
+./triple
