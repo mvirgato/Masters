@@ -309,7 +309,7 @@ int main ()
        //double Br = B_r(vmax);
 
        //dCdr[i] = rate_integral( 1., muFn, vmax )*sqrt(1.-Br)/Br/Br;
-       dCdr[i] = rate_integral( 1e0, muFn, vmax, 220e3 ) * nd*nd/nresc;
+       dCdr[i] = rate_integral( 1e-3, muFn, vmax, 0 ) * nd*nd/nresc * (0.5e-41)/NSVEL;
 
        fprintf(outfile,"%0.10E\t%.10E\t%.10E\t%0.10E\t%.10E\t%.10E\n", radint[i], dCdr[i] , nd_interp(radint[i], npts)/ nresc, muFn,vmax/SOL);
        //dCdr[i] = log(radint[i] * radint[i] *1e6 * nd_interp(radint[i], npts) /nresc*rate_integral( mass_vals[j], muFn, vmax ));

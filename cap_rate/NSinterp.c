@@ -57,7 +57,7 @@ int readdata(char * filename){
    fclose(datafile);
 
    rmin = rad[0];
-   rmax = 11.6; // NS core
+   rmax = 12; // NS core
    //rmax = 12.158947177343357; // R inner crust
   //  printf("Npts: %d\n",npts);
    return npts;
