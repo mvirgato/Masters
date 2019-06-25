@@ -56,7 +56,7 @@ def single_plot( chosen_file ):
     fig, ax1 = plt.subplots()
     ax1.plot(domain, range, color='blue')
     ax1.set(xlabel = r'$r/R$ [km]', ylabel = chosen_file)
-    # ax1.set_yscale('log')
+    ax1.set_yscale('log')
     plt.savefig(chosen_file + '.png')
 
 
@@ -84,6 +84,6 @@ def cap_rate_plots():
     ax1.loglog(domain, range, color='blue')
     ax1.set(xlabel = r'$m$ [GeV]', ylabel = r'$C$')
     ax1.axis([1e-6, 1e2, 1e14, 1e38])
-    plt.savefig('cap_rate_plot.png')
+    plt.savefig('muFnchempot.png')
 
-cap_rate_plots()
+single_plot('muFnchempot')
