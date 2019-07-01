@@ -5,7 +5,7 @@
 #PBS -V
 
 # Submit to the long queue
-#PBS -q long
+#PBS -q short
 
 # Name of my job:
 #PBS -N cap_rate
@@ -20,6 +20,7 @@
 # This command switched to the directory from which the "qsub" command was run:
 cd $PBS_O_WORKDIR
 
+
 #  Now run my program
 make
-./run_MC
+./run_M
