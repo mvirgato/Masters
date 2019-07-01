@@ -36,7 +36,7 @@ display_results (char *title, double result, double error)
 double rate_integral(double dm, double muFn, double vmax, double DMvel){
   double res, err;
 
-  struct int_params params = {dm, muFn, vmax, DMvel };
+  struct omega_params params = {dm, muFn, vmax, DMvel };
 
   double smax = sbound(dm, vmax, muFn, DMvel);
   double tmax = tbound(dm, vmax, muFn, DMvel);
@@ -49,7 +49,7 @@ double rate_integral(double dm, double muFn, double vmax, double DMvel){
   gsl_rng *r;
 
 
-  gsl_monte_function G = { &myintegrand, 3, &params }; // {function, dimension, params}
+  gsl_monte_function G = { &OmegaIntegrand, 3, &params }; // {function, dimension, params}
 
   size_t calls = 500000;
 
@@ -107,52 +107,6 @@ double rate_integral(double dm, double muFn, double vmax, double DMvel){
 //=========================================================
 
 // struct int_params2 {double dm_mass2; double npoints2;};
-//
-// //=========================================================
-//
-// double r_integrand(double x, void *p){
-//
-//   struct int_params *params2 = (struct int_params *)p;
-//
-//   double dm = (params2->dm_mass2);
-//   int npts = (params2->npoints2);
-//
-//   return x * x  * nd_interp(x, npts)* rate_integral(dm, x, npts);
-// }
-
-
-
-//=========================================================
-
-// double all_integrals(double dm, int npoints){
-//
-//     int NP = 100;
-//
-//     // gsl_integration_workspace * w = gsl_integration_workspace_alloc (NP);
-//
-//
-//     double res, err;
-//
-//     struct int_params2 params2 = {dm, npoints};
-//     //
-//     // double xl[1] = {1};
-//     // double xu[1] = {12}; // r in km
-//
-//     gsl_integration_workspace * w = gsl_integration_workspace_alloc (1000);
-//
-//     gsl_function F;
-//     F.function = &r_integrand;
-//     F.params = &params2; // {function, dimension, params}
-//
-//     size_t calls = 1000;
-//
-//     //gsl_integration_qng (&F, 1.0 , 11.0 , 0.0 , 1e-7, &res, &err, &calls);
-//     gsl_integration_qag (&F, 1.0, 11.0, 1.e-6, 1.e-6,1000,6, w, &res, &err);
-//     gsl_integration_workspace_free (w);
-//
-//
-//   return res;
-// }
 
 //=========================================================
 
@@ -194,23 +148,6 @@ double dCdr_integrand(double r, void *p){
 }
 
 //=========================================================
-
-struct DMvelint_params {double wr; double diff_rate;};
-
-//=========================================================
-
-double DMvel_integrand(double DMvel, void *p){
-
-  struct DMvelint_params *params = (struct DMvelint_params *)p;
-
-  double wr = (params->wr);
-  double diff_rate = (params->diff_rate);
-
-  return fvel(DMvel)/DMvel*wr*diff_rate;
-}
-
-//=========================================================
-
 
 double DMvel_integral (double wr, double diff_rate){
 

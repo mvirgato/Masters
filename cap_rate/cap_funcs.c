@@ -97,6 +97,8 @@ double energy(double s, double t, double vel, double dm){
 
 //FERMI-DIRAC DISTRIBUTION FUNCTIONS
 
+//=========================================================
+
 double FD(double s, double t, double vel, double chempot, double dm){
 
 
@@ -108,6 +110,8 @@ double FD(double s, double t, double vel, double chempot, double dm){
 
 // INITIAL VELOCITY
 
+//=========================================================
+
 double w_init(double escvel, double DMvel) {
     return sqrt(escvel*escvel+DMvel*DMvel);
 }
@@ -117,16 +121,18 @@ double w_init(double escvel, double DMvel) {
 
 // DM halo velocity distribution
 
+//=========================================================
+
 double fvel(double DMvel) {
    double prefactor = sqrt(3./2./M_PI)*DMvel/NSVEL/VELDISP;
 
-   return prefactor*(exp(-3.*(DMvel-NSVEL)*(DMvel-NSVEL)/2./VELDISP/VELDISP) -  exp(-3.*(DMvel-NSVEL)*(DMvel+NSVEL)/2./VELDISP/VELDISP));
+   return prefactor*(exp(-3.*(DMvel-NSVEL)*(DMvel-NSVEL)/2./VELDISP/VELDISP) -  exp(-3.*(DMvel+NSVEL)*(DMvel+NSVEL)/2./VELDISP/VELDISP));
 
 }
 
 //=========================================================
 
-//INTEGRAND
+//INTEGRANDS
 
 //=========================================================
 
@@ -147,12 +153,9 @@ double sbound( double dm, double escvel, double muF, double DMvel){
 //=========================================================
 
 
+double OmegaIntegrand(double *x, size_t dim, void *p){
 
-//=========================================================
-
-double myintegrand(double *x, size_t dim, void *p){
-
-    struct int_params *params = (struct int_params *)p;
+    struct omega_params *params = (struct int_params *)p;
 
     double dm = (params->dm_mass);
     double chempot = (params->muF);
@@ -162,6 +165,18 @@ double myintegrand(double *x, size_t dim, void *p){
     return (16.0 / dm ) * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * (x[0] ) * x[2] * heaviside_product(x[1], x[2], w_init(escvel, dmvel), x[0]) *
 		 FD(x[1], x[2], w_init(escvel, dmvel), chempot, dm) * (1.0 - FD(x[1], x[2], x[0], chempot, dm));
 
+}
+
+//=========================================================
+
+double DMvel_integrand(double DMvel, void *p){
+
+  struct DMvelint_params *params = (struct DMvelint_params *)p;
+
+  double wr = (params->wr);
+  double diff_rate = (params->diff_rate);
+
+  return fvel(DMvel)/DMvel*wr*diff_rate;
 }
 
 //=========================================================
