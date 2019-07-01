@@ -31,9 +31,7 @@ display_results (char *title, double result, double error)
 
 //=========================================================
 
-//double rate_integral(double dm, double radius, int npts){
-
-double rate_integral(double dm, double muFn, double vmax, double DMvel){
+double OmegaIntegral(double dm, double muFn, double vmax, double DMvel){
   double res, err;
 
   struct omega_params params = {dm, muFn, vmax, DMvel };
@@ -106,7 +104,42 @@ double rate_integral(double dm, double muFn, double vmax, double DMvel){
 
 //=========================================================
 
-// struct int_params2 {double dm_mass2; double npoints2;};
+double DMvel_integrand(double DMvel, void *p){
+
+  struct DMvelint_params *params2 = (struct int_params *)p;
+
+  double dm = (params2->dm_mass);
+  double muF = (params2->muF);
+  double escvel = (params2->escvel);
+
+  return fvel(DMvel)*OmegaIntegral(dm, muF, escvel, DMvel)/DMvel;
+}
+
+//=========================================================
+
+double DMvel_integral (double dm, double muFn, double vmax){
+
+   double result, error;
+
+   struct DMvelint_params params2 = {dm, muFn, vmax};
+
+   gsl_integration_workspace * w = gsl_integration_workspace_alloc (1000);
+
+   gsl_function F;
+
+
+   F.function = &DMvel_integrand;
+   F.params = &params2;
+
+   size_t limit;
+   gsl_integration_qagiu (&F, 0, 1e-6, 1e-6, limit, w, &result, &error);
+
+
+
+   gsl_integration_workspace_free (w);
+
+   return result;
+}
 
 //=========================================================
 
@@ -145,30 +178,6 @@ double dCdr_interp(double r) {
 double dCdr_integrand(double r, void *p){
 
   return dCdr_interp(r);
-}
-
-//=========================================================
-
-double DMvel_integral (double wr, double diff_rate){
-
-   double result, error;
-
-   gsl_integration_workspace * w = gsl_integration_workspace_alloc (1000);
-
-   gsl_function F;
-
-
-   F.function = &DMvel_integrand;
-   F.params = 0;
-
-   size_t limit;
-   gsl_integration_qagiu (&F, 0, 1e-6, 1e-6, limit, w, &result, &error);
-
-
-
-   gsl_integration_workspace_free (w);
-
-   return result;
 }
 
 //=========================================================
@@ -245,11 +254,11 @@ int main ()
        double nresc = 2.*NM*pow(muFn,1.5)/3./M_PI/M_PI/hbarc/hbarc/hbarc;
        //double Br = B_r(vmax);
 
-       //dCdr[i] = rate_integral( 1., muFn, vmax )*sqrt(1.-Br)/Br/Br;
-       dCdr[i] = rate_integral( 1e-3, muFn, vmax, 0 ) * nd*nd/nresc * (0.5e-41)/NSVEL;
+       //dCdr[i] = OmegaIntegral( 1., muFn, vmax )*sqrt(1.-Br)/Br/Br;
+       dCdr[i] = prefactors(1e-3) * DMvel_integral( 1e-3, muFn, vmax ) * nd*nd/nresc * (0.5e-41) /4./M_PI;
 
        fprintf(outfile,"%0.10E\t%.10E\t%.10E\t%0.10E\t%.10E\t%.10E\n", radint[i], dCdr[i] , nd_interp(radint[i], npts)/ nresc, muFn,vmax/SOL);
-       //dCdr[i] = log(radint[i] * radint[i] *1e6 * nd_interp(radint[i], npts) /nresc*rate_integral( mass_vals[j], muFn, vmax ));
+       //dCdr[i] = log(radint[i] * radint[i] *1e6 * nd_interp(radint[i], npts) /nresc*OmegaIntegral( mass_vals[j], muFn, vmax ));
     }
 
 

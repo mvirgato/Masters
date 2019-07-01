@@ -37,6 +37,11 @@ double FERMI_VEL(double muF){
 
 }
 
+
+double prefactors(double dm){
+
+	return 64*M_PI* mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * mu_plus(dm)/dm;
+}
 //=========================================================
 
 //TRIG FUNCTIONS
@@ -162,24 +167,13 @@ double OmegaIntegrand(double *x, size_t dim, void *p){
     double escvel = (params->escvel);
 		double dmvel = (params->DMvel);
 
-    return (16.0 / dm ) * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * (x[0] ) * x[2] * heaviside_product(x[1], x[2], w_init(escvel, dmvel), x[0]) *
+    return x[0] * x[2] * heaviside_product(x[1], x[2], w_init(escvel, dmvel), x[0]) *
 		 FD(x[1], x[2], w_init(escvel, dmvel), chempot, dm) * (1.0 - FD(x[1], x[2], x[0], chempot, dm));
 
 }
 
 //=========================================================
 
-double DMvel_integrand(double DMvel, void *p){
-
-  struct DMvelint_params *params = (struct DMvelint_params *)p;
-
-  double wr = (params->wr);
-  double diff_rate = (params->diff_rate);
-
-  return fvel(DMvel)/DMvel*wr*diff_rate;
-}
-
-//=========================================================
 
 // LOGSPACE
 
