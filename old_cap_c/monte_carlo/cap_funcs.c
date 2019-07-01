@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <gsl/gsl_integration.h>
 
 #include "NSinterp.c"
 
@@ -33,13 +34,6 @@ double mu_plus(double dm){
 
 //=========================================================
 
-double esc_vel(double radius, int npts){ //rad in km
-
-	return sqrt((2 * 6.67408E-11 * mass_interp(radius, npts) * 2E30) / (radius*1E3));
-}
-
-
-//=========================================================
 
 
 double FERMI_VEL(double r, int npts){
@@ -71,11 +65,11 @@ double cosine(double s, double t, double v){
 
 double step(double f){
 	/* a step function to constrain integration region */
-	if ( fabs(f) > 1){
-		return 0;
+	if (f > 1){
+		return 1;
 	}
 	else{
-		return 1;
+		return 0;
 	}
 }
 
@@ -83,7 +77,7 @@ double step(double f){
 
 double heaviside_product(double s, double t, double vi, double vf){
 	/* product of relevant step functions */
-	return step( cosine( s, t, vi ) * step( cosine(s, t, vf) ) );
+	return step( vi - fabs(s-t) ) * step( s + t - vi ) * step( vf - fabs(s-t) ) * step(s + t -vf) ;
 }
 
 //=========================================================
@@ -92,9 +86,9 @@ double heaviside_product(double s, double t, double vi, double vf){
 
 //=========================================================
 
-double velsqr(double s, double t, double v, double dm){
+double velsqr(double s, double t, double vel, double dm){
 	/* square of velocity: v = ESCAPE_VEL for initial particle */
-	double a = 2 * mu(dm) * mu_plus(dm) * t * t + 2 * mu_plus(dm) * s*s- mu(dm) * v * v;
+	double a = 2 * mu(dm) * mu_plus(dm) * t * t + 2 * mu_plus(dm) * s*s- mu(dm) * vel * vel;
 	return a / (SOL*SOL);
 }
 
@@ -108,10 +102,10 @@ double energy(double s, double t, double vel, double dm){
 
 //FERMI-DIRAC DISTRIBUTION FUNCTIONS
 
-double FD(double s, double t, double v, double radius, int npts, double dm){
+double FD(double s, double t, double vel, double chempot, double dm){
 
 
- return 1 / (double)( 1 + exp( ( energy(s, t, v , dm) - ( muFn_interp(radius, npts) * 1e-3 ) ) / TEMP ) );
+ return 1 /( (double)( 1 + exp( ( energy(s, t, vel , dm) - ( chempot) ) / TEMP ) ) );
 
 }
 
@@ -126,13 +120,13 @@ for double int: s = x[0], t = x[1]
 for tripple int: v = x[0], s = x[1], t = x[2]
 */
 double tbound( double dm, double radius, int npts){
-    return 1.05 * sqrt( (SOL * SOL * FERMI_VEL(radius, npts) + mu(dm) * esc_vel(radius, npts) * esc_vel(radius, npts)) / ( 2.0 * mu(dm) * mu_plus(dm) ) );
+    return 1.5 * sqrt( (SOL * SOL * FERMI_VEL(radius, npts) + mu(dm) * esc_vel(radius, npts) * esc_vel(radius, npts)) / ( 2.0 * mu(dm) * mu_plus(dm) ) );
 }
 
 //=========================================================
 
 double sbound( double dm, double radius, int npts){
-    return 1.05 * sqrt( (SOL * SOL * FERMI_VEL(radius, npts) + mu(dm) * esc_vel(radius, npts) * esc_vel(radius, npts) )/ ( 2.0 * mu(dm) ) );
+    return 1.5 * sqrt( (SOL * SOL * FERMI_VEL(radius, npts) + mu(dm) * esc_vel(radius, npts) * esc_vel(radius, npts) )/ ( 2.0 * mu(dm) ) );
 }
 
 //=========================================================
@@ -149,11 +143,12 @@ double myintegrand(double *x, size_t dim, void *p){
 		double radius = (params->radius);
 		int npts = (params->npoints);
 
-		double v_i= esc_vel(radius, npts);
+		double v_i = esc_vel(radius, npts);
+		double chempot = muFn_interp(radius, npts) * 1e-3;
 
 
-    return 16 * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * nb_interp(radius, npts) * Yn_interp(radius, npts) * (x[0] / v_i) * x[2] * heaviside_product(x[1], x[2], v_i,x[0]) *
-		 FD(x[1], x[2], v_i, radius, npts, dm) * (1 - FD(x[1], x[2], x[0], radius, npts, dm));
+    return (16 / dm ) *  mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * nd_interp(radius, npts) * (x[0] / v_i) * x[2] * heaviside_product(x[1], x[2], v_i, x[0]) *
+		 FD(x[1], x[2], v_i, chempot, dm) * (1 - FD(x[1], x[2], x[0], chempot, dm));
 
 }
 

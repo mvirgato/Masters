@@ -138,7 +138,7 @@ int main( ){
 //	printf("%0.8e\n", a);
 
 	FILE *file_ptr = fopen(FILE_NAME, "w");
-	fprintf(file_ptr, " The anser is\n %0.8e\n ", output);
+	fprintf(file_ptr, " The answer is\n %0.8e\n ", output);
 	fclose(file_ptr);	
 	return 0;
 }
