@@ -5,7 +5,7 @@
 #PBS -V
 
 # Submit to the long queue
-#PBS -q short
+#PBS -q long
 
 # Name of my job:
 #PBS -N cap_rate
