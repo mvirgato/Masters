@@ -263,7 +263,7 @@ int main ()
        //double Br = B_r(vmax);
 
        //dCdr[i] = OmegaIntegral( 1., muFn, vmax )*sqrt(1.-Br)/Br/Br;
-       dCdr[i] = prefactors(1e-3) * DMvel_integral( 1e-3, muFn, vmax , 0) * nd*nd/nresc * (0.5e-41) /4./M_PI;
+       dCdr[i] = prefactors(1.) * DMvel_integral( 1., muFn, vmax) * nd*nd/nresc * (0.5e-41) /4./M_PI;
 
        fprintf(outfile,"%0.10E\t%.10E\t%.10E\t%0.10E\t%0.10E\n", radint[i], dCdr[i] , nd_interp(radint[i], npts)/ nresc, muFn, vmax/SOL);
        //dCdr[i] = log(radint[i] * radint[i] *1e6 * nd_interp(radint[i], npts) /nresc*OmegaIntegral( mass_vals[j], muFn, vmax ));
