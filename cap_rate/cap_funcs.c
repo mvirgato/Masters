@@ -160,7 +160,7 @@ double sbound( double dm, double escvel, double muF, double DMvel){
 
 double OmegaIntegrand(double *x, size_t dim, void *p){
 
-    struct omega_params *params = (struct int_params *)p;
+    struct omega_params *params = (struct omega_params *)p;
 
     double dm = (params->dm_mass);
     double chempot = (params->muF);

@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include<time.h>
+
 #include <gsl/gsl_spline.h>
 #include <gsl/gsl_math.h>
 #include <gsl/gsl_monte.h>
@@ -87,12 +89,12 @@ double OmegaIntegral(double dm, double muFn, double vmax, double DMvel){
       {
         gsl_monte_vegas_integrate (&G, xl, xu, 3, calls/5, r, s,
                                    &res, &err);
-        printf ("result = % .6e sigma = % .6e "
-                "chisq/dof = %.1e\n", res, err, gsl_monte_vegas_chisq (s));
+        // printf ("result = % .6e sigma = % .6e "
+        //         "chisq/dof = %.1e\n", res, err, gsl_monte_vegas_chisq (s));
       }
     while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.5);
 
-    // display_results ("vegas final", res, err);
+    display_results ("vegas final", res, err);
 
     gsl_monte_vegas_free (s);
   }
@@ -106,7 +108,7 @@ double OmegaIntegral(double dm, double muFn, double vmax, double DMvel){
 
 double DMvel_integrand(double DMvel, void *p){
 
-  struct DMvelint_params *params2 = (struct int_params *)p;
+  struct DMvelint_params *params2 = (struct DMvelint_params *)p;
 
   double dm = (params2->dm_mass);
   double muF = (params2->muF);
@@ -209,6 +211,12 @@ double capture_rate (double rmin, double rmax){
 
 int main ()
   {
+
+    double total_time;
+  	clock_t start, end;
+  	start = clock();
+  	srand(time(NULL));
+
     double ev[Nrpts];
 
     int npts;
@@ -255,9 +263,9 @@ int main ()
        //double Br = B_r(vmax);
 
        //dCdr[i] = OmegaIntegral( 1., muFn, vmax )*sqrt(1.-Br)/Br/Br;
-       dCdr[i] = prefactors(1e-3) * DMvel_integral( 1e-3, muFn, vmax ) * nd*nd/nresc * (0.5e-41) /4./M_PI;
+       dCdr[i] = prefactors(1e-3) * OmegaIntegral( 1e-3, muFn, vmax , 0) * nd*nd/nresc * (0.5e-41) /4./M_PI;
 
-       fprintf(outfile,"%0.10E\t%.10E\t%.10E\t%0.10E\t%.10E\t%.10E\n", radint[i], dCdr[i] , nd_interp(radint[i], npts)/ nresc, muFn,vmax/SOL);
+       fprintf(outfile,"%0.10E\t%.10E\t%.10E\t%0.10E\t%0.10E\n", radint[i], dCdr[i] , nd_interp(radint[i], npts)/ nresc, muFn, vmax/SOL);
        //dCdr[i] = log(radint[i] * radint[i] *1e6 * nd_interp(radint[i], npts) /nresc*OmegaIntegral( mass_vals[j], muFn, vmax ));
     }
 
@@ -275,6 +283,10 @@ int main ()
 //    }
 
     fclose(outfile);
+
+    end = clock();
+  	total_time = ((double) (end - start)) / CLOCKS_PER_SEC;
+  	printf("\nTime taken is: %f seconds\n", total_time);
 
     return 0;
   }
