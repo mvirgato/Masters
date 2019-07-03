@@ -44,8 +44,8 @@ def cap_rate_plots():
     for x in lines:
         x = x.split('\t')
         domain = np.append(domain, float(x[0]))
-        # range = np.append(range, float(x[1]))
-        range = np.append(range, float(x[2]))
+        range = np.append(range, float(x[1]))
+        # range = np.append(range, float(x[2]))
 
     current_file.close
 
@@ -53,7 +53,7 @@ def cap_rate_plots():
     ax1.plot(domain, range, color='blue')
     ax1.set(xlabel = r'$Radius$ [km]', ylabel = r'$C/V$')
     # ax1.axis([0, 11.5, 0.4, 1])
-    # plt.savefig('cap_rate_plot.png')
-    plt.savefig('zeta.png')
+    plt.savefig('cap_rate_plot.png')
+    # plt.savefig('zeta.png')
 
 cap_rate_plots()
