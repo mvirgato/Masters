@@ -51,7 +51,7 @@ def cap_rate_plots():
     fig, ax1 = plt.subplots()
     ax1.plot(domain, range, color='blue')
     ax1.set(xlabel = r'$Radius$ [km]', ylabel = r'$C/V$')
-    # ax1.axis([0, 11.5, 0, 2.2e7])
+    # ax1.axis([0, 11.5, 0.4, 1])
     plt.savefig('cap_rate_plot.png')
 
 cap_rate_plots()

@@ -227,7 +227,7 @@ int main ()
    int i,j;
    //double mdm = 1.e0;
 
-    double ev_out = (2.0 * Grav * mass_interp(rmax, npts) * 2E30) /rmax/1e3;
+    double ev_out = (2.0 * Grav * mass_interp(rmax, npts) * 2E30) /rmax/1e3; //square of escape vel outside NS
 
     // FILE *outfile = fopen("esc_vel.dat", "w");
     //
@@ -241,6 +241,7 @@ int main ()
 
 
 
+    double testmass = 1.;
 
     int range = 40;
     double mass_vals[range];
@@ -256,16 +257,16 @@ int main ()
     // fprintf(outfile, "%s\t%s\t%s\t%s\t%s\t%s\n", "radius(km)", "dCdr", "nd", "nresc", "mu", "vmax" );
     for (i = 0; i < Nrpts; i++){
        radint[i] = rmin + ((double) i)*(rmax-rmin)/(Nrpts-1);
-       double nd = nd_interp(radint[i], npts);
+       double nd = nd_interp(radint[i], npts) * 1e-45; // m^-3
        double muFn = muFn_interp(radint[i], npts);
        double vmax = sqrt( potnl(radint[i], rmax, npts) + ev_out);
-       double nresc = 2.*NM*pow(muFn,1.5)/3./M_PI/M_PI/hbarc/hbarc/hbarc;
+       double ndfree = pow(2.*NM*muFn,1.5)/3./M_PI/M_PI/hbarc/hbarc/hbarc * 1e-45; // m^-3
        //double Br = B_r(vmax);
 
        //dCdr[i] = OmegaIntegral( 1., muFn, vmax )*sqrt(1.-Br)/Br/Br;
-       dCdr[i] = prefactors(1.) * DMvel_integral( 1., muFn, vmax) * nd*nd/nresc * (0.5e-41) /4./M_PI;
+       dCdr[i] = prefactors(testmass) * DMvel_integral( testmass, muFn, vmax) * nd*nd/ndfree * constCS();
 
-       fprintf(outfile,"%0.10E\t%.10E\t%.10E\t%0.10E\t%0.10E\n", radint[i], dCdr[i] , nd_interp(radint[i], npts)/ nresc, muFn, vmax/SOL);
+       fprintf(outfile,"%0.10E\t%.10E\t%.10E\t%0.10E\t%0.10E\n", radint[i], dCdr[i] , nd_interp(radint[i], npts)/ ndfree, muFn, vmax/SOL);
        //dCdr[i] = log(radint[i] * radint[i] *1e6 * nd_interp(radint[i], npts) /nresc*OmegaIntegral( mass_vals[j], muFn, vmax ));
     }
 

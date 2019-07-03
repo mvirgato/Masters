@@ -40,7 +40,7 @@ double FERMI_VEL(double muF){
 
 double prefactors(double dm){
 
-	return 64*M_PI* mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * mu_plus(dm)/dm;
+	return 64*M_PI* mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * erf(sqrt(3/2)*NSVEL/VELDISP)/NSVEL*(1e6/dm);
 }
 //=========================================================
 
@@ -174,8 +174,20 @@ double OmegaIntegrand(double *x, size_t dim, void *p){
 
 //=========================================================
 
+// DIFFERENTIAL CROSS SECTIONS
+
+//=========================================================
+
+double constCS(){
+	return 1e-45/2 *1e-6; // m^-2
+}
+//=========================================================
+
+//=========================================================
 
 // LOGSPACE
+
+//=========================================================
 
 double* logspace(double a, double b, int n, double u[])
 {

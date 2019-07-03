@@ -16,4 +16,6 @@ struct DMvelint_params {double dm_mass; double muF; double escvel;};
 
 double DMvel_integrand(double DMvel, void *p);
 
+double constCS();
+
 double* logspace(double a, double b, int n, double u[]);
