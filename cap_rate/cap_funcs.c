@@ -15,7 +15,6 @@
 //=========================================================
 
 double mu(double dm){
-	/* RATIO OF DARK MATTER TO NEUTRON MASS */
 
 	return dm / NM;
 }
@@ -24,7 +23,7 @@ double mu(double dm){
 
 double mu_plus(double dm){
 
-	return ( 1.0 + mu(dm)) / 2.0;
+	return ( 1.0 + dm / NM) / 2.0;
 }
 
 
@@ -32,6 +31,7 @@ double mu_plus(double dm){
 
 
 double FERMI_VEL(double muF){
+//square of fermi vel
 
 	return  (2.0 * muF ) / NM ;
 
@@ -54,7 +54,14 @@ double cosine(double s, double t, double v){
 	double num = v * v - s * s - t * t;
 	double den = 2.0 * s * t;
 
-	return num / den;
+	return num*num / den/den;
+}
+
+//=========================================================
+
+double sineSqr(double s, double t, double v){
+
+	return (1 - cosine(s, t, v)*cosine(s, t, v) );
 }
 
 //=========================================================
@@ -168,7 +175,7 @@ double OmegaIntegrand(double *x, size_t dim, void *p){
 		double dmvel = (params->DMvel);
 
     return x[0] * x[2] * heaviside_product(x[1], x[2], w_init(escvel, dmvel), x[0]) *
-		 FD(x[1], x[2], w_init(escvel, dmvel), chempot, dm) * (1.0 - FD(x[1], x[2], x[0], chempot, dm));
+		 FD(x[1], x[2], w_init(escvel, dmvel), chempot, dm) * (1.0 - FD(x[1], x[2], x[0], chempot, dm))*mom4CS(x[1], x[2], escvel ,x[0]);
 
 }
 
@@ -179,9 +186,14 @@ double OmegaIntegrand(double *x, size_t dim, void *p){
 //=========================================================
 
 double constCS(){
-	return 1e-45/2 *1e-6; // m^-2
+	return 1e-45/2 * 1e-4; // m^2
 }
 //=========================================================
+
+double mom4CS(double s, double t, double vinit, double vfin){
+
+return 2*M_PI*(1 - 2*cosine(s, t, vfin)*cosine(s, t, vinit) + cosine(s, t, vfin)*cosine(s, t, vinit)*cosine(s, t, vfin)*cosine(s, t, vinit) + 0.5*sineSqr(s, t, vfin)*sineSqr(s, t, vinit) );
+}
 
 //=========================================================
 

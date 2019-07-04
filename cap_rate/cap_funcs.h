@@ -18,4 +18,6 @@ double DMvel_integrand(double DMvel, void *p);
 
 double constCS();
 
+double mom4CS(double s, double t, double vinit, double vfin);
+
 double* logspace(double a, double b, int n, double u[]);

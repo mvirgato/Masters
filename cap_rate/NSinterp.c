@@ -15,7 +15,7 @@ double mass[N]; // Msun
 double nb[N];  // Baryon number density (fm^-3)
 double Yn[N];
 double muFn[N];  // Neutron chemical potential (GeV)
-double nd[N]; //neutron number densite
+double nd[N]; //neutron number density
 
 
 //=========================================================
@@ -57,7 +57,7 @@ int readdata(char * filename){
    fclose(datafile);
 
    rmin = rad[0];
-   rmax = 12.387; // NS core
+   rmax = 12.1; // NS core
    //rmax = 12.158947177343357; // R inner crust
   //  printf("Npts: %d\n",npts);
    return npts;
