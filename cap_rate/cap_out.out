@@ -1,8 +1,0 @@
-cc -O3   -c -o MC_cap.o MC_cap.c
-cc -O3   -c -o NSinterp.o NSinterp.c
-cc -O3   -c -o cap_funcs.o cap_funcs.c
-cc -O3  -o run_MC MC_cap.o NSinterp.o cap_funcs.o  -lgsl -lgslcblas -lm
-rm *.o
-File eos_24_lowmass.dat opened successfully.
-
-Time taken is: 19.419333 min

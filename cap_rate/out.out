@@ -1,0 +1,409 @@
+cc -O3   -c -o MC_cap.o MC_cap.c
+cc -O3   -c -o NSinterp.o NSinterp.c
+cc -O3   -c -o cap_funcs.o cap_funcs.c
+cc -O3  -o run_MC MC_cap.o NSinterp.o cap_funcs.o  -lgsl -lgslcblas -lm
+rm *.o
+File eos_24_lowmass.dat opened successfully.
+vegas warm-up ==================
+result           =  2.05272445e+41
+sigma            =  3.43826634e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  2.05217424e+41
+sigma            =  3.45933957e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  2.05083246e+41
+sigma            =  3.44058473e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  2.04860009e+41
+sigma            =  3.44556428e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  2.04555719e+41
+sigma            =  3.43759358e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  2.04153703e+41
+sigma            =  3.43023427e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  2.03693226e+41
+sigma            =  3.42773445e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  2.03132428e+41
+sigma            =  3.43099698e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  2.02491276e+41
+sigma            =  3.42161383e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  2.01745599e+41
+sigma            =  3.40516229e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  2.00948332e+41
+sigma            =  3.39227754e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  2.00041240e+41
+sigma            =  3.39709262e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.99068822e+41
+sigma            =  3.35829491e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.97991109e+41
+sigma            =  3.34048573e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.96875015e+41
+sigma            =  3.31333395e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.95644437e+41
+sigma            =  3.29183923e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.94367323e+41
+sigma            =  3.28898294e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.92989261e+41
+sigma            =  3.27098053e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.91560943e+41
+sigma            =  3.25702473e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.90045762e+41
+sigma            =  3.21256861e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.88437767e+41
+sigma            =  3.19490099e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.86800147e+41
+sigma            =  3.15964132e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.85087684e+41
+sigma            =  3.14268487e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.83304275e+41
+sigma            =  3.12791311e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.81446565e+41
+sigma            =  3.06704057e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.79527516e+41
+sigma            =  3.01438882e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.77534246e+41
+sigma            =  2.99550322e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.75506662e+41
+sigma            =  2.94209051e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.73381376e+41
+sigma            =  2.90809659e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.71231341e+41
+sigma            =  2.85304426e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.69022253e+41
+sigma            =  2.80443247e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.66770319e+41
+sigma            =  2.79481184e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.64448492e+41
+sigma            =  2.74110420e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.62080676e+41
+sigma            =  2.69832148e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.59668341e+41
+sigma            =  2.67551221e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.57221753e+41
+sigma            =  2.61984470e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.54731330e+41
+sigma            =  2.58285491e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.52209953e+41
+sigma            =  2.54021441e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.49629065e+41
+sigma            =  2.48871342e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.47052107e+41
+sigma            =  2.45911853e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.44418276e+41
+sigma            =  2.41046804e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.41763287e+41
+sigma            =  2.37215814e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.39067419e+41
+sigma            =  2.31717015e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.36372405e+41
+sigma            =  2.27068493e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.33648000e+41
+sigma            =  2.22512443e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.30892809e+41
+sigma            =  2.17698180e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.28136934e+41
+sigma            =  2.12467919e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.25349346e+41
+sigma            =  2.06705021e+37
+percent error =  0.016
+vegas warm-up ==================
+result           =  1.22569616e+41
+sigma            =  2.00564628e+37
+percent error =  0.016
+vegas warm-up ==================
+result           =  1.19776568e+41
+sigma            =  1.96590335e+37
+percent error =  0.016
+vegas warm-up ==================
+result           =  1.16976949e+41
+sigma            =  1.91960186e+37
+percent error =  0.016
+vegas warm-up ==================
+result           =  1.14173580e+41
+sigma            =  1.87897580e+37
+percent error =  0.016
+vegas warm-up ==================
+result           =  1.11376742e+41
+sigma            =  1.84383142e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.08581584e+41
+sigma            =  1.79254491e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.05774907e+41
+sigma            =  1.74910407e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.02974780e+41
+sigma            =  1.70121675e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.00185885e+41
+sigma            =  1.66430717e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  9.74312294e+40
+sigma            =  1.61531834e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  9.46558655e+40
+sigma            =  1.55796063e+37
+percent error =  0.016
+vegas warm-up ==================
+result           =  9.19067660e+40
+sigma            =  1.50094610e+37
+percent error =  0.016
+vegas warm-up ==================
+result           =  8.91713639e+40
+sigma            =  1.43129093e+37
+percent error =  0.016
+vegas warm-up ==================
+result           =  8.64759720e+40
+sigma            =  1.43315041e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  8.37848357e+40
+sigma            =  1.37694102e+37
+percent error =  0.016
+vegas warm-up ==================
+result           =  8.11019877e+40
+sigma            =  1.34033937e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  7.84694708e+40
+sigma            =  1.29877910e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  7.58568266e+40
+sigma            =  1.27378666e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  7.32743491e+40
+sigma            =  1.23296228e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  7.07123740e+40
+sigma            =  1.17140120e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  6.81919314e+40
+sigma            =  1.13678509e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  6.57217644e+40
+sigma            =  1.12426381e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  6.32636593e+40
+sigma            =  1.05700819e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  6.08494881e+40
+sigma            =  1.02318871e+37
+percent error =  0.017
+vegas warm-up ==================
+result           =  5.84690258e+40
+sigma            =  9.65188015e+36
+percent error =  0.017
+vegas warm-up ==================
+result           =  5.61389426e+40
+sigma            =  9.20962865e+36
+percent error =  0.016
+vegas warm-up ==================
+result           =  5.38458836e+40
+sigma            =  8.76999248e+36
+percent error =  0.016
+vegas warm-up ==================
+result           =  5.15919782e+40
+sigma            =  8.33332795e+36
+percent error =  0.016
+vegas warm-up ==================
+result           =  4.93684773e+40
+sigma            =  8.10607896e+36
+percent error =  0.016
+vegas warm-up ==================
+result           =  4.72111631e+40
+sigma            =  7.82376680e+36
+percent error =  0.017
+vegas warm-up ==================
+result           =  4.51002807e+40
+sigma            =  7.49736449e+36
+percent error =  0.017
+vegas warm-up ==================
+result           =  4.30206430e+40
+sigma            =  7.39903909e+36
+percent error =  0.017
+vegas warm-up ==================
+result           =  4.09825712e+40
+sigma            =  6.80780597e+36
+percent error =  0.017
+vegas warm-up ==================
+result           =  3.89928463e+40
+sigma            =  6.40736559e+36
+percent error =  0.016
+vegas warm-up ==================
+result           =  3.70602251e+40
+sigma            =  6.13591088e+36
+percent error =  0.017
+vegas warm-up ==================
+result           =  3.51700990e+40
+sigma            =  5.96168052e+36
+percent error =  0.017
+vegas warm-up ==================
+result           =  3.33187916e+40
+sigma            =  5.68333242e+36
+percent error =  0.017
+vegas warm-up ==================
+result           =  3.15193056e+40
+sigma            =  5.31210264e+36
+percent error =  0.017
+vegas warm-up ==================
+result           =  2.97696606e+40
+sigma            =  4.98747716e+36
+percent error =  0.017
+vegas warm-up ==================
+result           =  2.80715640e+40
+sigma            =  4.85075378e+36
+percent error =  0.017
+vegas warm-up ==================
+result           =  2.64197236e+40
+sigma            =  4.53033691e+36
+percent error =  0.017
+vegas warm-up ==================
+result           =  2.48165914e+40
+sigma            =  4.22171790e+36
+percent error =  0.017
+vegas warm-up ==================
+result           =  2.32597753e+40
+sigma            =  4.05609388e+36
+percent error =  0.017
+vegas warm-up ==================
+result           =  2.17633527e+40
+sigma            =  3.67593918e+36
+percent error =  0.017
+vegas warm-up ==================
+result           =  2.03271031e+40
+sigma            =  3.50691809e+36
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.89629445e+40
+sigma            =  3.31411545e+36
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.76925340e+40
+sigma            =  3.06795549e+36
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.65037234e+40
+sigma            =  2.73366045e+36
+percent error =  0.017
+vegas warm-up ==================
+result           =  1.53297408e+40
+sigma            =  2.71637059e+36
+percent error =  0.018
+vegas warm-up ==================
+result           =  1.42229922e+40
+sigma            =  2.54377919e+36
+percent error =  0.018
+vegas warm-up ==================
+result           =  1.32119260e+40
+sigma            =  2.35496663e+36
+percent error =  0.018
+vegas warm-up ==================
+result           =  1.22531390e+40
+sigma            =  2.19684214e+36
+percent error =  0.018
+1.0000000000E+00	8.2671159000E+57
+
+Time taken is: 0.565667 min

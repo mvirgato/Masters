@@ -242,19 +242,19 @@ int main ()
 
 
 
-    double testmass = 1;
+    double testmass = 1.;
 
     int range = 20;
     double mass_vals[range];
 
 
-    logspace(-9, 3, range, mass_vals);
+    logspace(-6, 1, range, mass_vals);
 
-    FILE *outfile = fopen("complete_caprate.dat", "w");
+    // FILE *outfile = fopen("complete_caprate.dat", "w");
 
-    for (j = 0; j < range; j++){
-
-
+    // for (j = 0; j < range; j++){
+	// printf("mass = %0.10E\n", mass_vals[j] );
+	
     // FILE *outfile = fopen("cap_rate_rad.dat", "w");
 
     for (i = 0; i < Nrpts; i++){
@@ -266,15 +266,16 @@ int main ()
        //double Br = B_r(vmax);
 
        //dCdr[i] = OmegaIntegral( 1., muFn, vmax )*sqrt(1.-Br)/Br/Br;
-       dCdr[i] = prefactors(testmass) * constCS() * OmegaIntegral( mass_vals[j], muFn, vmax, 0)* nd*nd/ndfree ;
+       dCdr[i] = prefactors(testmass) * constCS() * OmegaIntegral( testmass, muFn, vmax, 0)* nd*nd/ndfree ;
 
       //  fprintf(outfile,"%0.10E\t%.10E\t%.10E\t%0.10E\t%0.10E\n", radint[i], dCdr[i] , nd*nd/ndfree, dCdr[i]/(nd*nd/ndfree), vmax/SOL);
        //dCdr[i] = log(radint[i] * radint[i] *1e6 * nd_interp(radint[i], npts) /nresc*OmegaIntegral( mass_vals[j], muFn, vmax ));
     }
 
 
-   cap_full[j] = capture_rate(rmin, rmax);
-   fprintf(outfile, "%0.10E\t%0.10E\n", mass_vals[j], cap_full[j]);
+   double cap_full = capture_rate(rmin, rmax);
+   
+   printf("%0.10E\t%0.10E\n", testmass, cap_full);
  //   printf("%0.10E\n", test);
 
 
@@ -284,9 +285,9 @@ int main ()
 
 //       fprintf(outfile,"%0.10E\t%.10E\n", mass_vals[j], capture_rate(rmin, rmax)*1e3);
 
-   }
+   // }
 
-    fclose(outfile);
+   // fclose(outfile);
 
     end = clock();
   	total_time = ((double) (end - start)) / CLOCKS_PER_SEC/60;
