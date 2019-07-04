@@ -175,7 +175,7 @@ double OmegaIntegrand(double *x, size_t dim, void *p){
 		double dmvel = (params->DMvel);
 
     return x[0] * x[2] * heaviside_product(x[1], x[2], w_init(escvel, dmvel), x[0]) *
-		 FD(x[1], x[2], w_init(escvel, dmvel), chempot, dm) * (1.0 - FD(x[1], x[2], x[0], chempot, dm))*mom4CS(x[1], x[2], escvel ,x[0]);
+		 FD(x[1], x[2], w_init(escvel, dmvel), chempot, dm) * (1.0 - FD(x[1], x[2], x[0], chempot, dm));
 
 }
 

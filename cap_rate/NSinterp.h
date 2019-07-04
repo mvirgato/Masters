@@ -20,6 +20,6 @@ double potn_integrand(double rad, void *p);
 
 double potnl(double rad1, double rad2, int np);
 
-double esc_vel(double radius, int npts);
+double esc_vel_full(double radius, int npts);
 
 double B_r(double escvel);

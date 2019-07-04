@@ -274,9 +274,9 @@ double potnl(double rad1, double rad2, int np){
 
 //=========================================================
 
-double esc_vel(double radius, int npts){ //rad in km
+double esc_vel_full(double radius, int npts){ //rad in km
     //return ESCAPE_VEL;
-    return sqrt((2.0 * Grav * mass_interp(radius, npts) * 2E30) /radius/1e3);
+    return sqrt( potnl(radius, rmax, npts) + (2.0 * Grav * mass_interp(rmax, npts) * 2E30) /rmax/1e3);
 }
 
 //=========================================================
