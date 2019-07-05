@@ -52,7 +52,7 @@ double OmegaIntegral(double dm, double muFn, double vmax, double DMvel){
 
   gsl_monte_function G = { &OmegaIntegrand, 3, &params }; // {function, dimension, params}
 
-  size_t calls = 5000000;
+  size_t calls = 1000000;
 
   gsl_rng_env_setup ();
 
@@ -65,40 +65,40 @@ double OmegaIntegral(double dm, double muFn, double vmax, double DMvel){
   //                              &res, &err);
   //   gsl_monte_plain_free (s);
   //
-  //   // display_results ("plain", res, err);
+  //   display_results ("plain", res, err);
   // }
 
-  // {
-  //   gsl_monte_miser_state *s = gsl_monte_miser_alloc (3);
-  //   gsl_monte_miser_integrate (&G, xl, xu, 3, calls, r, s,
-  //                              &res, &err);
-  //   gsl_monte_miser_free (s);
-  //
-  //   display_results ("miser", res, err);
-  // }
-  //
   {
-    gsl_monte_vegas_state *s = gsl_monte_vegas_alloc (3);
-
-    gsl_monte_vegas_integrate (&G, xl, xu, 3, 100000, r, s,
+    gsl_monte_miser_state *s = gsl_monte_miser_alloc (3);
+    gsl_monte_miser_integrate (&G, xl, xu, 3, calls, r, s,
                                &res, &err);
-    display_results ("vegas warm-up", res, err);
-    //
-    // printf ("converging...\n");
+    gsl_monte_miser_free (s);
 
-    do
-      {
-        gsl_monte_vegas_integrate (&G, xl, xu, 3, calls/5, r, s,
-                                   &res, &err);
-        // printf ("result = % .6e sigma = % .6e "
-        //         "chisq/dof = %.1e\n", res, err, gsl_monte_vegas_chisq (s));
-      }
-    while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.5);
-
-    // display_results ("vegas final", res, err);
-
-    gsl_monte_vegas_free (s);
+    display_results ("miser", res, err);
   }
+  //
+  // {
+  //   gsl_monte_vegas_state *s = gsl_monte_vegas_alloc (3);
+  //
+  //   gsl_monte_vegas_integrate (&G, xl, xu, 3, 10000, r, s,
+  //                              &res, &err);
+  //   // display_results ("vegas warm-up", res, err);
+  //   //
+  //   // printf ("converging...\n");
+  //
+  //   do
+  //     {
+  //       gsl_monte_vegas_integrate (&G, xl, xu, 3, calls/5, r, s,
+  //                                  &res, &err);
+  //       // printf ("result = % .6e sigma = % .6e "
+  //       //         "chisq/dof = %.1e\n", res, err, gsl_monte_vegas_chisq (s));
+  //     }
+  //   while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.5);
+  //
+  //   display_results ("vegas final", res, err);
+  //
+  //   gsl_monte_vegas_free (s);
+  // }
 
   gsl_rng_free (r);
 
@@ -186,7 +186,7 @@ double dCdr_integrand(double r, void *p){
 //=========================================================
 
 
-double capture_rate (double rmin, double rmax){
+double capture_rate (double min, double max){
 
    double result, error;
 
@@ -200,7 +200,7 @@ double capture_rate (double rmin, double rmax){
 
 //   size_t limit; gsl_integration_qagiu (&F, 0, 1e-6, 1e-6, limit, w, &result, &error);
 
-   gsl_integration_qag (&F, rmin, rmax, 1.e-6, 1.e-6,1000,6, w, &result, &error);
+   gsl_integration_qag (&F, min, max, 1.e-6, 1.e-6,1000,6, w, &result, &error);
 
    gsl_integration_workspace_free (w);
 
@@ -225,7 +225,7 @@ int main ()
 
     int i,j;
 
-    double testmass = 1e-4 ;
+    // double testmass = 1e-4 ;
 
     int range = 20;
     double mass_vals[range];
@@ -233,46 +233,43 @@ int main ()
 
     logspace(-6, 1, range, mass_vals);
 
+    // double test_mass = 1e-6;
 
     // FILE *outfile = fopen("complete_caprate.dat", "w");
+    FILE *outfile3 = fopen("full_cap.dat", "w");
+    for (j = 0; j < range; j++){
 
-    // for (j = 0; j < range; j++){
-    // printf("mass = %0.10E\n", mass_vals[j] );
+      // FILE *outfile = fopen("cap_rate_rad.dat", "w");
 
-    FILE *outfile = fopen("cap_rate_rad.dat", "w");
-//
-    for (i = 0; i < Nrpts; i++){
+      for (i = 0; i < Nrpts; i++){
 
-      radint[i] = rmin + ((double) i)*(rmax-rmin)/(Nrpts-1);
-      double nd = nd_interp(radint[i], npts) * 1e+45; // m^-3
-      double muFn = muFn_interp(radint[i], npts);
-      double vmax = esc_vel_full(radint[i],  npts);
-      double ndfree = pow(2.*NM*muFn,1.5)/3./M_PI/M_PI/hbarc/hbarc/hbarc * 1e+45; // m^-3
-      //double Br = B_r(vmax);
+        radint[i] = rmin + ((double) i)*(rmax-rmin)/(Nrpts-1);
+        double nd = nd_interp(radint[i], npts) * 1e+45; // m^-3
+        double muFn = muFn_interp(radint[i], npts);
+        double vmax = esc_vel_full(radint[i],  npts);
+        double ndfree = pow(2.*NM*muFn,1.5)/3./M_PI/M_PI/hbarc/hbarc/hbarc * 1e+45; // m^-3
 
-      //dCdr[i] = OmegaIntegral( 1., muFn, vmax )*sqrt(1.-Br)/Br/Br;
-      dCdr[i] = prefactors(testmass) * constCS() *
-                OmegaIntegral( testmass, muFn, vmax, 0)* nd*nd/ndfree; //* radint[i] * radint[i]* 1e6 ;
+        dCdr[i] = prefactors(mass_vals[j]) * constCS() *
+                  OmegaIntegral( mass_vals[j], muFn, vmax, 0)* nd*nd/ndfree; //* radint[i] * radint[i]* 1e6 ;
 
-      fprintf(outfile,"%0.10E\t%.10E\t%.10E\t%0.10E\t%0.10E\n",
-             radint[i], dCdr[i] , nd*nd/ndfree, dCdr[i]/(nd*nd/ndfree), vmax/SOL);
-      //dCdr[i] = log(radint[i] * radint[i] *1e6 * nd_interp(radint[i], npts) /nresc*OmegaIntegral( mass_vals[j], muFn, vmax ));
-    }
+        // fprintf(outfile,"%0.10E\t%.10E\t%.10E\t%0.10E\t%0.10E\n",
+              //  radint[i], dCdr[i] , nd*nd/ndfree, dCdr[i]/(nd*nd/ndfree), vmax/SOL);
+      }
+      // fclose(outfile);
 
-    fclose(outfile);
+      cap_full[j] = capture_rate(rmin, rmax);
+      fprintf(outfile3, "%0.10e\t%0.10e\n", mass_vals[j], cap_full[j]);
 
-    FILE *outfile2 = fopen("cap_interp_test.dat", "w");
+    // FILE *outfile2 = fopen("cap_interp_test.dat", "w");
 
-    for (i = 0; i < Nrpts; i++){
-      fprintf(outfile,"%0.10E\t%.10E\t%.10E\t%0.10E\t%0.10E\n",
-             radint[i], dCdr_interp(radint[i]));
-    }
-    fclose(outfile2);
+    // for (i = 0; i < Nrpts; i++){
+    //   fprintf(outfile2,"%0.10E\t%.10E\n",
+    //          radint[i], dCdr_interp(radint[i]));
+    // }
+    // fclose(outfile2);
+   }
 
-
-   // }
-
-
+   fclose(outfile3);
 
     end = clock();
   	total_time = ((double) (end - start)) / CLOCKS_PER_SEC/60;
