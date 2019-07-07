@@ -68,37 +68,37 @@ double OmegaIntegral(double dm, double muFn, double vmax, double DMvel){
   //   display_results ("plain", res, err);
   // }
 
-  {
-    gsl_monte_miser_state *s = gsl_monte_miser_alloc (3);
-    gsl_monte_miser_integrate (&G, xl, xu, 3, calls, r, s,
-                               &res, &err);
-    gsl_monte_miser_free (s);
+ // {
+ //   gsl_monte_miser_state *s = gsl_monte_miser_alloc (3);
+ //   gsl_monte_miser_integrate (&G, xl, xu, 3, calls, r, s,
+ //                              &res, &err);
+ //   gsl_monte_miser_free (s);
 
-    display_results ("miser", res, err);
-  }
-  //
-  // {
-  //   gsl_monte_vegas_state *s = gsl_monte_vegas_alloc (3);
-  //
-  //   gsl_monte_vegas_integrate (&G, xl, xu, 3, 10000, r, s,
-  //                              &res, &err);
-  //   // display_results ("vegas warm-up", res, err);
-  //   //
-  //   // printf ("converging...\n");
-  //
-  //   do
-  //     {
-  //       gsl_monte_vegas_integrate (&G, xl, xu, 3, calls/5, r, s,
-  //                                  &res, &err);
-  //       // printf ("result = % .6e sigma = % .6e "
-  //       //         "chisq/dof = %.1e\n", res, err, gsl_monte_vegas_chisq (s));
-  //     }
-  //   while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.5);
-  //
-  //   display_results ("vegas final", res, err);
-  //
-  //   gsl_monte_vegas_free (s);
-  // }
+ //   display_results ("miser", res, err);
+ // }
+  
+   {
+     gsl_monte_vegas_state *s = gsl_monte_vegas_alloc (3);
+  
+     gsl_monte_vegas_integrate (&G, xl, xu, 3, 10000, r, s,
+                                &res, &err);
+     // display_results ("vegas warm-up", res, err);
+     //
+     // printf ("converging...\n");
+  
+     do
+       {
+         gsl_monte_vegas_integrate (&G, xl, xu, 3, calls/5, r, s,
+                                    &res, &err);
+         // printf ("result = % .6e sigma = % .6e "
+         //         "chisq/dof = %.1e\n", res, err, gsl_monte_vegas_chisq (s));
+       }
+     while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.5);
+  
+     display_results ("vegas final", res, err);
+  
+     gsl_monte_vegas_free (s);
+   }
 
   gsl_rng_free (r);
 
@@ -227,7 +227,7 @@ int main ()
 
     // double testmass = 1e-4 ;
 
-    int range = 20;
+    int range = 100;
     double mass_vals[range];
 
 
@@ -250,7 +250,7 @@ int main ()
         double ndfree = pow(2.*NM*muFn,1.5)/3./M_PI/M_PI/hbarc/hbarc/hbarc * 1e+45; // m^-3
 
         dCdr[i] = prefactors(mass_vals[j]) * constCS() *
-                  OmegaIntegral( mass_vals[j], muFn, vmax, 0)* nd*nd/ndfree; //* radint[i] * radint[i]* 1e6 ;
+                  DMvel_integral( mass_vals[j], muFn, vmax)* nd*nd/ndfree * radint[i] * radint[i]* 1e6 ;
 
         // fprintf(outfile,"%0.10E\t%.10E\t%.10E\t%0.10E\t%0.10E\n",
               //  radint[i], dCdr[i] , nd*nd/ndfree, dCdr[i]/(nd*nd/ndfree), vmax/SOL);
