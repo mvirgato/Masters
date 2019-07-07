@@ -17,9 +17,9 @@
 
 #define Nrpts 100
 
-double radint[Nrpts];
-double dCdr[Nrpts];
+double radint[Nrpts]; 
 double cap_full[Nrpts];
+double dCdr[Nrpts];
 
 //=========================================================
 void
@@ -99,8 +99,7 @@ double OmegaIntegral(double dm, double muFn, double vmax, double DMvel){
   
      gsl_monte_vegas_free (s);
    }
-
-  gsl_rng_free (r);
+gsl_rng_free (r);
 
   return res;
 }
@@ -149,7 +148,7 @@ double DMvel_integral (double dm, double muFn, double vmax){
 
 double dCdr_interp(double r) {
   // printf("called nd\n");
-
+   
    double dCdr_r;
 
    if (r >= radint[0] && r <= radint[Nrpts-1]) {
@@ -200,8 +199,7 @@ double capture_rate (double min, double max){
 
 //   size_t limit; gsl_integration_qagiu (&F, 0, 1e-6, 1e-6, limit, w, &result, &error);
 
-   gsl_integration_qag (&F, min, max, 1.e-6, 1.e-6,1000,6, w, &result, &error);
-
+   gsl_integration_qag (&F, min, max, 1.e-6, 1.e-6,1000,6, w, &result, &error); 
    gsl_integration_workspace_free (w);
 
    return result;
@@ -227,19 +225,21 @@ int main ()
 
     // double testmass = 1e-4 ;
 
-    int range = 100;
+    int range = 50;
     double mass_vals[range];
 
-
-    logspace(-6, 1, range, mass_vals);
+    logspace(-5, 1, range, mass_vals);
 
     // double test_mass = 1e-6;
 
     // FILE *outfile = fopen("complete_caprate.dat", "w");
     FILE *outfile3 = fopen("full_cap.dat", "w");
     for (j = 0; j < range; j++){
-
+	
+	printf("\n%e0.6E\n\n", mass_vals[j]);
+	
       // FILE *outfile = fopen("cap_rate_rad.dat", "w");
+	
 
       for (i = 0; i < Nrpts; i++){
 
@@ -248,9 +248,9 @@ int main ()
         double muFn = muFn_interp(radint[i], npts);
         double vmax = esc_vel_full(radint[i],  npts);
         double ndfree = pow(2.*NM*muFn,1.5)/3./M_PI/M_PI/hbarc/hbarc/hbarc * 1e+45; // m^-3
-
-        dCdr[i] = prefactors(mass_vals[j]) * constCS() *
-                  DMvel_integral( mass_vals[j], muFn, vmax)* nd*nd/ndfree * radint[i] * radint[i]* 1e6 ;
+	
+	dCdr[i] = prefactors(mass_vals[j]) * constCS() *
+                  OmegaIntegral( mass_vals[j], muFn, vmax, 0 )* nd*nd/ndfree * radint[i] * radint[i]* 1e6 ;
 
         // fprintf(outfile,"%0.10E\t%.10E\t%.10E\t%0.10E\t%0.10E\n",
               //  radint[i], dCdr[i] , nd*nd/ndfree, dCdr[i]/(nd*nd/ndfree), vmax/SOL);
@@ -267,7 +267,11 @@ int main ()
     //          radint[i], dCdr_interp(radint[i]));
     // }
     // fclose(outfile2);
-   }
+    
+    for (i = 0; i<Nrpts; i++){
+	dCdr[i] = 0; 
+   	}
+    }
 
    fclose(outfile3);
 
