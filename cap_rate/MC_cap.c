@@ -100,8 +100,12 @@ double OmegaIntegral(double dm, double muFn, double vmax, double DMvel){
      gsl_monte_vegas_free (s);
    }
 gsl_rng_free (r);
-
+  if (isnan(res)){
+	return 0;
+  }
+  else{
   return res;
+  }
 }
 
 //=========================================================
@@ -228,7 +232,7 @@ int main ()
     int range = 50;
     double mass_vals[range];
 
-    logspace(-5, 1, range, mass_vals);
+    logspace(-6, 1, range, mass_vals);
 
     // double test_mass = 1e-6;
 
@@ -250,7 +254,7 @@ int main ()
         double ndfree = pow(2.*NM*muFn,1.5)/3./M_PI/M_PI/hbarc/hbarc/hbarc * 1e+45; // m^-3
 	
 	dCdr[i] = prefactors(mass_vals[j]) * constCS() *
-                  OmegaIntegral( mass_vals[j], muFn, vmax, 0 )* nd*nd/ndfree * radint[i] * radint[i]* 1e6 ;
+                  DMvelIntegral( mass_vals[j], muFn, vmax )* nd*nd/ndfree * radint[i] * radint[i]* 1e6 ;
 
         // fprintf(outfile,"%0.10E\t%.10E\t%.10E\t%0.10E\t%0.10E\n",
               //  radint[i], dCdr[i] , nd*nd/ndfree, dCdr[i]/(nd*nd/ndfree), vmax/SOL);
