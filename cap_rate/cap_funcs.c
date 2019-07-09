@@ -157,13 +157,13 @@ for double int: s = x[0], t = x[1]
 for tripple int: v = x[0], s = x[1], t = x[2]
 */
 double tbound( double dm, double escvel, double muF, double DMvel){
-    return 1.05 * sqrt( (SOL * SOL * FERMI_VEL(muF) + mu(dm) * w_init(escvel, DMvel) * w_init(escvel, DMvel)) / ( 2.0 * mu(dm) * mu_plus(dm) ) );
+    return 1.5* sqrt( (SOL * SOL * FERMI_VEL(muF) + mu(dm) * w_init(escvel, DMvel) * w_init(escvel, DMvel)) / ( 2.0 * mu(dm) * mu_plus(dm) ) );
 }
 
 //=========================================================
 
 double sbound( double dm, double escvel, double muF, double DMvel){
-    return 1.05 * sqrt( (SOL * SOL * FERMI_VEL(muF) + mu(dm) * w_init(escvel, DMvel) * w_init(escvel, DMvel) )/ ( 2.0 * mu(dm) ) );
+    return 1.5 * sqrt( (SOL * SOL * FERMI_VEL(muF) + mu(dm) * w_init(escvel, DMvel) * w_init(escvel, DMvel) )/ ( 2.0 * mu(dm) ) );
 }
 
 //=========================================================

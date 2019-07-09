@@ -97,4 +97,5 @@ def full_plotter():
         # ax1.axis([0, 12, 0, 1.2e56])
         plt.savefig(name + '.png')
 
-full_plotter()
+# full_plotter()
+cap_rate_plots()

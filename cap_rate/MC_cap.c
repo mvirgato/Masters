@@ -17,7 +17,7 @@
 
 #define Nrpts 100
 
-double radint[Nrpts]; 
+double radint[Nrpts];
 double cap_full[Nrpts];
 double dCdr[Nrpts];
 
@@ -52,7 +52,7 @@ double OmegaIntegral(double dm, double muFn, double vmax, double DMvel){
 
   gsl_monte_function G = { &OmegaIntegrand, 3, &params }; // {function, dimension, params}
 
-  size_t calls = 1000000;
+  size_t calls = 2000000;
 
   gsl_rng_env_setup ();
 
@@ -76,16 +76,16 @@ double OmegaIntegral(double dm, double muFn, double vmax, double DMvel){
 //
 //    display_results ("miser", res, err);
 //  }
-  
+
    {
      gsl_monte_vegas_state *s = gsl_monte_vegas_alloc (3);
-  
+
      gsl_monte_vegas_integrate (&G, xl, xu, 3, 10000, r, s,
                                 &res, &err);
      // display_results ("vegas warm-up", res, err);
      //
      // printf ("converging...\n");
-  
+
      do
        {
          gsl_monte_vegas_integrate (&G, xl, xu, 3, calls/5, r, s,
@@ -94,14 +94,14 @@ double OmegaIntegral(double dm, double muFn, double vmax, double DMvel){
          //         "chisq/dof = %.1e\n", res, err, gsl_monte_vegas_chisq (s));
        }
      while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.5);
-  
+
      display_results ("vegas final", res, err);
-  
+
      gsl_monte_vegas_free (s);
    }
- 
+
   gsl_rng_free (r);
- 
+
  if (isnan(res) == 1){
 	return 0;
   }
@@ -154,7 +154,7 @@ double DMvel_integral (double dm, double muFn, double vmax){
 
 double dCdr_interp(double r) {
   // printf("called nd\n");
-   
+
    double dCdr_r;
 
    if (r >= radint[0] && r <= radint[Nrpts-1]) {
@@ -205,7 +205,7 @@ double capture_rate (double min, double max){
 
 //   size_t limit; gsl_integration_qagiu (&F, 0, 1e-6, 1e-6, limit, w, &result, &error);
 
-   gsl_integration_qag (&F, min, max, 1.e-6, 1.e-6,1000,6, w, &result, &error); 
+   gsl_integration_qag (&F, min, max, 1.e-6, 1.e-6,1000,6, w, &result, &error);
    gsl_integration_workspace_free (w);
 
    return result;
@@ -236,34 +236,35 @@ int main ()
 
     logspace(-6, 1, range, mass_vals);
 
-    // double test_mass = 1e-6;
+    double test_mass = 1e0;
 
     // FILE *outfile = fopen("complete_caprate.dat", "w");
-    FILE *outfile3 = fopen("vegas_full.dat", "w");
-    for (j = 0; j < range; j++){
-	
-	printf("\n%e0.6E\n\n", mass_vals[j]);
-	
-      // FILE *outfile = fopen("cap_rate_rad.dat", "w");
-	
+    // FILE *outfile3 = fopen("vegas_full.dat", "w");
+    // for (j = 0; j < range; j++){
+
+      // printf("\n%e0.6E\n\n", mass_vals[j]);
+
+      FILE *outfile = fopen("cap_rate_rad.dat", "w");
+
 
       for (i = 0; i < Nrpts; i++){
 
-        radint[i] = rmin + ((double) i)*(rmax-rmin)/(Nrpts-1); double nd = nd_interp(radint[i], npts) * 1e+45; // m^-3
+        radint[i] = rmin + ((double) i)*(rmax-rmin)/(Nrpts-1);
+        double nd = nd_interp(radint[i], npts) * 1e+45; // m^-3
         double muFn = muFn_interp(radint[i], npts);
         double vmax = esc_vel_full(radint[i],  npts);
         double ndfree = pow(2.*NM*muFn,1.5)/3./M_PI/M_PI/hbarc/hbarc/hbarc * 1e+45; // m^-3
-	
-	dCdr[i] = prefactors(mass_vals[j]) * constCS() *
-                  DMvel_integral( mass_vals[j], muFn, vmax )* nd*nd/ndfree * radint[i] * radint[i]* 1e6 ;
 
-        // fprintf(outfile,"%0.10E\t%.10E\t%.10E\t%0.10E\t%0.10E\n",
-              //  radint[i], dCdr[i] , nd*nd/ndfree, dCdr[i]/(nd*nd/ndfree), vmax/SOL);
+	      dCdr[i] = prefactors(test_mass) * constCS() *
+                  OmegaIntegral( test_mass, muFn, vmax, 0 ) * nd*nd/ndfree; //* radint[i] * radint[i]* 1e6 ;
+
+        fprintf(outfile,"%0.10E\t%.10E\t%.10E\t%0.10E\t%0.10E\n",
+               radint[i], dCdr[i] , nd*nd/ndfree, dCdr[i]/(nd*nd/ndfree), vmax/SOL);
       }
-      // fclose(outfile);
+      fclose(outfile);
 
-      cap_full[j] = capture_rate(rmin, rmax);
-      fprintf(outfile3, "%0.10e\t%0.10e\n", mass_vals[j], cap_full[j]);
+      // cap_full[j] = capture_rate(rmin, rmax);
+      // fprintf(outfile3, "%0.10e\t%0.10e\n", mass_vals[j], cap_full[j]);
 
     // FILE *outfile2 = fopen("cap_interp_test.dat", "w");
 
@@ -272,13 +273,13 @@ int main ()
     //          radint[i], dCdr_interp(radint[i]));
     // }
     // fclose(outfile2);
-    
-    for (i = 0; i<Nrpts; i++){
-	dCdr[i] = 0; 
-   	}
-    }
 
-   fclose(outfile3);
+    // for (i = 0; i<Nrpts; i++){
+	// dCdr[i] = 0;
+   	 //  }
+    // }
+
+  //  fclose(outfile3);
 
     end = clock();
   	total_time = ((double) (end - start)) / CLOCKS_PER_SEC/60;

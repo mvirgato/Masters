@@ -1,5 +1,5 @@
 #define SOL 299792458.0 // speed of light in vacuum m/s
-#define hbarc 197.3269788/1e3  // GeV fm
+#define hbarc 0.1973269788/1e3  // GeV fm
 
 #define NM 0.939    //neutron mass in GeV
 #define Grav 6.67408E-11
