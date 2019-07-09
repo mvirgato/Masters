@@ -86,7 +86,7 @@ def full_plotter():
         for x in lines:
             x = x.split('\t')
             domain = np.append(domain, float(x[0]))
-            range = np.append(range, float(x[1]))
+            range = np.append(range, float(x[1]) )
 
         current_file.close
 
@@ -97,5 +97,5 @@ def full_plotter():
         # ax1.axis([0, 12, 0, 1.2e56])
         plt.savefig(name + '.png')
 
-# full_plotter()
+full_plotter()
 cap_rate_plots()

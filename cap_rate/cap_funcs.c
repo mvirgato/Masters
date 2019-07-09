@@ -31,7 +31,7 @@ double mu_plus(double dm){
 
 
 double FERMI_VEL(double muF){
-//square of fermi vel
+//square of fermi vel in natural units
 
 	return  (2.0 * muF ) / NM ;
 
@@ -41,7 +41,7 @@ double FERMI_VEL(double muF){
 double prefactors(double dm){
 
 	return 64*M_PI* mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) *
-					erf(sqrt(3/2)*NSVEL/VELDISP)/NSVEL*(1e6/dm);
+					erf(sqrt(3/2)*NSVEL/VELDISP)/NSVEL*(1e6/dm); // rho_chi/dm in GeV/m^2
 }
 //=========================================================
 
@@ -73,7 +73,7 @@ double sineSqr(double s, double t, double v){
 
 double step(double f){
 	/* a step function to constrain integration region */
-	if ( f > 1){
+	if ( f >= 1){
 		return 1;
 	}
 	else{
@@ -86,7 +86,7 @@ double step(double f){
 double heaviside_product(double s, double t, double vi, double vf){
 	/* product of relevant step functions */
 	return ( step( vi - fabs(s-t) ) * step( s + t - vi ) *
-					step( vf - fabs(s-t) ) * step(s + t -vf) );
+					step( vf - fabs(s-t) ) * step(s + t - vf) );
 }
 
 //=========================================================
