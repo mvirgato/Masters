@@ -236,7 +236,7 @@ int main ()
 
     logspace(-6, 1, range, mass_vals);
 
-    double test_mass = 1e-3;
+    double test_mass = 1.;
 
     // FILE *outfile = fopen("complete_caprate.dat", "w");
     // FILE *outfile3 = fopen("vegas_full.dat", "w");
