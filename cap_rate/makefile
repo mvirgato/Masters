@@ -10,7 +10,7 @@ LDFLAGS = -lgsl -lgslcblas -lm
 
 SOURCES=MC_cap.c NSinterp.c cap_funcs.c
 OBJECTS=$(SOURCES:.c=.o)
-EXEC=run_misner_no_vel
+EXEC=run_vegas_full
 
 
 all: $(EXEC)
