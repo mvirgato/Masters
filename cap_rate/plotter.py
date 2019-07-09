@@ -2,6 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+
+files = ['misner_full_cap', 'misner_no_vel_cap', 'vegas_no_vel_cap']
+
 def cap_rate_plots():
     """
     Plots capture rate
@@ -70,6 +73,28 @@ def cap_interp_plts():
     plt.savefig('cap_interp_plot.png')
 
 
+def full_plotter():
 
-cap_rate_plots()
-cap_interp_plts()
+    for name in files:
+        lines = []
+        domain = np.empty(0)
+        range = np.empty(0)
+
+        current_file = open(name + '.dat', 'r')
+        lines = current_file.readlines()
+
+        for x in lines:
+            x = x.split('\t')
+            domain = np.append(domain, float(x[0]))
+            range = np.append(range, float(x[1]))
+
+        current_file.close
+
+        fig, ax1 = plt.subplots()
+        ax1.loglog(domain, range, color='blue')
+        ax1.set(xlabel = r'$m$ [GeV]', ylabel = r'$C$', title = name)
+        # ax1.set_yscale('log')
+        # ax1.axis([0, 12, 0, 1.2e56])
+        plt.savefig(name + '.png')
+
+full_plotter()
