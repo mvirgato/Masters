@@ -6,9 +6,9 @@ double sbound( double dm, double escvel, double muF, double DMvel);
 
 struct omega_params {double dm_mass; double muF; double escvel; double DMvel;};
 
-double w(double escvel, double DMvel);
-
 double fvel(double DMvel);
+
+double FD(double s, double t, double vel, double chempot, double dm);
 
 double OmegaIntegrand(double *x, size_t dim, void *p);
 

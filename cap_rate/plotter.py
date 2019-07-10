@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 
 
-files = ['misner_full_cap', 'misner_no_vel_cap', 'vegas_no_vel_cap']
+files = ['misner_full_cap', 'misner_no_vel_cap', 'vegas_no_vel_cap', 'vegas_full']
 
 def cap_rate_plots():
     """
@@ -33,7 +33,7 @@ def cap_rate_plots():
     ax1.set(xlabel = r'$Radius$ [km]', ylabel = r'$C/V$')
     # ax1.set_yscale('log')
     # ax1.axis([0, 12, 0, 1.2e56])
-    plt.savefig('C_per_V_1GeV.png')
+    plt.savefig('C_per_V.png')
 
     fig, ax2 = plt.subplots()
     ax2.plot(domain, range2, color='blue')
