@@ -235,7 +235,7 @@ int main ()
 
     logspace(-6, 1, range, mass_vals);
 
-    double test_mass = 1e-3;
+    double test_mass = 1.e0;
 
     // FILE *outfile = fopen("complete_caprate.dat", "w");
     // FILE *outfile3 = fopen("vegas_full.dat", "w");
@@ -253,11 +253,10 @@ int main ()
         double vmax = esc_vel_full(radint[i],  npts);
         double ndfree = pow(2.*NM*muFn,1.5)/3./M_PI/M_PI/hbarc/hbarc/hbarc * 1e45; // m^-3
 
-	      dCdr[i] = prefactors(test_mass) * constCS() *
-                  OmegaIntegral( test_mass, muFn, vmax, 0 ); //* nd*nd/ndfree; //* radint[i] * radint[i]* 1e6 ;
+	      dCdr[i] = prefactors(test_mass)*constCS() * OmegaIntegral( test_mass, muFn, vmax, 0 ) * nd*nd/ndfree; //* radint[i] * radint[i]* 1e6 ;
 
-        fprintf(outfile,"%0.10E\t%.10E\t%.10E\t%0.10E\t%0.10E\n",
-               radint[i], dCdr[i] , nd*nd/ndfree, dCdr[i]/(nd*nd/ndfree), vmax/SOL);
+        fprintf(outfile,"%0.10E\t%.10E\t%.10E\n",
+               radint[i], dCdr[i] , nd*nd/ndfree);
       }
       fclose(outfile);
 
@@ -280,8 +279,20 @@ int main ()
   //  fclose(outfile3);
 
     end = clock();
-  	total_time = ((double) (end - start)) / CLOCKS_PER_SEC/60;
-  	printf("\nTime taken is: %f min\n", total_time);
+  	total_time = ((double) (end - start)) / CLOCKS_PER_SEC;
+
+    int hrs, min;
+    float sec;
+
+    if (total_time < 60){
+      hrs =0; min =0; sec = total_time;
+    } else if (total_time < 3600){
+      hrs = 0; min = round(total_time/60); sec = round(total_time - 60 * min);
+    } else if (total_time) {
+      hrs = round(total_time/3600); min = round(total_time/60 - 60 * hrs); sec = total_time - 60 * min;
+    }
+
+  	printf("\nTime taken is: %d hrs : %d min : %f sec\n",hrs, min, sec);
 
     return 0;
   }

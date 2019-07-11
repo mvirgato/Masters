@@ -67,38 +67,13 @@ double sineSqr(double s, double t, double v){
 
 //=========================================================
 
-//STEP FUNCTIONS
-
-//=========================================================
-
-double step(double f){
-	/* a step function to constrain integration region */
-	if ( f >= 1){
-		return 1;
-	}
-	else{
-		return 0;
-	}
-}
-
-//=========================================================
-
-double heaviside_product(double s, double t, double vi, double vf){
-	/* product of relevant step functions */
-	return ( step( vi - fabs(s-t) ) * step( s + t - vi ) *
-					step( vf - fabs(s-t) ) * step(s + t - vf) );
-}
-
-//=========================================================
-
 //ENERGIES
 
 //=========================================================
 
 double velsqr(double s, double t, double vel, double dm){
 	/* square of velocity: v = ESCAPE_VEL for initial particle */
-	double a = (2.0 * mu(dm) * mu_plus(dm) * t * t + 2.0 * mu_plus(dm) *
-							s*s - mu(dm) * vel * vel);
+	double a = (2.0 * mu(dm) * mu_plus(dm) * t * t + 2.0 * mu_plus(dm)*s*s - mu(dm) * vel * vel);
 	return a / (SOL*SOL);
 }
 
@@ -117,7 +92,7 @@ double energy(double s, double t, double vel, double dm){
 double FD(double s, double t, double vel, double chempot, double dm){
 
 
- return 1.0 /(  1.0 + exp( ( energy(s, t, vel , dm) -  chempot)  / TEMP ) );
+ return (1.0 /(  1.0 + exp( ( energy(s, t, vel , dm) -  chempot)  / TEMP ) ));
 
 }
 
@@ -156,32 +131,7 @@ double fvel(double DMvel) {
 for double int: s = x[0], t = x[1]
 for tripple int: v = x[0], s = x[1], t = x[2]
 */
-double tbound( double dm, double escvel, double muF, double DMvel){
-    return 2. * sqrt( (SOL * SOL * FERMI_VEL(muF) + mu(dm) * w_init(escvel, DMvel) * w_init(escvel, DMvel)) / ( 2.0 * mu(dm) * mu_plus(dm) ) );
-}
-
 //=========================================================
-
-double sbound( double dm, double escvel, double muF, double DMvel){
-    return 2. * sqrt( (SOL * SOL * FERMI_VEL(muF) + mu(dm) * w_init(escvel, DMvel) * w_init(escvel, DMvel) )/ ( 2.0 * mu(dm) ) );
-}
-
-//=========================================================
-
-
-// double OmegaIntegrand(double *x, size_t dim, void *p){
-//
-//     struct omega_params *params = (struct omega_params *)p;
-//
-//     double dm      = (params->dm_mass);
-//     double chempot = (params->muF);
-//     double escvel  = (params->escvel);
-// 		double dmvel   = (params->DMvel);
-//
-//     return x[0] * x[2] * heaviside_product(x[1], x[2], w_init(escvel, dmvel), x[0]) *
-// 		 FD(x[1], x[2], w_init(escvel, dmvel), chempot, dm) * (1.0 - FD(x[1], x[2], x[0], chempot, dm));
-//
-// }
 
 //=========================================================
 

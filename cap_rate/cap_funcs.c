@@ -157,13 +157,13 @@ for double int: s = x[0], t = x[1]
 for tripple int: v = x[0], s = x[1], t = x[2]
 */
 double tbound( double dm, double escvel, double muF, double DMvel){
-    return 2. * sqrt( (SOL * SOL * FERMI_VEL(muF) + mu(dm) * w_init(escvel, DMvel) * w_init(escvel, DMvel)) / ( 2.0 * mu(dm) * mu_plus(dm) ) );
+    return 3. * sqrt( (SOL * SOL * FERMI_VEL(muF) + mu(dm) * w_init(escvel, DMvel) * w_init(escvel, DMvel)) / ( 2.0 * mu(dm) * mu_plus(dm) ) );
 }
 
 //=========================================================
 
 double sbound( double dm, double escvel, double muF, double DMvel){
-    return 2. * sqrt( (SOL * SOL * FERMI_VEL(muF) + mu(dm) * w_init(escvel, DMvel) * w_init(escvel, DMvel) )/ ( 2.0 * mu(dm) ) );
+    return 3. * sqrt( (SOL * SOL * FERMI_VEL(muF) + mu(dm) * w_init(escvel, DMvel) * w_init(escvel, DMvel) )/ ( 2.0 * mu(dm) ) );
 }
 
 //=========================================================
@@ -178,8 +178,8 @@ double OmegaIntegrand(double *x, size_t dim, void *p){
     double escvel  = (params->escvel);
 		double dmvel   = (params->DMvel);
 
-    return x[0] * x[2] * heaviside_product(x[1], x[2], w_init(escvel, dmvel), x[0]) *
-		 FD(x[1], x[2], w_init(escvel, dmvel), chempot, dm) * (1.0 - FD(x[1], x[2], x[0], chempot, dm));
+    return x[0] * x[2] * heaviside_product(x[1], x[2], escvel, x[0]) *
+		 FD(x[1], x[2], escvel, chempot, dm) * (1.0 - FD(x[1], x[2], x[0], chempot, dm));
 
 }
 
