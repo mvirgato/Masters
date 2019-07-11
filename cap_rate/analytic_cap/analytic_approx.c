@@ -291,9 +291,9 @@ int main()
 
   int i,j;
 
-  int range = 50;
+  int range = 100;
   double mass_vals[range];
-  logspace(-9, 2, range, mass_vals);
+  logspace(-9, 1, range, mass_vals);
 
   // double test_mass   = 1.e2;
 
@@ -314,7 +314,7 @@ int main()
       double ndfree      = pow(2.*NM*chempot,1.5)/3./M_PI/M_PI/hbarc/hbarc/hbarc * 1.e45 ;
 
 
-      dCdr[i] = OmegaIntegral(initialvel, chempot, mass_vals[j]) * nd*nd/ndfree;
+      dCdr[i] = prefactors(mass_vals[j])*constCS()*OmegaIntegral(initialvel, chempot, mass_vals[j]) * nd*nd/ndfree;
       // fprintf(outfile, "%0.10E\t%0.10E\t%0.10E\n", radint[i], dCdr[i], nd*nd/ndfree);
 
     }
@@ -340,9 +340,9 @@ int main()
   if (total_time < 60){
     hrs =0; min =0; sec = total_time;
   } else if (total_time < 3600){
-    hrs = 0; min = round(total_time/60); sec = round(total_time - 60 * min);
+    hrs = 0; min = floor(total_time/60); sec = total_time - 60 * min;
   } else {
-    hrs = round(total_time/3600); min = round(total_time/60 - 60 * hrs); sec = round(total_time - 60 * min);
+    hrs = floor(total_time/3600); min = floor(total_time/60 - 60 * hrs); sec = total_time - 60 * min;
   }
 
   printf("\nTime taken is: %d hrs : %d min : %f sec\n",hrs, min, sec);

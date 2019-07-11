@@ -30,14 +30,6 @@ double mu_plus(double dm){
 //=========================================================
 
 
-double FERMI_VEL(double muF){
-//square of fermi vel in natural units
-
-	return  (2.0 * muF ) / NM ;
-
-}
-
-
 double prefactors(double dm){
 
 	return 64*M_PI* mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) *erf(sqrt(3/2)*NSVEL/VELDISP)/NSVEL*(1e6/dm); // rho_chi/dm in GeV/m^2
@@ -64,23 +56,6 @@ double sineSqr(double s, double t, double v){
 	return (1 - cosine(s, t, v)*cosine(s, t, v) );
 }
 
-//=========================================================
-
-//ENERGIES
-
-//=========================================================
-
-double velsqr(double s, double t, double vel, double dm){
-	/* square of velocity: v = ESCAPE_VEL for initial particle */
-	double a = (2.0 * mu(dm) * mu_plus(dm) * t * t + 2.0 * mu_plus(dm)*s*s - mu(dm) * vel * vel);
-	return a / (SOL*SOL);
-}
-
-//=========================================================
-
-double energy(double s, double t, double vel, double dm){
-	return 0.5 * NM * velsqr(s, t, vel, dm);
-}
 
 //=========================================================
 
@@ -91,7 +66,7 @@ double energy(double s, double t, double vel, double dm){
 double FD(double s, double t, double vel, double chempot, double dm){
 
 
- return (1.0 /(  1.0 + exp( ( energy(s, t, vel , dm) -  chempot)  / TEMP ) ));
+ return (1.0 /(  1.0 + exp( ( 0.5*NM*( 2.*mu(dm)*mu_plus(dm)*t*t + 2.*mu_plus(dm)*s*s - mu(dm)*vel*vel)/SOL/SOL -  chempot)  / TEMP ) ) );
 
 }
 
