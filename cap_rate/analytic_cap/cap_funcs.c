@@ -23,7 +23,7 @@ double mu(double dm){
 
 double mu_plus(double dm){
 
-	return ( 1.0 + dm / NM) / 2.0;
+	return (0.5*( 1.0 + dm / NM) );
 }
 
 
@@ -40,8 +40,7 @@ double FERMI_VEL(double muF){
 
 double prefactors(double dm){
 
-	return 64*M_PI* mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) *
-					erf(sqrt(3/2)*NSVEL/VELDISP)/NSVEL*(1e6/dm); // rho_chi/dm in GeV/m^2
+	return 64*M_PI* mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) *erf(sqrt(3/2)*NSVEL/VELDISP)/NSVEL*(1e6/dm); // rho_chi/dm in GeV/m^2
 }
 //=========================================================
 
