@@ -8,9 +8,9 @@ CFLAGS = -O3
 
 LDFLAGS = -lgsl -lgslcblas -lm
 
-SOURCES=MC_cap.c NSinterp.c cap_funcs.c
+SOURCES=analytic_approx.c NSinterp.c cap_funcs.c
 OBJECTS=$(SOURCES:.c=.o)
-EXEC=run_MC
+EXEC=run_analytic
 
 
 all: $(EXEC)

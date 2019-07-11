@@ -1,0 +1,26 @@
+ #!/bin/csh
+
+# --- Start PBS Directives ---
+# Inherit current user environment
+#PBS -V
+
+# Submit to the long queue
+#PBS -q long
+
+# Name of my job:
+#PBS -N analytic_cap
+
+# Where to write stderr:
+#PBS -e err.err
+
+# Where to write stdout:
+#PBS -o out.out
+
+
+# This command switched to the directory from which the "qsub" command was run:
+cd $PBS_O_WORKDIR
+
+
+#  Now run my program
+
+./run_analytic
