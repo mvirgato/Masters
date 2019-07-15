@@ -158,7 +158,7 @@ int main()
   npts = readdata("eos_24_lowmass.dat");
 
   double test_rad   = 11.3;
-  double test_mass  = 1.e1;
+  double test_mass  = 1.e-3;
   double muFn       = muFn_interp(test_rad, npts);
   double initialvel = esc_vel_full(test_rad, npts)/SOL/SOL;
 
