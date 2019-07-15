@@ -30,11 +30,11 @@ double mu(double DMmass){
 }
 
 double muPlus(double DMmass){
-  return (0.5*(DMmass/NM + 1));
+  return (0.5*((DMmass/NM) + 1));
 }
 
 double muMinus(double DMMass){
-  return (0.5*(DMMass/NM - 1));
+  return (0.5*((DMMass/NM) - 1));
 }
 
 // =========================================================
@@ -44,7 +44,7 @@ double LambdaPlus(double initvel, double finvel, double DMmass, double chempot){
 }
 
 double LambdaMinus(double initvel, double finvel, double DMmass, double chempot){
-  return sqrt( FermiVel(chempot) - mu(DMmass) * (initvel*initvel - finvel*finvel) );
+  return sqrt( FermiVel(chempot) * FermiVel(chempot) - mu(DMmass) * (initvel*initvel - finvel*finvel) );
 }
 
 // =========================================================
@@ -90,7 +90,7 @@ double phiMinus(double initvel, double finvel, double DMmass){
 // =========================================================
 
 double step(double x){
-  if (x <=0){
+  if (x <0){
     return ((double) 0.);
   }
   else{
@@ -151,6 +151,8 @@ double SixMuI (double initvel, double finvel, double DMmass, double chempot){
   return -l1 - l2 - l3 - l4 + l5 - l6 + l7 - l8 - l9 - l10 - l11 + l12 + l13;
 }
 
+// =========================================================
+
 int main()
 {
 
@@ -158,9 +160,10 @@ int main()
   npts = readdata("eos_24_lowmass.dat");
 
   double test_rad   = 11.3;
-  double test_mass  = 1.e-3;
+  double test_mass  = 1e0;
   double muFn       = muFn_interp(test_rad, npts);
-  double initialvel = esc_vel_full(test_rad, npts)/SOL/SOL;
+  double initialvel = esc_vel_full(test_rad, npts)/SOL;
+
 
 
   double test = SixMuI(initialvel, initialvel, test_mass, muFn);
