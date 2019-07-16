@@ -8,7 +8,7 @@ CFLAGS = -O3
 
 LDFLAGS = -lgsl -lgslcblas -lm
 
-SOURCES=zero_temp.c NSinterp.c
+SOURCES=zero_temp.c cap_funcs.c NSinterp.c
 OBJECTS=$(SOURCES:.c=.o)
 EXEC=run_zero
 

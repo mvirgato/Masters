@@ -26,6 +26,12 @@ double mu_plus(double dm){
 	return (0.5*( 1.0 + dm / NM) );
 }
 
+//=========================================================
+
+double FermiVel(double chempot){
+  return sqrt(0.5*chempot/NM);
+}
+
 
 //=========================================================
 
@@ -68,6 +74,19 @@ double FD(double s, double t, double vel, double chempot, double dm){
 
  return (1.0 /(  1.0 + exp( ( 0.5*NM*( 2.*mu(dm)*mu_plus(dm)*t*t + 2.*mu_plus(dm)*s*s - mu(dm)*vel*vel)/SOL/SOL -  chempot)  / TEMP ) ) );
 
+}
+
+//=========================================================
+
+//STEP FUNCTION
+
+double step(double x){
+  if (x <0){
+    return ((double) 0.);
+  }
+  else{
+    return ((double) 1.);
+  }
 }
 
 //=========================================================
@@ -116,6 +135,7 @@ for tripple int: v = x[0], s = x[1], t = x[2]
 double constCS(){
 	return 1e-45/2 * 1e-4; // m^2
 }
+
 //=========================================================
 
 double mom4CS(double s, double t, double vinit, double vfin){

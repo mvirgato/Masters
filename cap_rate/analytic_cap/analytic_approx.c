@@ -42,7 +42,12 @@ double ItIntegrand(double tvel, void *p){
   double v        =  (params->finalvel);
   double w        =  (params->initvel);
 
-  return tvel * FD(s, tvel, w, chempot, dm) * ( 1 - FD(s, tvel, v, chempot, dm) );
+  double MU       =  mu(dm);
+  double FV       =  FermiVel(chempot);
+  double MUP      =  mu_plus(dm);
+
+  // return tvel * FD(s, tvel, w, chempot, dm) * ( 1 - FD(s, tvel, v, chempot, dm) );
+  return tvel*step(FV*FV*SOL*SOL + w*w - 2.*MU*MUP*tvel*tvel - 2.*MUP*s*s)*step(2.*MU*MUP*tvel*tvel +2.*MUP*s*s - FV*FV*SOL*SOL - MU*v*v);
 }
 
 //=========================================================
@@ -293,16 +298,26 @@ int main()
 
   int range = 100;
   double mass_vals[range];
-  logspace(-9, 1, range, mass_vals);
+  logspace(-9, 4, range, mass_vals);
 
   // double test_mass   = 1.e2;
 
   int npts;
   npts = readdata("eos_24_lowmass.dat");
 
-  FILE *outfile = fopen("analytic_complete_cap.dat", "w");
+  double test_rad   = 11.3;
+  double test_mass  = 1e-3;
+  // double muFn       = muFn_interp(test_rad, npts);
+  // double initialvel = esc_vel_full(test_rad, npts)/SOL;
 
+
+
+  FILE *outfile = fopen("analytic_complete_cap.dat", "w");
+  //
   for (j =0; j<range;j++){
+    // double test = 0;
+    // test = 3.*(mass_vals[j]/NM + 1)*(I1Integral(initialvel, initialvel, muFn, mass_vals[j]) + I2Integral(initialvel, initialvel, muFn, mass_vals[j]));
+    // fprintf(outfile, "%0.8e\t%0.8E\n",mass_vals[j], test);
 
     for (i = 0; i<Nrpts; i++){
 
@@ -318,8 +333,9 @@ int main()
       // fprintf(outfile, "%0.10E\t%0.10E\t%0.10E\n", radint[i], dCdr[i], nd*nd/ndfree);
 
     }
-
-
+  //
+  // double test = capture_rate(rmin, rmax);
+  // printf("%0.8e\n", test);
 
     cap_full[j] = capture_rate(rmin, rmax);
     fprintf(outfile, "%0.10e\t%0.10e\n", mass_vals[j], cap_full[j]);
@@ -328,7 +344,7 @@ int main()
       dCdr[i] = 0;
     }
   }
-
+  //
   fclose(outfile);
 
   end = clock();

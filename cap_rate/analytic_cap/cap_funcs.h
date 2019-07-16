@@ -1,5 +1,11 @@
 double prefactors(double dm);
 
+double mu(double dm);
+
+double mu_plus(double dm);
+
+double FermiVel(double chempot);
+
 double tbound( double dm, double escvel, double muF, double DMvel);
 
 double sbound( double dm, double escvel, double muF, double DMvel);
@@ -9,6 +15,8 @@ struct omega_params {double dm_mass; double muF; double escvel; double DMvel;};
 double fvel(double DMvel);
 
 double FD(double s, double t, double vel, double chempot, double dm);
+
+double step(double x);
 
 // double OmegaIntegrand(double *x, size_t dim, void *p);
 
