@@ -219,7 +219,7 @@ double OmegaIntegral(double initvel, double chempot, double DMmass){
   gsl_integration_workspace_free(wp5);
   printf("result        = %0.8E\n", res5);
   printf("error         = %0.8E\n", err5);
-  printf("==========================\n");
+  printf("==============================\n");
   return res5;
 }
 
