@@ -46,8 +46,8 @@ double ItIntegrand(double tvel, void *p){
   double FV       =  FermiVel(chempot);
   double MUP      =  mu_plus(dm);
 
-  // return tvel * FD(s, tvel, w, chempot, dm) * ( 1 - FD(s, tvel, v, chempot, dm) );
-  return tvel*step(FV*FV*SOL*SOL + w*w - 2.*MU*MUP*tvel*tvel - 2.*MUP*s*s)*step(2.*MU*MUP*tvel*tvel +2.*MUP*s*s - FV*FV*SOL*SOL - MU*v*v);
+  return tvel * FD(s, tvel, w, chempot, dm) * ( 1 - FD(s, tvel, v, chempot, dm) );
+  // return tvel*step(FV*FV*SOL*SOL + w*w - 2.*MU*MUP*tvel*tvel - 2.*MUP*s*s)*step(2.*MU*MUP*tvel*tvel +2.*MUP*s*s - FV*FV*SOL*SOL - MU*v*v);
 }
 
 //=========================================================
