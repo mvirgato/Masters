@@ -29,11 +29,11 @@ def cap_rate_plots():
     current_file.close
 
     fig, ax1 = plt.subplots()
-    ax1.plot(domain, range, color='blue')
+    ax1.loglog(domain, range, color='blue')
     ax1.set(xlabel = r'$Radius$ [km]', ylabel = r'$C/V$')
     # ax1.set_yscale('log')
     # ax1.axis([0, 12, 0, 1.2e56])
-    plt.savefig('C_per_V.png')
+    plt.savefig('com_plot.png')
 
 
 

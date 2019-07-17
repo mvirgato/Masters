@@ -210,6 +210,11 @@ double rintegral(double dmmass, int npts){
 
 int main() {
 
+  double total_time;
+  clock_t start, end;
+  start = clock();
+  srand(time(NULL));
+
   double testmass = 1e-3;
 
   int i;
@@ -225,13 +230,28 @@ int main() {
 
   for (i = 0; i<Nrpts; i++){
 
-        cap_full[i] = 4*M_PI*M_PI*M_PI*0.5e-49*SOL*SOL * rintegral(mass_vals[i], npts);
+        cap_full[i] = 4*M_PI*M_PI*M_PI*0.5e-49*SOL*SOL * rintegral(mass_vals[i], npts)*(1e6/mass_vals[i]);
         fprintf(outfile, "%0.10E\t%0.10E\n", mass_vals[i], cap_full[i]);
 
       }
 
-      fclose(outfile);
+  fclose(outfile);
 
+  end = clock();
+  total_time = ((double) (end - start)) / CLOCKS_PER_SEC;
+
+  int hrs, min;
+  float sec;
+
+  if (total_time < 60){
+    hrs =0; min =0; sec = total_time;
+  } else if (total_time < 3600){
+    hrs = 0; min = floor(total_time/60); sec = total_time - 60 * min;
+  } else {
+    hrs = floor(total_time/3600); min = floor(total_time/60 - 60 * hrs); sec = total_time - 60 * min;
+  }
+
+  printf("\nTime taken is: %d hrs : %d min : %f sec\n",hrs, min, sec);
 
   // double test = vintegral(w, chempot, testmass);
   // printf("%0.8e\n", test);
