@@ -163,6 +163,7 @@ double I2Integral(double finalvel, double initvel, double chempot, double DMmass
   struct IParams params4 = {finalvel, initvel, chempot, DMmass};
 
   double smin = 0.5*(initvel + finalvel);
+  double smax = (FermiVel(chempot) + 1e6*0.81 )* ( 5e8 );
 
   double res4, err4;
 
@@ -173,9 +174,9 @@ double I2Integral(double finalvel, double initvel, double chempot, double DMmass
   F4.function = &I2Integrand;
   F4.params   = &params4;
 
-  size_t limit;
+  // size_t limit;
 
-  gsl_integration_qagiu(&F4, smin, 1.e-6, 1.e-6, limit, wp4, &res4, &err4);
+  gsl_integration_qag(&F4, smin, smax, 1.e-6, 1.e-6, 5000, 6, wp4, &res4, &err4);
   gsl_integration_workspace_free(wp4);
 
   return res4;
@@ -298,7 +299,7 @@ int main()
 
   int range = 100;
   double mass_vals[range];
-  logspace(-9, 4, range, mass_vals);
+  logspace(-9, 6, range, mass_vals);
 
   // double test_mass   = 1.e2;
 
@@ -306,13 +307,14 @@ int main()
   npts = readdata("eos_24_lowmass.dat");
 
   double test_rad   = 11.3;
-  double test_mass  = 1e-3;
+  double test_mass  = 1e0;
   // double muFn       = muFn_interp(test_rad, npts);
   // double initialvel = esc_vel_full(test_rad, npts)/SOL;
 
 
 
   FILE *outfile = fopen("analytic_complete_cap.dat", "w");
+  // FILE *outfile = fopen("analytic_rad_cap.dat", "w");
   //
   for (j =0; j<range;j++){
     // double test = 0;
@@ -323,19 +325,19 @@ int main()
 
       radint[i] = rmin + ((double) i)*(rmax-rmin)/(Nrpts-1);
 
-      double initialvel  = esc_vel_full(radint[i], npts);
-      double nd          = nd_interp(radint[i], npts)* 1.e45 ; // m^-3
+      double initialvel  = esc_vel_full(radint[i], npts)/SOL;
+      double nd          = nd_interp(radint[i], npts) ; // m^-3
       double chempot     = muFn_interp(radint[i], npts);
-      double ndfree      = pow(2.*NM*chempot,1.5)/3./M_PI/M_PI/hbarc/hbarc/hbarc * 1.e45 ;
+      double ndfree      = pow(2.*NM*chempot,1.5)/3./M_PI/M_PI/hbarc/hbarc/hbarc;
 
 
-      dCdr[i] = prefactors(mass_vals[j])*constCS()*OmegaIntegral(initialvel, chempot, mass_vals[j]) * nd*nd/ndfree;
-      // fprintf(outfile, "%0.10E\t%0.10E\t%0.10E\n", radint[i], dCdr[i], nd*nd/ndfree);
+      dCdr[i] = prefactors(mass_vals[j])*constCS()*OmegaIntegral(initialvel, chempot, mass_vals[j]) * nd*nd/ndfree*radint[i]*radint[i];
+      fprintf(outfile, "%0.10E\t%0.10E\t%0.10E\n", radint[i], dCdr[i], initialvel);
 
     }
-  //
-  // double test = capture_rate(rmin, rmax);
-  // printf("%0.8e\n", test);
+
+  double test = capture_rate(rmin, rmax);
+  printf("%0.8e\n", test);
 
     cap_full[j] = capture_rate(rmin, rmax);
     fprintf(outfile, "%0.10e\t%0.10e\n", mass_vals[j], cap_full[j]);
@@ -344,7 +346,7 @@ int main()
       dCdr[i] = 0;
     }
   }
-  //
+
   fclose(outfile);
 
   end = clock();
