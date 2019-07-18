@@ -71,8 +71,11 @@ double sineSqr(double s, double t, double v){
 
 double FD(double s, double t, double vel, double chempot, double dm){
 
+	double MUP = mu_plus(dm);
+	double MU  = mu(dm);
 
- return (1.0 /(  1.0 + exp( ( 0.5*NM*( 2.*mu(dm)*mu_plus(dm)*t*t + 2.*mu_plus(dm)*s*s - mu(dm)*vel*vel)/SOL/SOL -  chempot)  / TEMP ) ) );
+
+ return (1.0 /(  1.0 + exp( ( 0.5*NM*( 2.*MU*MUP*t*t + 2.*MUP*s*s - MU*vel*vel)/SOL/SOL -  chempot)  / TEMP ) ) );
 
 }
 
@@ -133,7 +136,7 @@ for tripple int: v = x[0], s = x[1], t = x[2]
 //=========================================================
 
 double constCS(){
-	return 1e-45/2 * 1e-4; // m^2
+	return 0.5e-49; // m^2
 }
 
 //=========================================================

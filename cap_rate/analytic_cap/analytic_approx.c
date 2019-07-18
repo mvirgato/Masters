@@ -47,7 +47,7 @@ double ItIntegrand(double tvel, void *p){
   double MUP      =  mu_plus(dm);
 
   return tvel * FD(s, tvel, w, chempot, dm) * ( 1 - FD(s, tvel, v, chempot, dm) );
-  // return tvel*step(FV*FV*SOL*SOL + w*w - 2.*MU*MUP*tvel*tvel - 2.*MUP*s*s)*step(2.*MU*MUP*tvel*tvel +2.*MUP*s*s - FV*FV*SOL*SOL - MU*v*v);
+  // return tvel*step(FV*FV + w*w - 2.*MU*MUP*tvel*tvel - 2.*MUP*s*s)*step(2.*MU*MUP*tvel*tvel +2.*MUP*s*s - FV*FV - MU*v*v);
 }
 
 //=========================================================
@@ -163,7 +163,6 @@ double I2Integral(double finalvel, double initvel, double chempot, double DMmass
   struct IParams params4 = {finalvel, initvel, chempot, DMmass};
 
   double smin = 0.5*(initvel + finalvel);
-  double smax = (FermiVel(chempot) + 1e6*0.81 )* ( 5e8 );
 
   double res4, err4;
 
@@ -174,9 +173,9 @@ double I2Integral(double finalvel, double initvel, double chempot, double DMmass
   F4.function = &I2Integrand;
   F4.params   = &params4;
 
-  // size_t limit;
+  size_t limit;
 
-  gsl_integration_qag(&F4, smin, smax, 1.e-6, 1.e-6, 5000, 6, wp4, &res4, &err4);
+  gsl_integration_qagiu(&F4, smin, 1.e-6, 1.e-6, limit, wp4, &res4, &err4);
   gsl_integration_workspace_free(wp4);
 
   return res4;
@@ -297,9 +296,9 @@ int main()
 
   int i,j;
 
-  int range = 200;
+  int range = 30;
   double mass_vals[range];
-  logspace(-9, 6, range, mass_vals);
+  logspace(-1, 6, range, mass_vals);
 
   // double test_mass   = 1.e2;
 
@@ -307,7 +306,7 @@ int main()
   npts = readdata("eos_24_lowmass.dat");
 
   double test_rad   = 11.3;
-  double test_mass  = 1e0;
+  // double test_mass  = 1e-3;
   // double muFn       = muFn_interp(test_rad, npts);
   // double initialvel = esc_vel_full(test_rad, npts)/SOL;
 

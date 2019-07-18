@@ -52,7 +52,7 @@ double OmegaIntegral(double dm, double muFn, double vmax, double DMvel){
 
   gsl_monte_function G = { &OmegaIntegrand, 3, &params }; // {function, dimension, params}
 
-  size_t calls = 1000000;
+  size_t calls = 500000;
 
   gsl_rng_env_setup ();
 
@@ -250,10 +250,10 @@ int main ()
         radint[i] = rmin + ((double) i)*(rmax-rmin)/(Nrpts-1);
         double nd = nd_interp(radint[i], npts) * 1e45; // m^-3
         double muFn = muFn_interp(radint[i], npts);
-        double vmax = esc_vel_full(radint[i],  npts);
+        double vmax = esc_vel_full(radint[i],  npts)/SOL;
         double ndfree = pow(2.*NM*muFn,1.5)/3./M_PI/M_PI/hbarc/hbarc/hbarc * 1e45; // m^-3
 
-	      dCdr[i] = prefactors(test_mass)*constCS() * OmegaIntegral( test_mass, muFn, vmax, 0 ) * nd*nd/ndfree; //* radint[i] * radint[i]* 1e6 ;
+	      dCdr[i] = prefactors(test_mass)*constCS() * OmegaIntegral( test_mass, muFn, vmax, 0 ) * nd*nd/ndfree* radint[i] * radint[i]*SOL*SOL*1.e54 ;
 
         fprintf(outfile,"%0.10E\t%.10E\t%.10E\n",
                radint[i], dCdr[i] , nd*nd/ndfree);

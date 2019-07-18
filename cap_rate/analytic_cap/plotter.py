@@ -31,7 +31,7 @@ def cap_rate_plots_an():
     current_file.close
 
     fig, ax1 = plt.subplots()
-    ax1.plot(domain, range1, color='blue')
+    ax1.loglog(domain, range1, color='blue')
     ax1.set(xlabel = r'$m_\chi$ [GeV]', ylabel = r'$C$')
     # ax1.set_yscale('log')
     # ax1.axis([0, 12, 0, 1.2e56])
