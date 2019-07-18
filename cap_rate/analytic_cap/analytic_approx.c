@@ -326,18 +326,18 @@ int main()
       radint[i] = rmin + ((double) i)*(rmax-rmin)/(Nrpts-1);
 
       double initialvel  = esc_vel_full(radint[i], npts)/SOL;
-      double nd          = nd_interp(radint[i], npts) ; // m^-3
+      double nd          = nd_interp(radint[i], npts); // m^-3
       double chempot     = muFn_interp(radint[i], npts);
       double ndfree      = pow(2.*NM*chempot,1.5)/3./M_PI/M_PI/hbarc/hbarc/hbarc;
 
 
-      dCdr[i] = prefactors(mass_vals[j])*constCS()*OmegaIntegral(initialvel, chempot, mass_vals[j]) * nd*nd/ndfree*radint[i]*radint[i];
+      dCdr[i] = prefactors(mass_vals[j])*constCS()*OmegaIntegral(initialvel, chempot, mass_vals[j]) * nd*nd/ndfree*radint[i]*radint[i]*SOL*SOL*1.e54;
       // fprintf(outfile, "%0.10E\t%0.10E\t%0.10E\n", radint[i], dCdr[i], initialvel);
 
     }
 
-  double test = capture_rate(rmin, rmax);
-  printf("%0.8e\n", test);
+ // double test = capture_rate(rmin, rmax);
+ // printf("%0.8e\n", test);
 
     cap_full[j] = capture_rate(rmin, rmax);
     fprintf(outfile, "%0.10e\t%0.10e\n", mass_vals[j], cap_full[j]);
