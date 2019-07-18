@@ -34,13 +34,13 @@ display_results (char *title, double result, double error)
 
 //=========================================================
 
-double OmegaIntegral(double dm, double muFn, double vmax, double DMvel){
+double OmegaIntegral(double dm, double muFn, double vmax){
   double res, err;
 
-  struct omega_params params = {dm, muFn, vmax, DMvel };
+  struct omega_params params = {dm, muFn, vmax };
 
-  double smax = sbound(dm, vmax, muFn, DMvel);
-  double tmax = tbound(dm, vmax, muFn, DMvel);
+  double smax = sbound(dm, vmax, muFn);
+  double tmax = tbound(dm, vmax, muFn);
 
 
   double xl[3] = {0, 0, 0}; // lower bounds for (v, s, t)
@@ -120,7 +120,7 @@ double DMvel_integrand(double DMvel, void *p){
   double muF = (params2->muF);
   double escvel = (params2->escvel);
 
-  return fvel(DMvel)*OmegaIntegral(dm, muF, escvel, DMvel)/DMvel;
+  return fvel(DMvel)*OmegaIntegral(dm, muF, escvel)/DMvel;
 }
 
 //=========================================================
@@ -235,7 +235,7 @@ int main ()
 
     logspace(-6, 1, range, mass_vals);
 
-    double test_mass = 1.e0;
+    double test_mass = 1.e3;
 
     // FILE *outfile = fopen("complete_caprate.dat", "w");
     // FILE *outfile3 = fopen("vegas_full.dat", "w");
@@ -250,10 +250,10 @@ int main ()
         radint[i] = rmin + ((double) i)*(rmax-rmin)/(Nrpts-1);
         double nd = nd_interp(radint[i], npts) * 1e45; // m^-3
         double muFn = muFn_interp(radint[i], npts);
-        double vmax = esc_vel_full(radint[i],  npts)/SOL;
+        double vmax = esc_vel_full(radint[i],  npts);
         double ndfree = pow(2.*NM*muFn,1.5)/3./M_PI/M_PI/hbarc/hbarc/hbarc * 1e45; // m^-3
 
-	      dCdr[i] = prefactors(test_mass)*constCS() * OmegaIntegral( test_mass, muFn, vmax, 0 ) * nd*nd/ndfree* radint[i] * radint[i]*SOL*SOL*1.e54 ;
+	      dCdr[i] = prefactors(test_mass)*constCS() * OmegaIntegral( test_mass, muFn, vmax) * nd*nd/ndfree* radint[i] * radint[i]*SOL*SOL*1.e54 ;
 
         fprintf(outfile,"%0.10E\t%.10E\t%.10E\n",
                radint[i], dCdr[i] , nd*nd/ndfree);

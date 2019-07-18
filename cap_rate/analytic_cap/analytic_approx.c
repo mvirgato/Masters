@@ -296,9 +296,9 @@ int main()
 
   int i,j;
 
-  int range = 30;
+  int range = 50;
   double mass_vals[range];
-  logspace(-1, 6, range, mass_vals);
+  logspace(-1, 4, range, mass_vals);
 
   // double test_mass   = 1.e2;
 

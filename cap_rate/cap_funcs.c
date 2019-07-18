@@ -116,8 +116,11 @@ double energy(double s, double t, double vel, double dm){
 
 double FD(double s, double t, double vel, double chempot, double dm){
 
+	double MUP = mu_plus(dm);
+	double MU  = mu(dm);
 
- return 1.0 /(  1.0 + exp( ( energy(s, t, vel , dm) -  chempot)  / TEMP ) );
+
+ return (1.0 /(  1.0 + exp( ( 0.5*NM*( 2.*MU*MUP*t*t + 2.*MUP*s*s - MU*vel*vel)/SOL/SOL -  chempot)  / TEMP ) ) );
 
 }
 
@@ -126,10 +129,6 @@ double FD(double s, double t, double vel, double chempot, double dm){
 // INITIAL VELOCITY
 
 //=========================================================
-
-double w_init(double escvel, double DMvel) {
-    return sqrt(escvel*escvel+DMvel*DMvel);
-}
 
 
 //=========================================================
@@ -156,14 +155,14 @@ double fvel(double DMvel) {
 for double int: s = x[0], t = x[1]
 for tripple int: v = x[0], s = x[1], t = x[2]
 */
-double tbound( double dm, double escvel, double muF, double DMvel){
-    return 3. * sqrt( ( FERMI_VEL(muF) + mu(dm) * w_init(escvel, DMvel) * w_init(escvel, DMvel)) / ( 2.0 * mu(dm) * mu_plus(dm) ) );
+double tbound( double dm, double escvel, double muF){
+    return 1.05 * sqrt( ( FERMI_VEL(muF)*SOL*SOL + mu(dm) * escvel * escvel) / ( 2.0 * mu(dm) * mu_plus(dm) ) );
 }
 
 //=========================================================
 
-double sbound( double dm, double escvel, double muF, double DMvel){
-    return 3. * sqrt( (FERMI_VEL(muF) + mu(dm) * w_init(escvel, DMvel) * w_init(escvel, DMvel) )/ ( 2.0 * mu(dm) ) );
+double sbound( double dm, double escvel, double muF){
+    return 1.05 * sqrt( (FERMI_VEL(muF)*SOL*SOL + mu(dm) * escvel * escvel )/ ( 2.0 * mu_plus(dm) ) );
 }
 
 //=========================================================
@@ -176,7 +175,7 @@ double OmegaIntegrand(double *x, size_t dim, void *p){
     double dm      = (params->dm_mass);
     double chempot = (params->muF);
     double escvel  = (params->escvel);
-		double dmvel   = (params->DMvel);
+
 
     return x[0] * x[2] * heaviside_product(x[1], x[2], escvel, x[0]) *
 		 FD(x[1], x[2], escvel, chempot, dm) * (1.0 - FD(x[1], x[2], x[0], chempot, dm));

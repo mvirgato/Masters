@@ -1,10 +1,10 @@
 double prefactors(double dm);
 
-double tbound( double dm, double escvel, double muF, double DMvel);
+double tbound( double dm, double escvel, double muF);
 
-double sbound( double dm, double escvel, double muF, double DMvel);
+double sbound( double dm, double escvel, double muF);
 
-struct omega_params {double dm_mass; double muF; double escvel; double DMvel;};
+struct omega_params {double dm_mass; double muF; double escvel;};
 
 double fvel(double DMvel);
 
