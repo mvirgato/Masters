@@ -297,7 +297,7 @@ int main()
 
   int i,j;
 
-  int range = 100;
+  int range = 200;
   double mass_vals[range];
   logspace(-9, 6, range, mass_vals);
 
