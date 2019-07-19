@@ -75,7 +75,7 @@ double FD(double s, double t, double vel, double chempot, double dm){
 	double MU  = mu(dm);
 
 
- return (1.0 /(  1.0 + exp( ( 0.5*NM*( 2.*MU*MUP*t*t + 2.*MUP*s*s - MU*vel*vel) -  chempot)  / TEMP ) ) );
+ return (1.0 /(  1.0 + exp( ( 0.5*NM*( 2.*MU*MUP*t*t + 2.*MUP*s*s - MU*vel*vel)/SOL/SOL -  chempot)  / TEMP ) ) );
 
 }
 
