@@ -330,7 +330,7 @@ int main()
       double ndfree      = pow(2.*NM*chempot,1.5)/3./M_PI/M_PI/hbarc/hbarc/hbarc;
 
 
-      dCdr[i] = prefactors(mass_vals[j])*constCS()*OmegaIntegral(initialvel, chempot, mass_vals[j]) * nd*nd/ndfree*radint[i]*radint[i]*1.e54/SOL/SOL/SOL;
+      dCdr[i] = prefactors(mass_vals[j])*constCS()* OmegaIntegral(initialvel, chempot, mass_vals[j]) * nd*nd/ndfree*radint[i]*radint[i]*1.e54/SOL/SOL/SOL;
       // fprintf(outfile, "%0.10E\t%0.10E\t%0.10E\n", radint[i], dCdr[i], initialvel);
 
     }
