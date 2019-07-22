@@ -173,9 +173,8 @@ double I2Integral(double finalvel, double initvel, double chempot, double DMmass
   F4.function = &I2Integrand;
   F4.params   = &params4;
 
-  size_t limit;
 
-  gsl_integration_qagiu(&F4, smin, 1.e-6, 1.e-6, limit, wp4, &res4, &err4);
+  gsl_integration_qagiu(&F4, smin, 1.e-6, 1.e-6, 5000, wp4, &res4, &err4);
   gsl_integration_workspace_free(wp4);
 
   return res4;
