@@ -34,7 +34,7 @@ int main(){
   double eval     = esc_vel_full(testrad, npts)/SOL;
   double ki       = eval*testmass/sqrt(1 - eval*eval);
 
-  double test = prefac(testmass)*kfIntegral(ki, testmass, chempot);
+  double test = volumeIntegral();
 
   printf("%0.8e\n", test);
 

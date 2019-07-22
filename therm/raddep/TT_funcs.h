@@ -6,6 +6,14 @@ struct qParams {double initmom; double finmom; double DMmass; double chempot;};
 
 struct kfParams {double initmom; double DMmass; double chempot;};
 
+struct rGammaParams {double DMmass; int npts;};
+
 double qIntegral(double initmom, double finmom, double DMmass, double chempot);
 
 double kfIntegral(double initmom, double DMmass, double chempot);
+
+double Gamma(double initmom, double DMmass, double chempot);
+
+double volumeIntegral();
+
+double rGammaIntegral(double DMmass, int npts);

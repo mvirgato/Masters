@@ -128,3 +128,79 @@ double kfIntegral(double initmom, double DMmass, double chempot){
   return result2;
 
 }
+
+// =========================================================
+
+double Gamma(double initmom, double DMmass, double chempot){
+  //Gamma at a specific r value
+  return prefac(DMmass)*kfIntegral(initmom, DMmass, chempot);
+}
+
+// =========================================================
+
+double volumeIntegrand(double rad, void *p){
+
+  return rad*rad;
+
+}
+
+// =========================================================
+
+double volumeIntegral(){
+
+  double result3, error3;
+
+  gsl_integration_workspace * wp3 = gsl_integration_workspace_alloc (5000);
+
+  gsl_function F3;
+
+  F3.function = &volumeIntegrand;
+  F3.params   = 0;
+
+  gsl_integration_qag(&F3, rmin, rmax, 1.e-6, 1.e-6, 5000, 6, wp3, &result3, &error3);
+  gsl_integration_workspace_free(wp3);
+
+  return result3;
+
+
+}
+
+// =========================================================
+
+double rGammaIntegrand(double r, void *p){
+
+  struct rGammaParams *params4 = (struct rGammaParams *)p;
+
+
+  double dm   = (params4->DMmass);
+  double np   = (params4->npts);
+
+  double eval = esc_vel_full(dm, np)/SOL;
+  double ki   = eval*dm/sqrt(1 - eval*eval);
+  double muFn = muFn_interp(r, np)*1e9;
+
+  return r*r*Gamma(ki, dm, muFn);
+
+}
+
+// =========================================================
+
+double rGammaIntegral(double DMmass, int npts){
+
+  struct rGammaParams params4 = {DMmass, npts};
+
+  double result4, error4;
+
+  gsl_integration_workspace * wp4 = gsl_integration_workspace_alloc (5000);
+
+  gsl_function F4;
+
+  F4.function = &rGammaIntegrand;
+  F4.params   = &params4;
+
+
+  gsl_integration_qag(&F4, rmin, rmax, 1.e-6, 1.e-6, 5000, 6, wp4, &result4, &error4);
+  gsl_integration_workspace_free(wp4);
+
+  return result4;
+}
