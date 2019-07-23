@@ -62,7 +62,7 @@ double qIntegrand(double q, void *p){
 
   double brace      = (z*(1 + zetaMinus/z))/(1 + exp(-z));
 
-  return mom4supME(q)*brace/ki/kf;
+  return constME(dm)*brace*kf/ki;
 }
 
 // =========================================================
@@ -167,7 +167,7 @@ double volumeIntegral(){
 
 // =========================================================
 
-double rGammaIntegrand(double r, void *p){
+double volAvgRateIntegrand(double r, void *p){
 
   struct rGammaParams *params4 = (struct rGammaParams *)p;
 
@@ -176,7 +176,8 @@ double rGammaIntegrand(double r, void *p){
   double np   = (params4->npts);
 
   double eval = esc_vel_full(dm, np)/SOL;
-  double ki   = eval*dm/sqrt(1 - eval*eval);
+  double ki   = eval*dm;
+  // double ki   = eval*dm/sqrt(1 - eval*eval);
   double muFn = muFn_interp(r, np)*1e9;
 
   return r*r*Gamma(ki, dm, muFn);
@@ -185,7 +186,7 @@ double rGammaIntegrand(double r, void *p){
 
 // =========================================================
 
-double rGammaIntegral(double DMmass, int npts){
+double volAvgRateIntegral(double DMmass, int npts){
 
   struct rGammaParams params4 = {DMmass, npts};
 
@@ -195,7 +196,7 @@ double rGammaIntegral(double DMmass, int npts){
 
   gsl_function F4;
 
-  F4.function = &rGammaIntegrand;
+  F4.function = &volAvgRateIntegrand;
   F4.params   = &params4;
 
 
@@ -203,4 +204,88 @@ double rGammaIntegral(double DMmass, int npts){
   gsl_integration_workspace_free(wp4);
 
   return result4;
+}
+
+// =========================================================
+
+// Average final energy
+
+// =========================================================
+
+double numeratorGammaIntegrand(double kf, void *p){
+
+  struct kfParams *params5 = (struct kfParams *)p;
+
+  double ki         = (params5->initmom);
+  double dm         = (params5->DMmass);
+  double muFn       = (params5->chempot);
+
+  return qIntegral(ki, kf, dm, muFn)*kf*kf*0.5/dm/dm;
+
+}
+
+// =========================================================
+
+double numeratorGammaIntegral(double initmom, double DMmass, double chempot){
+
+  struct kfParams params5 = {initmom, DMmass, chempot};
+
+  double nummin = 0;
+  double nummax = initmom;
+
+  double result5, error5;
+
+  gsl_integration_workspace * wp5 = gsl_integration_workspace_alloc (5000);
+
+  gsl_function F5;
+
+  F5.function = &numeratorGammaIntegrand;
+  F5.params   = &params5;
+
+  gsl_integration_qag(&F5, nummin, nummax, 1.e-6, 1.e-6, 5000, 6, wp5, &result5, &error5);
+  gsl_integration_workspace_free(wp5);
+
+  return result5*0.5/DMmass/DMmass;
+
+}
+
+// =========================================================
+
+double volAvgEnergyIntegrand(double r, void *p){
+
+  struct rGammaParams *params6 = (struct rGammaParams *)p;
+
+
+  double dm   = (params6->DMmass);
+  double np   = (params6->npts);
+
+  double eval = esc_vel_full(dm, np)/SOL;
+  double ki   = eval*dm;
+  // double ki   = eval*dm/sqrt(1 - eval*eval);
+  double muFn = muFn_interp(r, np)*1e9;
+
+  return r*r*numeratorGammaIntegral(ki, dm, muFn);
+
+}
+
+// =========================================================
+
+double volAvgEnergyIntegral(double DMmass, int npts){
+
+  struct rGammaParams params6 = {DMmass, npts};
+
+  double result6, error6;
+
+  gsl_integration_workspace * wp6 = gsl_integration_workspace_alloc (5000);
+
+  gsl_function F6;
+
+  F6.function = &volAvgEnergyIntegrand;
+  F6.params   = &params6;
+
+
+  gsl_integration_qag(&F6, rmin, rmax, 1.e-6, 1.e-6, 5000, 6, wp6, &result6, &error6);
+  gsl_integration_workspace_free(wp6);
+
+  return result6;
 }

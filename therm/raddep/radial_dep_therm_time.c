@@ -17,6 +17,7 @@
 #include "NSinterp.h"
 #include "constants.h"
 #include "TT_funcs.h"
+
 // =========================================================
 
 
@@ -28,13 +29,13 @@ int main(){
   int npts;
   npts = readdata("eos_24_lowmass.dat");
 
-  double testmass = 1e15; //in eV
+  double testmass = 1e0; //in eV
   double testrad  = 11.;
-  double chempot  = muFn_interp(testrad, npts)*1e9;
-  double eval     = esc_vel_full(testrad, npts)/SOL;
-  double ki       = eval*testmass/sqrt(1 - eval*eval);
 
-  double test = volumeIntegral();
+  double initmomtest = esc_vel_full(testrad, npts)/SOL;
+  double testchempot = muFn_interp(testrad, npts);
+
+  double test = volAvgEnergyIntegral(testmass, npts);
 
   printf("%0.8e\n", test);
 

@@ -8,3 +8,4 @@
 #define FERMI_ENERGY 0.085 // in GeV (will need to make a variable)
 #define VELDISP 270e3 //DM velocity dispersion for MB dist
 #define NSVEL 200e3 // NS velocity in galactic frame
+#define TT 1e10*3.154e7/(6.58e-16) //therm time in 1/eV

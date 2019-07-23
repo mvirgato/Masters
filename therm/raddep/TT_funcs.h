@@ -16,4 +16,8 @@ double Gamma(double initmom, double DMmass, double chempot);
 
 double volumeIntegral();
 
-double rGammaIntegral(double DMmass, int npts);
+double volAvgRateIntegral(double DMmass, int npts);
+
+double numeratorGammaIntegral(double initmom, double DMmass, double chempot);
+
+double volAvgEnergyIntegral(double DMmass, int npts);
