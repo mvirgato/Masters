@@ -56,8 +56,8 @@ double It1Integral(double svel, double finalvel, double initvel, double chempot,
 
   struct ItParams params = {svel, finalvel, initvel, chempot, DMmass};
 
-  double tmin = initvel - svel;
   double tmax = finalvel + svel;
+  double tmin = initvel - svel;
 
   double result1, error1;
 
@@ -80,8 +80,8 @@ double It2Integral(double svel, double finalvel, double initvel, double chempot,
 
   struct ItParams params2 = {svel, finalvel, initvel, chempot, DMmass};
 
-  double tmin = initvel - svel;
-  double tmax = svel - finalvel;
+  double tmax = finalvel +svel;
+  double tmin = svel - finalvel;
 
   double result2, error2;
 
@@ -137,8 +137,8 @@ double I1Integral(double finalvel, double initvel, double chempot, double DMmass
 
   struct IParams params3 = {finalvel, initvel, chempot, DMmass};
 
-  double smin = 0.5*(initvel - finalvel);
   double smax = 0.5*(initvel + finalvel);
+  double smin = 0.5*(initvel - finalvel);
 
   double res3, err3;
 
@@ -207,14 +207,14 @@ double OmegaIntegral(double initvel, double chempot, double DMmass){
 
   double res5, err5;
 
-  gsl_integration_workspace * wp5 = gsl_integration_workspace_alloc (1000);
+  gsl_integration_workspace * wp5 = gsl_integration_workspace_alloc (5000);
 
   gsl_function F5;
 
   F5.function = &OmegaIntegrand;
   F5.params   = &params5;
 
-  gsl_integration_qag(&F5, 0, initvel, 1.e-6, 1.e-6, 1000, 6, wp5, &res5, &err5);
+  gsl_integration_qag(&F5, 0, initvel, 1.e-6, 1.e-6, 5000, 6, wp5, &res5, &err5);
   gsl_integration_workspace_free(wp5);
   printf("result        = %0.8E\n", res5);
   printf("error         = %0.8E\n", err5);
@@ -295,9 +295,9 @@ int main()
 
   int i,j;
 
-  int range = 50;
+  int range = 100;
   double mass_vals[range];
-  logspace(-1, 4, range, mass_vals);
+  logspace(-6, 4, range, mass_vals);
 
   // double test_mass   = 1.e2;
 
@@ -323,13 +323,13 @@ int main()
 
       radint[i] = rmin + ((double) i)*(rmax-rmin)/(Nrpts-1);
 
-      double initialvel  = esc_vel_full(radint[i], npts);
-      double nd          = nd_interp(radint[i], npts); // m^-3
+      double initialvel  = esc_vel_full(radint[i], npts)/SOL;
+      double nd          = nd_interp(radint[i], npts); // fm^-3
       double chempot     = muFn_interp(radint[i], npts);
       double ndfree      = pow(2.*NM*chempot,1.5)/3./M_PI/M_PI/hbarc/hbarc/hbarc;
 
 
-      dCdr[i] = prefactors(mass_vals[j])*constCS()* OmegaIntegral(initialvel, chempot, mass_vals[j]) * nd*nd/ndfree*radint[i]*radint[i]*1.e54/SOL/SOL/SOL;
+      dCdr[i] = prefactors(mass_vals[j])*constCS()* OmegaIntegral(initialvel, chempot, mass_vals[j]) * nd*nd/ndfree*radint[i]*radint[i]*1.e54*SOL*SOL;
       // fprintf(outfile, "%0.10E\t%0.10E\t%0.10E\n", radint[i], dCdr[i], initialvel);
 
     }

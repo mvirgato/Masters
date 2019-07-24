@@ -38,7 +38,9 @@ double FermiVel(double chempot){
 
 double prefactors(double dm){
 
-	return 64*M_PI* mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) *erf(sqrt(3/2)*NSVEL/VELDISP)/NSVEL*(1e6/dm); // rho_chi/dm in GeV/m^2
+	double MUP = mu_plus(dm);
+
+	return 64*M_PI*MUP*MUP*MUP*MUP*erf(sqrt(3/2)*NSVEL/VELDISP)/NSVEL*(1e6/dm); // rho_chi/dm in GeV/m^2
 }
 //=========================================================
 
@@ -75,7 +77,7 @@ double FD(double s, double t, double vel, double chempot, double dm){
 	double MU  = mu(dm);
 
 
- return (1.0 /(  1.0 + exp( ( 0.5*NM*( 2.*MU*MUP*t*t + 2.*MUP*s*s - MU*vel*vel)/SOL/SOL -  chempot)  / TEMP ) ) );
+ return (1.0 /(  1.0 + exp( ( 0.5*NM*( 2.*MU*MUP*t*t + 2.*MUP*s*s - MU*vel*vel) -  chempot)  / TEMP ) ) );
 
 }
 

@@ -43,14 +43,17 @@ double prefac(double DMmass){
 
 // =========================================================
 
-double qIntegrand(double q, void *p){
+double cosIntegrand(double x, void *p){
 
   struct qParams *params1 = (struct qParams *)p;
+
 
   double ki         = (params1->initmom);
   double kf         = (params1->finmom);
   double dm         = (params1->DMmass);
   double muFn       = (params1->chempot);
+
+  double q          = sqrt(ki*ki + kf*kf -2.*ki*kf*x);
 
   double q0         = 0.5*(ki*ki - kf*kf)/dm;
 
@@ -62,17 +65,17 @@ double qIntegrand(double q, void *p){
 
   double brace      = (z*(1 + zetaMinus/z))/(1 + exp(-z));
 
-  return constME(dm)*brace*kf/ki;
+  return constME(dm)*brace*kf*kf/q;
 }
 
 // =========================================================
 
-double qIntegral(double initmom, double finmom, double DMmass, double chempot){
+double cosIntegral(double initmom, double finmom, double DMmass, double chempot){
 
   struct qParams params1 = {initmom, finmom, DMmass, chempot};
 
-  double qmin = initmom - finmom;
-  double qmax = initmom + finmom;
+  double qmin = -1.;
+  double qmax = 1.;
 
   double result1, error1;
 
@@ -80,7 +83,7 @@ double qIntegral(double initmom, double finmom, double DMmass, double chempot){
 
   gsl_function F1;
 
-  F1.function = &qIntegrand;
+  F1.function = &cosIntegrand;
   F1.params   = &params1;
 
   gsl_integration_qag(&F1, qmin, qmax, 1.e-6, 1.e-6, 5000, 6, wp1, &result1, &error1);
@@ -100,7 +103,7 @@ double kfIntegrand(double kf, void *p){
   double dm         = (params2->DMmass);
   double muFn       = (params2->chempot);
 
-  return qIntegral(ki, kf, dm, muFn);
+  return cosIntegral(ki, kf, dm, muFn);
 
 }
 
@@ -220,7 +223,7 @@ double numeratorGammaIntegrand(double kf, void *p){
   double dm         = (params5->DMmass);
   double muFn       = (params5->chempot);
 
-  return qIntegral(ki, kf, dm, muFn)*kf*kf*0.5/dm/dm;
+  return cosIntegral(ki, kf, dm, muFn)*kf*kf*0.5/dm/dm;
 
 }
 
