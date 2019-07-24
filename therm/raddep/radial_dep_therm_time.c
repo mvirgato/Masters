@@ -29,15 +29,19 @@ int main(){
   int npts;
   npts = readdata("eos_24_lowmass.dat");
 
-  double testmass = 1e0; //in eV
-  double testrad  = 11.;
+  double testmass = 1e2; //in eV
+  double testrad  = 1.;
 
-  double initmomtest = esc_vel_full(testrad, npts)/SOL;
+  double initvel     = esc_vel_full(testrad, npts)/SOL;
+  double testinitmom = testmass*initvel/sqrt(1 - initvel*initvel);
   double testchempot = muFn_interp(testrad, npts);
 
-  double test = volAvgEnergyIntegral(testmass, npts);
+  double test = nextEnergy(testinitmom, testmass, testchempot);
 
   printf("%0.8e\n", test);
+
+
+
 
   return 0;
 }

@@ -4,7 +4,7 @@
 #define NM 0.939    //neutron mass in GeV
 #define Grav 6.67408E-11
 #define ESCAPE_VEL sqrt((2 * Grav * 1.4 * 2E30) / (10E3))	//NS escape velocity in m/s. Need to make into function of radius
-#define TEMP (1E5 * 1E-9) / (1.16E4)	//NS temp in GeV
+#define TEMP ((1E5 * 1E-9) / (1.16E4))	//NS temp in GeV
 #define FERMI_ENERGY 0.085 // in GeV (will need to make a variable)
 #define VELDISP 270e3 //DM velocity dispersion for MB dist
 #define NSVEL 200e3 // NS velocity in galactic frame

@@ -18,6 +18,6 @@ double volumeIntegral();
 
 double volAvgRateIntegral(double DMmass, int npts);
 
-double numeratorGammaIntegral(double initmom, double DMmass, double chempot);
+double finalEnergyNumIntegral(double initmom, double DMmass, double chempot);
 
-double volAvgEnergyIntegral(double DMmass, int npts);
+double nextEnergy(double initmom, double DMmass, double chempot);

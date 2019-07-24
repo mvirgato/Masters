@@ -297,7 +297,7 @@ int main()
 
   int range = 100;
   double mass_vals[range];
-  logspace(-6, 4, range, mass_vals);
+  logspace(0, 15, range, mass_vals);
 
   // double test_mass   = 1.e2;
 
@@ -325,7 +325,7 @@ int main()
 
       double initialvel  = esc_vel_full(radint[i], npts)/SOL;
       double nd          = nd_interp(radint[i], npts); // fm^-3
-      double chempot     = muFn_interp(radint[i], npts);
+      double chempot     = muFn_interp(radint[i], npts)*1e9;
       double ndfree      = pow(2.*NM*chempot,1.5)/3./M_PI/M_PI/hbarc/hbarc/hbarc;
 
 
