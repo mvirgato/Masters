@@ -256,8 +256,69 @@ double finalEnergyNumIntegral(double initmom, double DMmass, double chempot){
 
 double nextEnergy(double initmom, double DMmass, double chempot){
 
-  double numerator = finalEnergyNumIntegral(initmom, DMmass, chempot);
+  double numerator   = finalEnergyNumIntegral(initmom, DMmass, chempot);
   double denominator = kfIntegral(initmom, DMmass, chempot);
 
   return numerator/denominator;
+
+
+}
+
+// =========================================================
+
+double EtoMom(double energy, double DMmass){
+
+  return sqrt(2*DMmass*energy);
+}
+
+// =========================================================
+
+double momToEnergy(double mom, double DMmass){
+
+  return (0.5*mom*mom/DMmass);
+}
+
+// =========================================================
+
+double TTintegrand(double rad, double dm, int npts){
+
+  // struct rGammaParams *params6 = (struct rGammaParams *)p;
+  //
+  // double dm      = (params6->DMmass);
+  // int    npts    = (params6->npts);
+
+  double muFn    = muFn_interp(rad, npts)*1e9;
+
+  double v0      = esc_vel_full(rad, npts)/SOL;
+  double k0      = dm*v0/sqrt( 1 - v0*v0);
+  double E0      = sqrt(k0*k0 + dm*dm);
+
+  double sum    = 0;
+  double Gdummy = 0;
+
+  Gdummy = (Gamma(k0, dm, muFn))/dm;
+  sum   += 1./Gdummy;
+
+  double initialE = E0;
+  double finalE   = nextEnergy(k0, dm, muFn);
+
+  while ( (initialE - finalE)>TEMP ) {
+
+
+    double initialk = EtoMom(finalE, dm);
+
+
+    Gdummy = Gamma(initialk, dm, muFn)/dm;
+    sum   += 1./Gdummy;
+
+    printf("%0.8e\n", sum);
+
+
+
+    initialE = finalE;
+    finalE   = nextEnergy(initialk, dm, muFn);
+  }
+
+  return sum/dm;
+
 }

@@ -21,3 +21,5 @@ double volAvgRateIntegral(double DMmass, int npts);
 double finalEnergyNumIntegral(double initmom, double DMmass, double chempot);
 
 double nextEnergy(double initmom, double DMmass, double chempot);
+
+double TTintegrand(double rad, double dm, int npts);
