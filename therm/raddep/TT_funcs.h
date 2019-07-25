@@ -22,4 +22,6 @@ double finalEnergyNumIntegral(double initmom, double DMmass, double chempot);
 
 double nextEnergy(double initmom, double DMmass, double chempot);
 
-double TTintegrand(double rad, double dm, int npts);
+double TTintegrand(double rad, void *p);
+
+double TTintegral(double DMmass, double npts);

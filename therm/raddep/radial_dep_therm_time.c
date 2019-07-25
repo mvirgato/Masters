@@ -29,14 +29,14 @@ int main(){
   int npts;
   npts = readdata("eos_24_lowmass.dat");
 
-  double testmass = 1e15; //in eV
+  double testmass = 1e3; //in eV
   double testrad  = 11.;
 
   double initvel     = esc_vel_full(testrad, npts)/SOL;
   double testinitmom = testmass*initvel/sqrt(1 - initvel*initvel);
   double testchempot = muFn_interp(testrad, npts);
 
-  double test = TT;
+  double test = TTintegral(testmass, npts);
 
   printf("%0.8e\n", test);
 

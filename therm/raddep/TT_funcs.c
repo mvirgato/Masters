@@ -280,12 +280,12 @@ double momToEnergy(double mom, double DMmass){
 
 // =========================================================
 
-double TTintegrand(double rad, double dm, int npts){
+double TTintegrand(double rad, void *p){
 
-  // struct rGammaParams *params6 = (struct rGammaParams *)p;
-  //
-  // double dm      = (params6->DMmass);
-  // int    npts    = (params6->npts);
+  struct rGammaParams *params6 = (struct rGammaParams *)p;
+
+  double dm      = (params6->DMmass);
+  int    npts    = (params6->npts);
 
   double muFn    = muFn_interp(rad, npts)*1e9;
 
@@ -319,6 +319,30 @@ double TTintegrand(double rad, double dm, int npts){
     finalE   = nextEnergy(initialk, dm, muFn);
   }
 
-  return sum/dm;
+  return rad*rad*sum/dm;
+
+}
+
+// =========================================================
+
+double TTintegral(double DMmass, double npts){
+
+  struct kfParams params6 = {DMmass, npts};
+
+  double result6, error6;
+
+  gsl_integration_workspace * wp6 = gsl_integration_workspace_alloc (5000);
+
+  gsl_function F6;
+
+  F6.function = &TTintegrand;
+  F6.params   = &params6;
+
+
+  gsl_integration_qag(&F6, rmin, rmax, 1.e-6, 1.e-6, 5000, 6, wp6, &result6, &error6);
+  gsl_integration_workspace_free(wp6);
+
+  return result6;
+
 
 }
