@@ -261,7 +261,7 @@ int main ()
       // fclose(outfile);
 
       cap_full[j] = capture_rate(rmin, rmax);
-      fprintf(outfile3, "%0.10e\t%0.10e\n", mass_vals[j], cap_full[j]);
+      fprintf(outfile, "%0.10e\t%0.10e\n", mass_vals[j], cap_full[j]);
 
 
     for (i = 0; i<Nrpts; i++){
