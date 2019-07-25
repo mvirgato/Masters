@@ -52,7 +52,7 @@ double OmegaIntegral(double dm, double muFn, double vmax){
 
   gsl_monte_function G = { &OmegaIntegrand, 3, &params }; // {function, dimension, params}
 
-  size_t calls = 500000;
+  size_t calls = 1000000;
 
   gsl_rng_env_setup ();
 
@@ -82,9 +82,9 @@ double OmegaIntegral(double dm, double muFn, double vmax){
 
      gsl_monte_vegas_integrate (&G, xl, xu, 3, 10000, r, s,
                                 &res, &err);
-     // display_results ("vegas warm-up", res, err);
+     display_results ("vegas warm-up", res, err);
      //
-     // printf ("converging...\n");
+     printf ("converging...\n");
 
      do
        {
@@ -109,6 +109,7 @@ double OmegaIntegral(double dm, double muFn, double vmax){
   return res;
   }
 }
+
 
 //=========================================================
 
@@ -233,50 +234,42 @@ int main ()
     int range = 50;
     double mass_vals[range];
 
-    logspace(-6, 1, range, mass_vals);
+    logspace(0, 15, range, mass_vals);
 
-    double test_mass = 1.e3;
+    double test_mass = 1.e9;
 
-    // FILE *outfile = fopen("complete_caprate.dat", "w");
+    FILE *outfile = fopen("complete_caprate.dat", "w");
     // FILE *outfile3 = fopen("vegas_full.dat", "w");
-    // for (j = 0; j < range; j++){
+    for (j = 0; j < range; j++){
 
       // printf("\n%e0.6E\n\n", mass_vals[j]);
 
-      FILE *outfile = fopen("cap_rate_rad.dat", "w");
+      // FILE *outfile = fopen("cap_rate_rad.dat", "w");
 
       for (i = 0; i < Nrpts; i++){
 
         radint[i] = rmin + ((double) i)*(rmax-rmin)/(Nrpts-1);
-        double nd = nd_interp(radint[i], npts) * 1e45; // m^-3
-        double muFn = muFn_interp(radint[i], npts);
+        double nd = nd_interp(radint[i], npts) ; // m^-3
+        double muFn = muFn_interp(radint[i], npts)*1e9;
         double vmax = esc_vel_full(radint[i],  npts);
-        double ndfree = pow(2.*NM*muFn,1.5)/3./M_PI/M_PI/hbarc/hbarc/hbarc * 1e45; // m^-3
+        double ndfree = pow(2.*NM*muFn,1.5)/3./M_PI/M_PI/hbarc/hbarc/hbarc; // m^-3
 
-	      dCdr[i] = prefactors(test_mass)*constCS() * OmegaIntegral( test_mass, muFn, vmax) * nd*nd/ndfree* radint[i] * radint[i]*SOL*SOL*1.e54 ;
+	      dCdr[i] = prefactors(test_mass)*constCS() * OmegaIntegral( test_mass, muFn, vmax) * (nd*nd/ndfree)*SOL*SOL*1.e54*radint[i]*radint[i] ;
 
-        fprintf(outfile,"%0.10E\t%.10E\t%.10E\n",
-               radint[i], dCdr[i] , nd*nd/ndfree);
+        // fprintf(outfile,"%0.10E\t%.10E\t%.10E\n", radint[i], dCdr[i] , nd*nd/ndfree);
       }
-      fclose(outfile);
+      // fclose(outfile);
 
-      // cap_full[j] = capture_rate(rmin, rmax);
-      // fprintf(outfile3, "%0.10e\t%0.10e\n", mass_vals[j], cap_full[j]);
+      cap_full[j] = capture_rate(rmin, rmax);
+      fprintf(outfile3, "%0.10e\t%0.10e\n", mass_vals[j], cap_full[j]);
 
-    // FILE *outfile2 = fopen("cap_interp_test.dat", "w");
 
-    // for (i = 0; i < Nrpts; i++){
-    //   fprintf(outfile2,"%0.10E\t%.10E\n",
-    //          radint[i], dCdr_interp(radint[i]));
-    // }
-    // fclose(outfile2);
+    for (i = 0; i<Nrpts; i++){
+	dCdr[i] = 0;
+   	  }
+    }
 
-    // for (i = 0; i<Nrpts; i++){
-	// dCdr[i] = 0;
-   	 //  }
-    // }
-
-  //  fclose(outfile3);
+   fclose(outfile);
 
     end = clock();
   	total_time = ((double) (end - start)) / CLOCKS_PER_SEC;

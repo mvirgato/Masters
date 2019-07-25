@@ -105,7 +105,7 @@ double velsqr(double s, double t, double vel, double dm){
 //=========================================================
 
 double energy(double s, double t, double vel, double dm){
-	return 0.5 * NM * velsqr(s, t, vel, dm);
+	return (0.5 * NM * velsqr(s, t, vel, dm));
 }
 
 //=========================================================
@@ -176,9 +176,19 @@ double OmegaIntegrand(double *x, size_t dim, void *p){
     double chempot = (params->muF);
     double escvel  = (params->escvel);
 
+		double sp = x[1];
+		double tp = x[2];
 
-    return x[0] * x[2] * heaviside_product(x[1], x[2], escvel, x[0]) *
-		 FD(x[1], x[2], escvel, chempot, dm) * (1.0 - FD(x[1], x[2], x[0], chempot, dm));
+
+		// double sp = x[1]/(1-x[1]);
+		// double tp = x[2]/(1-x[2]);
+		//
+		// double jacobian = 1./((1. - x[1])*(1. - x[1])*(1. - x[2])*(1. - x[2]));
+
+
+
+    return x[0] * tp * heaviside_product(sp, tp, escvel, x[0]) *
+		 FD(sp, tp, escvel, chempot, dm) * (1.0 - FD(sp, tp, x[0], chempot, dm));
 
 }
 

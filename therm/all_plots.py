@@ -135,7 +135,7 @@ def make_plot_cross_section():
     ax1.text(1e-1, 5e-47, r'$G[\bar{\chi}\gamma^5\chi][\bar{\psi}\psi]$', fontsize=30)
     ax1.text(0.5e-1, 5e-54, r'Bertoni ($G[\bar{\chi}\chi][\bar{\psi}\psi]$)', fontsize=30)
 
-    plt.savefig('all.png')
+    plt.savefig('all.pdf')
 
 
 make_plot_cross_section()
