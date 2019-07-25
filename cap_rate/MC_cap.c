@@ -236,7 +236,7 @@ int main ()
 
     logspace(0, 15, range, mass_vals);
 
-    double test_mass = 1.e9;
+    // double test_mass = 1.e9;
 
     FILE *outfile = fopen("complete_caprate.dat", "w");
     // FILE *outfile3 = fopen("vegas_full.dat", "w");
@@ -254,7 +254,7 @@ int main ()
         double vmax = esc_vel_full(radint[i],  npts);
         double ndfree = pow(2.*NM*muFn,1.5)/3./M_PI/M_PI/hbarc/hbarc/hbarc; // m^-3
 
-	      dCdr[i] = prefactors(test_mass)*constCS() * OmegaIntegral( test_mass, muFn, vmax) * (nd*nd/ndfree)*SOL*SOL*1.e54*radint[i]*radint[i] ;
+	      dCdr[i] = prefactors(mass_vals[j])*constCS() * OmegaIntegral( mass_vals[j], muFn, vmax) * (nd*nd/ndfree)*SOL*SOL*1.e54*radint[i]*radint[i] ;
 
         // fprintf(outfile,"%0.10E\t%.10E\t%.10E\n", radint[i], dCdr[i] , nd*nd/ndfree);
       }
