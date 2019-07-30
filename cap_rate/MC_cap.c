@@ -234,7 +234,7 @@ int main ()
     int range = 50;
     double mass_vals[range];
 
-    logspace(0, 15, range, mass_vals);
+    logspace(7, 10, range, mass_vals);
 
     // double test_mass = 1.e9;
 
