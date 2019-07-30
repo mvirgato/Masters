@@ -18,7 +18,6 @@ def cap_rate_plots():
     current_file = open('complete_caprate.dat', 'r')
     lines = current_file.readlines()
 
-
     for x in lines:
         x = x.split('\t')
         domain = np.append(domain, float(x[0]))
