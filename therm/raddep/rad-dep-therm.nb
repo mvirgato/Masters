@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     25651,        548]
-NotebookOptionsPosition[     24828,        515]
-NotebookOutlinePosition[     25227,        531]
-CellTagsIndexPosition[     25184,        528]
+NotebookDataLength[     28832,        630]
+NotebookOptionsPosition[     27777,        589]
+NotebookOutlinePosition[     28176,        605]
+CellTagsIndexPosition[     28133,        602]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -511,6 +511,80 @@ Cell[BoxData[{
    3.774235805728716*^9, 3.774235814692971*^9}},
  ExpressionUUID -> "62d85b83-718c-4bc4-90a1-2a8e0f408177"]
 }, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["General Functions", "Section",
+ CellChangeTimes->{{3.7742385105328903`*^9, 3.774238529316648*^9}}],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{
+    "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+      "===", "===", "===", "===", "===", "===", "===", "===", "==="}], "="}], 
+   "*)"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"ConstantMatrixElement", "[", "DMmass_", "]"}], " ", ":=", " ", 
+     RowBox[{"16.", "*", 
+      RowBox[{"NM", "^", "2"}], "*", 
+      RowBox[{"DMmass", "^", "2"}]}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+     "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+       "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+       "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+       "===", "===", "===", "===", "===", "===", "===", "===", "===", "===", "===",
+       "===", "===", "===", "===", "===", "===", "===", "===", "==="}], "="}],
+     "*)"}], "\[IndentingNewLine]", "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.774238532761181*^9, 3.774238674430736*^9}, 
+   3.7742451695562077`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Main Functions", "Section",
+ CellChangeTimes->{{3.77424449018472*^9, 3.7742444936160307`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"dGammadkprime", "[", 
+   RowBox[{"k0_", ",", "kp_", ",", " ", "DMmass_"}], "]"}], " ", ":=", " ", 
+  RowBox[{"Module", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"{", " ", 
+     RowBox[{
+     "q", ",", " ", "q0", ",", " ", "z", ",", " ", "zeta", ",", " ", "S", ",",
+       "PreFactor"}], "}"}], ",", "\[IndentingNewLine]", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"PreFactor", "=", " ", 
+      FractionBox["TEMP", 
+       RowBox[{"64.", "*", 
+        RowBox[{"Pi", "^", "3"}], "*", 
+        RowBox[{"DMmass", "^", "2"}]}]]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"q0", " ", "=", " ", 
+      RowBox[{
+       FractionBox["1", 
+        RowBox[{"2.", "*", "DMmass"}]], "*", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"k0", "^", "2"}], " ", "-", " ", 
+         RowBox[{"kp", "^", "2"}]}], ")"}]}]}], ";"}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.77424449779347*^9, 3.774244618330394*^9}, {
+  3.774244922381427*^9, 3.774245063856103*^9}, {3.7742451723927402`*^9, 
+  3.774245178007475*^9}, {3.774245212217455*^9, 3.774245212405389*^9}}]
 }, Open  ]]
 },
 WindowSize->{1920, 1043},
@@ -547,8 +621,16 @@ Cell[4049, 104, 1745, 36, 74, "Input"],
 Cell[5797, 142, 14591, 262, 59, "Output"]
 }, Open  ]],
 Cell[20403, 407, 209, 3, 37, "Text"],
-Cell[20615, 412, 4185, 99, 389, "Input"]
+Cell[20615, 412, 4185, 99, 332, "Input"]
 }, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[24849, 517, 104, 1, 65, "Section"],
+Cell[24956, 520, 1505, 30, 206, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[26498, 555, 100, 1, 65, "Section"],
+Cell[26601, 558, 1160, 28, 233, "Input"]
 }, Open  ]]
 }
 ]
