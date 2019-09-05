@@ -34,13 +34,13 @@ display_results (char *title, double result, double error)
 
 //=========================================================
 
-double OmegaIntegral(double dm, double muFn, double vmax){
+double OmegaIntegral(double mu, double muFn, double vmax){
   double res, err;
 
-  struct omega_params params = {dm, muFn, vmax };
+  struct omega_params params = {mu, muFn, vmax };
 
-  double smax = sbound(dm, vmax, muFn);
-  double tmax = tbound(dm, vmax, muFn);
+  double smax = sbound(mu, vmax, muFn);
+  double tmax = tbound(mu, vmax, muFn);
 
 
   double xl[3] = {0, 0, 0}; // lower bounds for (v, s, t)
@@ -52,7 +52,7 @@ double OmegaIntegral(double dm, double muFn, double vmax){
 
   gsl_monte_function G = { &OmegaIntegrand, 3, &params }; // {function, dimension, params}
 
-  size_t calls = 1000000;
+  size_t calls = 100000;
 
   gsl_rng_env_setup ();
 
@@ -117,20 +117,20 @@ double DMvel_integrand(double DMvel, void *p){
 
   struct DMvelint_params *params2 = (struct DMvelint_params *)p;
 
-  double dm = (params2->dm_mass);
+  double mu = (params2->dm_mass);
   double muF = (params2->muF);
   double escvel = (params2->escvel);
 
-  return fvel(DMvel)*OmegaIntegral(dm, muF, escvel)/DMvel;
+  return fvel(DMvel)*OmegaIntegral(mu, muF, escvel)/DMvel;
 }
 
 //=========================================================
 
-double DMvel_integral (double dm, double muFn, double vmax){
+double DMvel_integral (double mu, double muFn, double vmax){
 
    double result, error;
 
-   struct DMvelint_params params2 = {dm, muFn, vmax};
+   struct DMvelint_params params2 = {mu, muFn, vmax};
 
    gsl_integration_workspace * w = gsl_integration_workspace_alloc (1000);
 
@@ -232,9 +232,9 @@ int main ()
     // double testmass = 1e-4 ;
 
     int range = 50;
-    double mass_vals[range];
+    double mu_vals[range];
 
-    logspace(7, 10, range, mass_vals);
+    logspace(-4, 1.5, range, mu_vals);
 
     // double test_mass = 1.e9;
 
@@ -242,7 +242,7 @@ int main ()
     // FILE *outfile3 = fopen("vegas_full.dat", "w");
     for (j = 0; j < range; j++){
 
-      // printf("\n%e0.6E\n\n", mass_vals[j]);
+      // printf("\n%e0.6E\n\n", mu_vals[j]);
 
       // FILE *outfile = fopen("cap_rate_rad.dat", "w");
 
@@ -254,14 +254,14 @@ int main ()
         double vmax = esc_vel_full(radint[i],  npts);
         double ndfree = pow(2.*NM*muFn,1.5)/3./M_PI/M_PI/hbarc/hbarc/hbarc; // m^-3
 
-	      dCdr[i] = prefactors(mass_vals[j])*constCS() * OmegaIntegral( mass_vals[j], muFn, vmax) * (nd*nd/ndfree)*SOL*SOL*1.e54*radint[i]*radint[i] ;
+	      dCdr[i] = prefactors(mu_vals[j])*constCS() * OmegaIntegral( mu_vals[j], muFn, vmax) * (nd*nd/ndfree)*SOL*SOL*1.e54*radint[i]*radint[i] ;
 
         // fprintf(outfile,"%0.10E\t%.10E\t%.10E\n", radint[i], dCdr[i] , nd*nd/ndfree);
       }
       // fclose(outfile);
 
       cap_full[j] = capture_rate(rmin, rmax);
-      fprintf(outfile, "%0.10e\t%0.10e\n", mass_vals[j], cap_full[j]);
+      fprintf(outfile, "%0.10e\t%0.10e\n", mu_vals[j], cap_full[j]);
 
 
     for (i = 0; i<Nrpts; i++){

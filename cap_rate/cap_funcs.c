@@ -14,16 +14,12 @@
 
 //=========================================================
 
-double mu(double dm){
-
-	return dm / NM;
-}
 
 //=========================================================
 
-double mu_plus(double dm){
+double mu_plus(double mu){
 
-	return ( 1.0 + dm / NM) / 2.0;
+	return ( 1.0 + mu) / 2.0;
 }
 
 
@@ -33,15 +29,14 @@ double mu_plus(double dm){
 double FERMI_VEL(double muF){
 //square of fermi vel in natural units
 
-	return  (2.0 * muF ) / NM ;
+	return  (2.0 * muF) / NM ;
 
 }
 
 
-double prefactors(double dm){
+double prefactors(double mu){
 
-	return 64*M_PI* mu_plus(dm) * mu_plus(dm) * mu_plus(dm) * mu_plus(dm) *
-					erf(sqrt(3/2)*NSVEL/VELDISP)/NSVEL*(1e6/dm); // rho_chi/dm in GeV/m^2
+	return 64*M_PI* mu_plus(mu) * mu_plus(mu) * mu_plus(mu) * mu_plus(mu)*erf(sqrt(3/2)*NSVEL/VELDISP)/NSVEL*(1e6*NM/mu); // rho_chi/dm in GeV/m^2
 }
 //=========================================================
 
@@ -85,8 +80,7 @@ double step(double f){
 
 double heaviside_product(double s, double t, double vi, double vf){
 	/* product of relevant step functions */
-	return ( step( vi - fabs(s-t) ) * step( s + t - vi ) *
-					step( vf - fabs(s-t) ) * step(s + t - vf) );
+	return (step( vf - fabs(s-t) ) * step(s + t - vi) );
 }
 
 //=========================================================
@@ -95,17 +89,17 @@ double heaviside_product(double s, double t, double vi, double vf){
 
 //=========================================================
 
-double velsqr(double s, double t, double vel, double dm){
+double velsqr(double s, double t, double vel, double mu){
 	/* square of velocity: v = ESCAPE_VEL for initial particle */
-	double a = (2.0 * mu(dm) * mu_plus(dm) * t * t + 2.0 * mu_plus(dm) *
-							s*s - mu(dm) * vel * vel);
+	double a = (2.0 * mu * mu_plus(mu) * t * t + 2.0 * mu_plus(mu) *
+							s*s - mu* vel * vel);
 	return a;
 }
 
 //=========================================================
 
-double energy(double s, double t, double vel, double dm){
-	return (0.5 * NM * velsqr(s, t, vel, dm));
+double energy(double s, double t, double vel, double mu){
+	return (0.5 * NM * velsqr(s, t, vel, mu));
 }
 
 //=========================================================
@@ -114,13 +108,12 @@ double energy(double s, double t, double vel, double dm){
 
 //=========================================================
 
-double FD(double s, double t, double vel, double chempot, double dm){
+double FD(double s, double t, double vel, double chempot, double mu){
 
-	double MUP = mu_plus(dm);
-	double MU  = mu(dm);
+	double MUP = mu_plus(mu);
 
 
- return (1.0 /(  1.0 + exp( ( 0.5*NM*( 2.*MU*MUP*t*t + 2.*MUP*s*s - MU*vel*vel)/SOL/SOL -  chempot)  / TEMP ) ) );
+ return (1.0 /(  1.0 + exp( ( 0.5*NM*( 2.*mu*MUP*t*t + 2.*MUP*s*s - mu*vel*vel)/SOL/SOL -  chempot)  / TEMP ) ) );
 
 }
 
@@ -155,14 +148,14 @@ double fvel(double DMvel) {
 for double int: s = x[0], t = x[1]
 for tripple int: v = x[0], s = x[1], t = x[2]
 */
-double tbound( double dm, double escvel, double muF){
-    return 1.05 * sqrt( ( FERMI_VEL(muF)*SOL*SOL + mu(dm) * escvel * escvel) / ( 2.0 * mu(dm) * mu_plus(dm) ) );
+double tbound( double mu, double escvel, double muF){
+    return 1.05 * sqrt( ( FERMI_VEL(muF)*SOL*SOL + mu * escvel * escvel) / ( 2.0 * mu * mu_plus(mu) ) );
 }
 
 //=========================================================
 
-double sbound( double dm, double escvel, double muF){
-    return 1.05 * sqrt( (FERMI_VEL(muF)*SOL*SOL + mu(dm) * escvel * escvel )/ ( 2.0 * mu_plus(dm) ) );
+double sbound( double mu, double escvel, double muF){
+    return 1.05 * sqrt( (FERMI_VEL(muF)*SOL*SOL + mu* escvel * escvel )/ ( 2.0 * mu_plus(mu) ) );
 }
 
 //=========================================================
@@ -172,7 +165,7 @@ double OmegaIntegrand(double *x, size_t dim, void *p){
 
     struct omega_params *params = (struct omega_params *)p;
 
-    double dm      = (params->dm_mass);
+    double mu      = (params->dm_mass);
     double chempot = (params->muF);
     double escvel  = (params->escvel);
 
@@ -188,7 +181,7 @@ double OmegaIntegrand(double *x, size_t dim, void *p){
 
 
     return x[0] * tp * heaviside_product(sp, tp, escvel, x[0]) *
-		 FD(sp, tp, escvel, chempot, dm) * (1.0 - FD(sp, tp, x[0], chempot, dm));
+		 FD(sp, tp, escvel, chempot, mu) * (1.0 - FD(sp, tp, x[0], chempot, mu));
 
 }
 
