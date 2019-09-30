@@ -250,17 +250,17 @@ int main ()
 
         radint[i] = rmin + ((double) i)*(rmax-rmin)/(Nrpts-1);
         double nd = nd_interp(radint[i], npts) ; // m^-3
-        double muFn = muFn_interp(radint[i], npts)*1e9;
+        double muFn = muFn_interp(radint[i], npts);
         double vmax = esc_vel_full(radint[i],  npts);
         double ndfree = pow(2.*NM*muFn,1.5)/3./M_PI/M_PI/hbarc/hbarc/hbarc; // m^-3
 
-	      dCdr[i] = prefactors(mu_vals[j])*constCS() * OmegaIntegral( mu_vals[j], muFn, vmax) * (nd*nd/ndfree)*SOL*SOL*1.e54*radint[i]*radint[i] ;
+	      dCdr[i] =  OmegaIntegral( mu_vals[j], muFn, vmax) * (nd*nd/ndfree)radint[i]*radint[i] ;
 
         // fprintf(outfile,"%0.10E\t%.10E\t%.10E\n", radint[i], dCdr[i] , nd*nd/ndfree);
       }
       // fclose(outfile);
 
-      cap_full[j] = capture_rate(rmin, rmax);
+      cap_full[j] = prefactors(mu_vals[j])*constCS() *capture_rate(rmin, rmax)*SOL*SOL*1.e54;
       fprintf(outfile, "%0.10e\t%0.10e\n", mu_vals[j], cap_full[j]);
 
 
