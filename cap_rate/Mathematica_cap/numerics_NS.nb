@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    132171,       3193]
-NotebookOptionsPosition[    128115,       3069]
-NotebookOutlinePosition[    128451,       3084]
-CellTagsIndexPosition[    128408,       3081]
+NotebookDataLength[    132787,       3204]
+NotebookOptionsPosition[    128730,       3080]
+NotebookOutlinePosition[    129066,       3095]
+CellTagsIndexPosition[    129023,       3092]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -210,10 +210,10 @@ Cell[BoxData[
         TypeSystem`PackageScope`Limited[
           TypeSystem`PackageScope`MulticolumnShape[3, 4, 105.60000000000002`],
            12, {}], "InitialData" -> 
-        TypeSystem`PackageScope`CacheHandle[1687698961], "Type" -> 
+        TypeSystem`PackageScope`CacheHandle[94254667], "Type" -> 
         TypeSystem`Vector[
           TypeSystem`Atom[String], 12], "HandleQ" -> True, "RowTarget" -> 20, 
-        "Data" -> TypeSystem`PackageScope`CacheHandle[1687698961]], 
+        "Data" -> TypeSystem`PackageScope`CacheHandle[94254667]], 
       TypeSystem`NestedGrid`PackagePrivate`$path$$ = {}, 
       TypeSystem`NestedGrid`PackagePrivate`$pos$$ = 1, 
       TypeSystem`NestedGrid`PackagePrivate`$grid$$ = 
@@ -225,7 +225,7 @@ Cell[BoxData[
                 Pane[
                  Annotation["r(km)", 
                   TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
-                  1806577997][
+                  1478355267][
                    GeneralUtilities`Slice[1]], "Mouse"], 
                  ImageSize -> {{105.60000000000002`, Full}, Automatic}, 
                  Alignment -> {Left, Baseline}], Frame -> {{
@@ -243,7 +243,7 @@ Cell[BoxData[
                 Pane[
                  Annotation["M(Msun)", 
                   TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
-                  1806577997][
+                  1478355267][
                    GeneralUtilities`Slice[2]], "Mouse"], 
                  ImageSize -> {{105.60000000000002`, Full}, Automatic}, 
                  Alignment -> {Left, Baseline}], Frame -> {{
@@ -261,7 +261,7 @@ Cell[BoxData[
                 Pane[
                  Annotation["nb(fm^-3)", 
                   TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
-                  1806577997][
+                  1478355267][
                    GeneralUtilities`Slice[3]], "Mouse"], 
                  ImageSize -> {{105.60000000000002`, Full}, Automatic}, 
                  Alignment -> {Left, Baseline}], Frame -> {{
@@ -279,7 +279,7 @@ Cell[BoxData[
                 Pane[
                  Annotation["Ye", 
                   TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
-                  1806577997][
+                  1478355267][
                    GeneralUtilities`Slice[4]], "Mouse"], 
                  ImageSize -> {{105.60000000000002`, Full}, Automatic}, 
                  Alignment -> {Left, Baseline}], Frame -> {{
@@ -297,7 +297,7 @@ Cell[BoxData[
                 Pane[
                  Annotation["Ymu", 
                   TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
-                  1806577997][
+                  1478355267][
                    GeneralUtilities`Slice[5]], "Mouse"], 
                  ImageSize -> {{105.60000000000002`, Full}, Automatic}, 
                  Alignment -> {Left, Baseline}], Frame -> {{
@@ -315,7 +315,7 @@ Cell[BoxData[
                 Pane[
                  Annotation["Yp", 
                   TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
-                  1806577997][
+                  1478355267][
                    GeneralUtilities`Slice[6]], "Mouse"], 
                  ImageSize -> {{105.60000000000002`, Full}, Automatic}, 
                  Alignment -> {Left, Baseline}], Frame -> {{
@@ -333,7 +333,7 @@ Cell[BoxData[
                 Pane[
                  Annotation["Yn", 
                   TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
-                  1806577997][
+                  1478355267][
                    GeneralUtilities`Slice[7]], "Mouse"], 
                  ImageSize -> {{105.60000000000002`, Full}, Automatic}, 
                  Alignment -> {Left, Baseline}], Frame -> {{
@@ -351,7 +351,7 @@ Cell[BoxData[
                 Pane[
                  Annotation["mu_n(MeV)", 
                   TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
-                  1806577997][
+                  1478355267][
                    GeneralUtilities`Slice[8]], "Mouse"], 
                  ImageSize -> {{105.60000000000002`, Full}, Automatic}, 
                  Alignment -> {Left, Baseline}], Frame -> {{
@@ -369,7 +369,7 @@ Cell[BoxData[
                 Pane[
                  Annotation["mu_p(MeV)", 
                   TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
-                  1806577997][
+                  1478355267][
                    GeneralUtilities`Slice[9]], "Mouse"], 
                  ImageSize -> {{105.60000000000002`, Full}, Automatic}, 
                  Alignment -> {Left, Baseline}], Frame -> {{
@@ -387,7 +387,7 @@ Cell[BoxData[
                 Pane[
                  Annotation["mu_e(MeV)", 
                   TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
-                  1806577997][
+                  1478355267][
                    GeneralUtilities`Slice[10]], "Mouse"], 
                  ImageSize -> {{105.60000000000002`, Full}, Automatic}, 
                  Alignment -> {Left, Baseline}], Frame -> {{
@@ -405,7 +405,7 @@ Cell[BoxData[
                 Pane[
                  Annotation["mu_mu(MeV)", 
                   TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
-                  1806577997][
+                  1478355267][
                    GeneralUtilities`Slice[11]], "Mouse"], 
                  ImageSize -> {{105.60000000000002`, Full}, Automatic}, 
                  Alignment -> {Left, Baseline}], Frame -> {{
@@ -423,7 +423,7 @@ Cell[BoxData[
                 Pane[
                  Annotation["P(dyncm^-2)", 
                   TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
-                  1806577997][
+                  1478355267][
                    GeneralUtilities`Slice[12]], "Mouse"], 
                  ImageSize -> {{105.60000000000002`, Full}, Automatic}, 
                  Alignment -> {Left, Baseline}], Frame -> {{
@@ -483,7 +483,7 @@ Cell[BoxData[
                 TypeSystem`NestedGrid`PackagePrivate`$state$$, 
                  TypeSystem`NestedGrid`PackagePrivate`$path$$, 
                  TypeSystem`NestedGrid`PackagePrivate`$pos$$, 
-                 TypeSystem`NestedGrid`PackagePrivate`$grid$$, 1806577997][
+                 TypeSystem`NestedGrid`PackagePrivate`$grid$$, 1478355267][
                 TypeSystem`NestedGrid`PackagePrivate`tmpData$]]; If[
                Not[
                 FailureQ[TypeSystem`NestedGrid`PackagePrivate`tmpGrid$]], 
@@ -518,14 +518,14 @@ Cell[BoxData[
           TypeSystem`NestedGrid`PackagePrivate`$state$$, 
            TypeSystem`NestedGrid`PackagePrivate`$path$$, 
            TypeSystem`NestedGrid`PackagePrivate`$pos$$, 
-           TypeSystem`NestedGrid`PackagePrivate`$grid$$, 1806577997]]], 
+           TypeSystem`NestedGrid`PackagePrivate`$grid$$, 1478355267]]], 
         TrackedSymbols :> {TypeSystem`NestedGrid`PackagePrivate`$path$$}], 
       TypeSystem`NestedGrid`PackagePrivate`$bottomBar$$ = Framed[
         Dynamic[
          Replace[
           MouseAnnotation[Null], {
-          TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[1806577997][Null] -> 
-           "", TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[1806577997][
+          TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[1478355267][Null] -> 
+           "", TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[1478355267][
              Pattern[TypeSystem`NestedGrid`PackagePrivate`path, 
               Blank[]]] :> (
             TypeSystem`NestedGrid`PackagePrivate`$lastPath = 
@@ -635,7 +635,7 @@ Cell[BoxData[
    3.7779564790703077`*^9, 3.777957299455921*^9, {3.778205718118408*^9, 
    3.778205742459227*^9}, 3.778286816875041*^9, 3.778287178326799*^9, 
    3.7782908833284683`*^9, 3.778807228008586*^9, 3.77881477377696*^9, 
-   3.778816620319112*^9},
+   3.778816620319112*^9, 3.778885832981841*^9, 3.778893204451676*^9},
  ExpressionUUID -> "21f913bc-30cd-472b-85c6-4f5fdd8b2861"]
 }, Open  ]],
 
@@ -2805,11 +2805,9 @@ Cell[BoxData[
    "\[IndentingNewLine]", "\[IndentingNewLine]", ",", "\[IndentingNewLine]", 
    RowBox[{"{", 
     RowBox[{"CS", ",", " ", 
-     RowBox[{"{", " ", 
-      RowBox[{
-      "d3", ",", " ", "d4", ",", " ", "d5", ",", " ", "d6", ",", "d7", ",", 
-       "d8", ",", "d9", ",", "d10"}], "}"}]}], "}"}]}], "\[IndentingNewLine]",
-   "]"}]], "Input",
+     RowBox[{"{", 
+      RowBox[{"d7", ",", "d8", ",", "d9", ",", "d10"}], "}"}]}], "}"}]}], 
+  "\[IndentingNewLine]", "]"}]], "Input",
  CellChangeTimes->{{3.777519450284083*^9, 3.777519450618931*^9}, {
    3.7775196472461357`*^9, 3.777519649688505*^9}, {3.7775202189818783`*^9, 
    3.777520337914358*^9}, {3.777520469764842*^9, 3.7775204698789263`*^9}, 
@@ -2838,157 +2836,170 @@ Cell[BoxData[
    3.778286955922225*^9}, {3.778287159116413*^9, 3.778287173886404*^9}, {
    3.778804452709524*^9, 3.778804478749775*^9}, {3.7788079105508537`*^9, 
    3.778807927187449*^9}, {3.778814762057675*^9, 3.77881476430053*^9}, 
-   3.778816664372396*^9}],
+   3.778816664372396*^9, {3.77888582650845*^9, 3.778885826979813*^9}, {
+   3.7788931929758453`*^9, 3.7788931942469273`*^9}}],
 
 Cell[BoxData[
  TemplateBox[{
   "Suave","success",
    "\"Needed \\!\\(\\*RowBox[{\\\"1000\\\"}]\\) function evaluations on \
-\\!\\(\\*RowBox[{\\\"1\\\"}]\\) subregions.\"",2,105,6,18286751647805946282,
+\\!\\(\\*RowBox[{\\\"1\\\"}]\\) subregions.\"",2,104,2,18287253550191340412,
    "Local"},
   "MessageTemplate"]], "Message", "MSG",
  CellChangeTimes->{3.778205743403763*^9, 3.778286821032178*^9, 
   3.778286902163117*^9, 3.7782869592631073`*^9, 3.7782871818590918`*^9, 
   3.778290887746455*^9, 3.778807232260017*^9, 3.778807930759561*^9, 
-  3.778814777713236*^9, 3.778816624212414*^9, 3.778816665876981*^9}],
+  3.778814777713236*^9, 3.778816624212414*^9, 3.778816665876981*^9, 
+  3.778885834281769*^9, 3.778893208436214*^9}],
 
 Cell[BoxData[
  TemplateBox[{
   "Suave","success",
    "\"Needed \\!\\(\\*RowBox[{\\\"1000\\\"}]\\) function evaluations on \
-\\!\\(\\*RowBox[{\\\"1\\\"}]\\) subregions.\"",2,105,7,18286751647805946282,
+\\!\\(\\*RowBox[{\\\"1\\\"}]\\) subregions.\"",2,104,3,18287253550191340412,
    "Local"},
   "MessageTemplate"]], "Message", "MSG",
  CellChangeTimes->{3.778205743403763*^9, 3.778286821032178*^9, 
   3.778286902163117*^9, 3.7782869592631073`*^9, 3.7782871818590918`*^9, 
   3.778290887746455*^9, 3.778807232260017*^9, 3.778807930759561*^9, 
-  3.778814777713236*^9, 3.778816624212414*^9, 3.7788166662792883`*^9}],
+  3.778814777713236*^9, 3.778816624212414*^9, 3.778816665876981*^9, 
+  3.778885834281769*^9, 3.7788932089337177`*^9}],
 
 Cell[BoxData[
  TemplateBox[{
   "Suave","success",
    "\"Needed \\!\\(\\*RowBox[{\\\"1000\\\"}]\\) function evaluations on \
-\\!\\(\\*RowBox[{\\\"1\\\"}]\\) subregions.\"",2,105,8,18286751647805946282,
+\\!\\(\\*RowBox[{\\\"1\\\"}]\\) subregions.\"",2,104,4,18287253550191340412,
    "Local"},
   "MessageTemplate"]], "Message", "MSG",
  CellChangeTimes->{3.778205743403763*^9, 3.778286821032178*^9, 
   3.778286902163117*^9, 3.7782869592631073`*^9, 3.7782871818590918`*^9, 
   3.778290887746455*^9, 3.778807232260017*^9, 3.778807930759561*^9, 
-  3.778814777713236*^9, 3.778816624212414*^9, 3.778816666684054*^9}],
+  3.778814777713236*^9, 3.778816624212414*^9, 3.778816665876981*^9, 
+  3.778885834281769*^9, 3.778893209418633*^9}],
 
 Cell[BoxData[
  TemplateBox[{
   "General","stop",
    "\"Further output of \\!\\(\\*StyleBox[RowBox[{\\\"Suave\\\", \\\"::\\\", \
 \\\"success\\\"}], \\\"MessageName\\\"]\\) will be suppressed during this \
-calculation.\"",2,105,9,18286751647805946282,"Local"},
+calculation.\"",2,104,5,18287253550191340412,"Local"},
   "MessageTemplate"]], "Message", "MSG",
  CellChangeTimes->{3.778205743403763*^9, 3.778286821032178*^9, 
   3.778286902163117*^9, 3.7782869592631073`*^9, 3.7782871818590918`*^9, 
   3.778290887746455*^9, 3.778807232260017*^9, 3.778807930759561*^9, 
-  3.778814777713236*^9, 3.778816624212414*^9, 3.77881666670234*^9}],
+  3.778814777713236*^9, 3.778816624212414*^9, 3.778816665876981*^9, 
+  3.778885834281769*^9, 3.778893209424671*^9}],
 
 Cell[BoxData[
  TemplateBox[{
   "NIntegrate","maxp",
    "\"The integral failed to converge after \
 \\!\\(\\*RowBox[{\\\"50000\\\"}]\\) integrand evaluations. NIntegrate \
-obtained \\!\\(\\*RowBox[{\\\"0.0169510825196332`15.\\\"}]\\) and \
-\\!\\(\\*RowBox[{\\\"0.000114974528446465`15.\\\"}]\\) for the integral and \
-error estimates.\"",2,105,10,18286751647805946282,"Local"},
+obtained \\!\\(\\*RowBox[{\\\"0.0157823676764168`15.\\\"}]\\) and \
+\\!\\(\\*RowBox[{\\\"0.000107724695959229`15.\\\"}]\\) for the integral and \
+error estimates.\"",2,104,6,18287253550191340412,"Local"},
   "MessageTemplate"]], "Message", "MSG",
  CellChangeTimes->{3.778205743403763*^9, 3.778286821032178*^9, 
   3.778286902163117*^9, 3.7782869592631073`*^9, 3.7782871818590918`*^9, 
   3.778290887746455*^9, 3.778807232260017*^9, 3.778807930759561*^9, 
-  3.778814777713236*^9, 3.778816624212414*^9, 3.7788167907774277`*^9}],
+  3.778814777713236*^9, 3.778816624212414*^9, 3.778816665876981*^9, 
+  3.778885834281769*^9, 3.77889333327179*^9}],
 
 Cell[BoxData[
  TemplateBox[{
   "NIntegrate","maxp",
    "\"The integral failed to converge after \
 \\!\\(\\*RowBox[{\\\"50000\\\"}]\\) integrand evaluations. NIntegrate \
-obtained \\!\\(\\*RowBox[{\\\"0.0198800148585954`15.\\\"}]\\) and \
-\\!\\(\\*RowBox[{\\\"0.000135288751869634`15.\\\"}]\\) for the integral and \
-error estimates.\"",2,105,11,18286751647805946282,"Local"},
+obtained \\!\\(\\*RowBox[{\\\"0.0181666364602656`15.\\\"}]\\) and \
+\\!\\(\\*RowBox[{\\\"0.000124689759820553`15.\\\"}]\\) for the integral and \
+error estimates.\"",2,104,7,18287253550191340412,"Local"},
   "MessageTemplate"]], "Message", "MSG",
  CellChangeTimes->{3.778205743403763*^9, 3.778286821032178*^9, 
   3.778286902163117*^9, 3.7782869592631073`*^9, 3.7782871818590918`*^9, 
   3.778290887746455*^9, 3.778807232260017*^9, 3.778807930759561*^9, 
-  3.778814777713236*^9, 3.778816624212414*^9, 3.778816811026807*^9}],
+  3.778814777713236*^9, 3.778816624212414*^9, 3.778816665876981*^9, 
+  3.778885834281769*^9, 3.778893353864646*^9}],
 
 Cell[BoxData[
  TemplateBox[{
   "NIntegrate","maxp",
    "\"The integral failed to converge after \
 \\!\\(\\*RowBox[{\\\"50000\\\"}]\\) integrand evaluations. NIntegrate \
-obtained \\!\\(\\*RowBox[{\\\"0.023221947656736`15.\\\"}]\\) and \
-\\!\\(\\*RowBox[{\\\"0.000158530499900139`15.\\\"}]\\) for the integral and \
-error estimates.\"",2,105,12,18286751647805946282,"Local"},
+obtained \\!\\(\\*RowBox[{\\\"0.0208697383881564`15.\\\"}]\\) and \
+\\!\\(\\*RowBox[{\\\"0.000143954907822945`15.\\\"}]\\) for the integral and \
+error estimates.\"",2,104,8,18287253550191340412,"Local"},
   "MessageTemplate"]], "Message", "MSG",
  CellChangeTimes->{3.778205743403763*^9, 3.778286821032178*^9, 
   3.778286902163117*^9, 3.7782869592631073`*^9, 3.7782871818590918`*^9, 
   3.778290887746455*^9, 3.778807232260017*^9, 3.778807930759561*^9, 
-  3.778814777713236*^9, 3.778816624212414*^9, 3.778816831182686*^9}],
+  3.778814777713236*^9, 3.778816624212414*^9, 3.778816665876981*^9, 
+  3.778885834281769*^9, 3.77889337464847*^9}],
 
 Cell[BoxData[
  TemplateBox[{
   "General","stop",
    "\"Further output of \\!\\(\\*StyleBox[RowBox[{\\\"NIntegrate\\\", \
 \\\"::\\\", \\\"maxp\\\"}], \\\"MessageName\\\"]\\) will be suppressed during \
-this calculation.\"",2,105,13,18286751647805946282,"Local"},
+this calculation.\"",2,104,9,18287253550191340412,"Local"},
   "MessageTemplate"]], "Message", "MSG",
  CellChangeTimes->{3.778205743403763*^9, 3.778286821032178*^9, 
   3.778286902163117*^9, 3.7782869592631073`*^9, 3.7782871818590918`*^9, 
   3.778290887746455*^9, 3.778807232260017*^9, 3.778807930759561*^9, 
-  3.778814777713236*^9, 3.778816624212414*^9, 3.778816831189308*^9}],
+  3.778814777713236*^9, 3.778816624212414*^9, 3.778816665876981*^9, 
+  3.778885834281769*^9, 3.778893374653737*^9}],
 
 Cell[BoxData[
  TemplateBox[{
   "Suave","accuracy",
    "\"Desired accuracy was not reached within \
 \\!\\(\\*RowBox[{\\\"50000\\\"}]\\) function evaluations on \\!\\(\\*RowBox[{\
-\\\"50\\\"}]\\) subregions.\"",2,105,14,18286751647805946282,"Local"},
+\\\"50\\\"}]\\) subregions.\"",2,104,10,18287253550191340412,"Local"},
   "MessageTemplate"]], "Message", "MSG",
  CellChangeTimes->{3.778205743403763*^9, 3.778286821032178*^9, 
   3.778286902163117*^9, 3.7782869592631073`*^9, 3.7782871818590918`*^9, 
   3.778290887746455*^9, 3.778807232260017*^9, 3.778807930759561*^9, 
-  3.778814777713236*^9, 3.778816624212414*^9, 3.7788171706142273`*^9}],
+  3.778814777713236*^9, 3.778816624212414*^9, 3.778816665876981*^9, 
+  3.778885834281769*^9, 3.77889379036829*^9}],
 
 Cell[BoxData[
  TemplateBox[{
   "Suave","accuracy",
    "\"Desired accuracy was not reached within \
 \\!\\(\\*RowBox[{\\\"50000\\\"}]\\) function evaluations on \\!\\(\\*RowBox[{\
-\\\"50\\\"}]\\) subregions.\"",2,105,15,18286751647805946282,"Local"},
+\\\"50\\\"}]\\) subregions.\"",2,104,11,18287253550191340412,"Local"},
   "MessageTemplate"]], "Message", "MSG",
  CellChangeTimes->{3.778205743403763*^9, 3.778286821032178*^9, 
   3.778286902163117*^9, 3.7782869592631073`*^9, 3.7782871818590918`*^9, 
   3.778290887746455*^9, 3.778807232260017*^9, 3.778807930759561*^9, 
-  3.778814777713236*^9, 3.778816624212414*^9, 3.778817185613454*^9}],
+  3.778814777713236*^9, 3.778816624212414*^9, 3.778816665876981*^9, 
+  3.778885834281769*^9, 3.778893806451898*^9}],
 
 Cell[BoxData[
  TemplateBox[{
   "Suave","accuracy",
    "\"Desired accuracy was not reached within \
 \\!\\(\\*RowBox[{\\\"50000\\\"}]\\) function evaluations on \\!\\(\\*RowBox[{\
-\\\"50\\\"}]\\) subregions.\"",2,105,16,18286751647805946282,"Local"},
+\\\"50\\\"}]\\) subregions.\"",2,104,12,18287253550191340412,"Local"},
   "MessageTemplate"]], "Message", "MSG",
  CellChangeTimes->{3.778205743403763*^9, 3.778286821032178*^9, 
   3.778286902163117*^9, 3.7782869592631073`*^9, 3.7782871818590918`*^9, 
   3.778290887746455*^9, 3.778807232260017*^9, 3.778807930759561*^9, 
-  3.778814777713236*^9, 3.778816624212414*^9, 3.778817200637045*^9}],
+  3.778814777713236*^9, 3.778816624212414*^9, 3.778816665876981*^9, 
+  3.778885834281769*^9, 3.778893822302437*^9}],
 
 Cell[BoxData[
  TemplateBox[{
   "General","stop",
    "\"Further output of \\!\\(\\*StyleBox[RowBox[{\\\"Suave\\\", \\\"::\\\", \
 \\\"accuracy\\\"}], \\\"MessageName\\\"]\\) will be suppressed during this \
-calculation.\"",2,105,17,18286751647805946282,"Local"},
+calculation.\"",2,104,13,18287253550191340412,"Local"},
   "MessageTemplate"]], "Message", "MSG",
  CellChangeTimes->{3.778205743403763*^9, 3.778286821032178*^9, 
   3.778286902163117*^9, 3.7782869592631073`*^9, 3.7782871818590918`*^9, 
   3.778290887746455*^9, 3.778807232260017*^9, 3.778807930759561*^9, 
-  3.778814777713236*^9, 3.778816624212414*^9, 3.778817200642242*^9}]
+  3.778814777713236*^9, 3.778816624212414*^9, 3.778816665876981*^9, 
+  3.778885834281769*^9, 3.778893822309745*^9}]
 }, Open  ]],
 
 Cell[BoxData[
@@ -3095,105 +3106,105 @@ Cell[CellGroupData[{
 Cell[6149, 157, 212, 3, 35, "Subsubsection"],
 Cell[CellGroupData[{
 Cell[6386, 164, 1745, 36, 74, "Input"],
-Cell[8134, 202, 22971, 436, 43, "Output"]
+Cell[8134, 202, 23011, 436, 111, "Output"]
 }, Open  ]],
-Cell[31120, 641, 209, 3, 37, "Text"],
-Cell[31332, 646, 6600, 141, 379, "Input"],
-Cell[37935, 789, 2672, 63, 260, "Input"],
-Cell[40610, 854, 1706, 35, 139, "Input"],
-Cell[42319, 891, 689, 16, 75, "Input"],
-Cell[43011, 909, 3714, 91, 142, "Input"],
-Cell[46728, 1002, 801, 18, 32, "Input"]
+Cell[31160, 641, 209, 3, 37, "Text"],
+Cell[31372, 646, 6600, 141, 379, "Input"],
+Cell[37975, 789, 2672, 63, 260, "Input"],
+Cell[40650, 854, 1706, 35, 139, "Input"],
+Cell[42359, 891, 689, 16, 75, "Input"],
+Cell[43051, 909, 3714, 91, 142, "Input"],
+Cell[46768, 1002, 801, 18, 32, "Input"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[47578, 1026, 287, 4, 65, "Section"],
-Cell[47868, 1032, 274, 6, 33, "Input"],
-Cell[48145, 1040, 1446, 36, 55, "Input"],
-Cell[49594, 1078, 472, 11, 32, "Input"],
-Cell[50069, 1091, 13650, 362, 698, "Input"],
-Cell[63722, 1455, 91, 1, 30, "Input"]
+Cell[47618, 1026, 287, 4, 65, "Section"],
+Cell[47908, 1032, 274, 6, 33, "Input"],
+Cell[48185, 1040, 1446, 36, 55, "Input"],
+Cell[49634, 1078, 472, 11, 32, "Input"],
+Cell[50109, 1091, 13650, 362, 698, "Input"],
+Cell[63762, 1455, 91, 1, 30, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[63850, 1461, 155, 2, 65, "Section"],
-Cell[64008, 1465, 185, 4, 32, "Input"],
-Cell[64196, 1471, 23194, 608, 814, "Input"]
+Cell[63890, 1461, 155, 2, 65, "Section"],
+Cell[64048, 1465, 185, 4, 32, "Input"],
+Cell[64236, 1471, 23194, 608, 814, "Input"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[87427, 2084, 157, 2, 51, "Section"],
+Cell[87467, 2084, 157, 2, 51, "Section"],
 Cell[CellGroupData[{
-Cell[87609, 2090, 159, 2, 44, "Subsection"],
-Cell[87771, 2094, 9402, 211, 325, "Input"],
-Cell[97176, 2307, 1785, 44, 59, "Input"]
+Cell[87649, 2090, 159, 2, 44, "Subsection"],
+Cell[87811, 2094, 9402, 211, 325, "Input"],
+Cell[97216, 2307, 1785, 44, 59, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[98998, 2356, 174, 2, 45, "Subsection"],
-Cell[99175, 2360, 769, 18, 32, "Input"],
-Cell[99947, 2380, 563, 14, 32, "Input"]
+Cell[99038, 2356, 174, 2, 45, "Subsection"],
+Cell[99215, 2360, 769, 18, 32, "Input"],
+Cell[99987, 2380, 563, 14, 32, "Input"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[100547, 2399, 192, 2, 37, "Subsection"],
-Cell[100742, 2403, 387, 8, 32, "Input"],
-Cell[101132, 2413, 397, 9, 32, "Input"],
-Cell[101532, 2424, 281, 6, 32, "Input"],
-Cell[101816, 2432, 280, 6, 32, "Input"],
-Cell[102099, 2440, 287, 6, 32, "Input"],
-Cell[102389, 2448, 290, 6, 32, "Input"],
-Cell[102682, 2456, 297, 6, 32, "Input"]
+Cell[100587, 2399, 192, 2, 37, "Subsection"],
+Cell[100782, 2403, 387, 8, 32, "Input"],
+Cell[101172, 2413, 397, 9, 32, "Input"],
+Cell[101572, 2424, 281, 6, 32, "Input"],
+Cell[101856, 2432, 280, 6, 32, "Input"],
+Cell[102139, 2440, 287, 6, 32, "Input"],
+Cell[102429, 2448, 290, 6, 32, "Input"],
+Cell[102722, 2456, 297, 6, 32, "Input"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[103016, 2467, 240, 3, 37, "Subsection"],
+Cell[103056, 2467, 240, 3, 37, "Subsection"],
 Cell[CellGroupData[{
-Cell[103281, 2474, 164, 2, 36, "Subsubsection"],
-Cell[103448, 2478, 492, 10, 32, "Input"],
-Cell[103943, 2490, 281, 6, 32, "Input"],
-Cell[104227, 2498, 280, 6, 32, "Input"],
-Cell[104510, 2506, 287, 6, 32, "Input"]
+Cell[103321, 2474, 164, 2, 36, "Subsubsection"],
+Cell[103488, 2478, 492, 10, 32, "Input"],
+Cell[103983, 2490, 281, 6, 32, "Input"],
+Cell[104267, 2498, 280, 6, 32, "Input"],
+Cell[104550, 2506, 287, 6, 32, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[104834, 2517, 162, 2, 36, "Subsubsection"],
-Cell[104999, 2521, 328, 7, 32, "Input"],
-Cell[105330, 2530, 356, 7, 32, "Input"],
-Cell[105689, 2539, 383, 8, 32, "Input"],
-Cell[106075, 2549, 243, 5, 32, "Input"]
+Cell[104874, 2517, 162, 2, 36, "Subsubsection"],
+Cell[105039, 2521, 328, 7, 32, "Input"],
+Cell[105370, 2530, 356, 7, 32, "Input"],
+Cell[105729, 2539, 383, 8, 32, "Input"],
+Cell[106115, 2549, 243, 5, 32, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[106355, 2559, 238, 3, 36, "Subsubsection"],
-Cell[106596, 2564, 435, 8, 32, "Input"],
-Cell[107034, 2574, 434, 8, 32, "Input"],
-Cell[107471, 2584, 441, 8, 32, "Input"],
-Cell[107915, 2594, 340, 7, 32, "Input"],
-Cell[108258, 2603, 328, 7, 32, "Input"]
+Cell[106395, 2559, 238, 3, 36, "Subsubsection"],
+Cell[106636, 2564, 435, 8, 32, "Input"],
+Cell[107074, 2574, 434, 8, 32, "Input"],
+Cell[107511, 2584, 441, 8, 32, "Input"],
+Cell[107955, 2594, 340, 7, 32, "Input"],
+Cell[108298, 2603, 328, 7, 32, "Input"]
 }, Open  ]]
 }, Closed]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[108647, 2617, 149, 2, 65, "Section"],
-Cell[108799, 2621, 1978, 38, 35, "Input"],
-Cell[110780, 2661, 895, 22, 35, "Input"],
-Cell[111678, 2685, 919, 22, 35, "Input"],
-Cell[112600, 2709, 599, 14, 54, "Input"]
+Cell[108687, 2617, 149, 2, 65, "Section"],
+Cell[108839, 2621, 1978, 38, 35, "Input"],
+Cell[110820, 2661, 895, 22, 35, "Input"],
+Cell[111718, 2685, 919, 22, 35, "Input"],
+Cell[112640, 2709, 599, 14, 54, "Input"]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[113236, 2728, 99, 1, 51, "Section"],
+Cell[113276, 2728, 99, 1, 51, "Section"],
 Cell[CellGroupData[{
-Cell[113360, 2733, 5045, 107, 300, "Input"],
-Cell[118408, 2842, 529, 10, 23, "Message"],
-Cell[118940, 2854, 531, 10, 23, "Message"],
-Cell[119474, 2866, 529, 10, 23, "Message"],
-Cell[120006, 2878, 573, 10, 23, "Message"],
-Cell[120582, 2890, 693, 12, 23, "Message"],
-Cell[121278, 2904, 691, 12, 23, "Message"],
-Cell[121972, 2918, 690, 12, 23, "Message"],
-Cell[122665, 2932, 577, 10, 23, "Message"],
-Cell[123245, 2944, 566, 10, 23, "Message"],
-Cell[123814, 2956, 564, 10, 23, "Message"],
-Cell[124381, 2968, 564, 10, 23, "Message"],
-Cell[124948, 2980, 576, 10, 23, "Message"]
+Cell[113400, 2733, 5065, 106, 300, "Input"],
+Cell[118468, 2841, 576, 11, 23, "Message"],
+Cell[119047, 2854, 578, 11, 23, "Message"],
+Cell[119628, 2867, 576, 11, 23, "Message"],
+Cell[120207, 2880, 621, 11, 23, "Message"],
+Cell[120831, 2893, 736, 13, 23, "Message"],
+Cell[121570, 2908, 737, 13, 23, "Message"],
+Cell[122310, 2923, 736, 13, 23, "Message"],
+Cell[123049, 2938, 623, 11, 23, "Message"],
+Cell[123675, 2951, 610, 11, 23, "Message"],
+Cell[124288, 2964, 611, 11, 23, "Message"],
+Cell[124902, 2977, 611, 11, 23, "Message"],
+Cell[125516, 2990, 623, 11, 23, "Message"]
 }, Open  ]],
-Cell[125539, 2993, 1381, 38, 80, "Input"],
-Cell[126923, 3033, 664, 18, 35, "Input"],
-Cell[127590, 3053, 509, 13, 56, "Input"]
+Cell[126154, 3004, 1381, 38, 80, "Input"],
+Cell[127538, 3044, 664, 18, 35, "Input"],
+Cell[128205, 3064, 509, 13, 56, "Input"]
 }, Open  ]]
 }
 ]
