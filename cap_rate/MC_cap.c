@@ -132,6 +132,8 @@ double DMvel_integral (double mu, double muFn, double vmax){
 
    struct DMvelint_params params2 = {mu, muFn, vmax};
 
+
+
    gsl_integration_workspace * w = gsl_integration_workspace_alloc (1000);
 
    gsl_function F;
